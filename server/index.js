@@ -45,6 +45,8 @@ app.use((req, res, next) => {
   }
 })
 
+
+
 // Authentication routes
 app.get('/auth/facebook', passport.authenticate('facebook'))
 app.get('/auth/facebook/callback', passport.authenticate('facebook', {session: false}), (req, res) => {
@@ -53,16 +55,31 @@ app.get('/auth/facebook/callback', passport.authenticate('facebook', {session: f
 })
 app.get('/disconnect', (req, res) => res.clearCookie('jwt_token').redirect('/'))
 
-app.get('/', (req, res) => res.end(`<a href='/auth/facebook'>Connect</a><a href='/disconnect'>Disconnect</a>`))
 
+
+// Graphql routes
 app.use('/graphql', bodyParser.json(), apolloExpress((req, res) => ({
   schema,
   context: {me: req.user}
 })))
 
-app.use('/graphiql', graphiqlExpress({
-  endpointURL: '/graphql',
-}))
+// renderer
+if (process.env.NODE_ENV !== 'production') {
+  app.use('/graphiql', graphiqlExpress({
+    endpointURL: '/graphql',
+  }))
+
+  const webpack = require('webpack')
+  const webpackConfig = require('../webpack.config.js')
+  const compiler = webpack(webpackConfig)
+
+  app.use(require('webpack-dev-middleware')(compiler, {
+    noInfo: true, publicPath: webpackConfig.output.publicPath
+  }))
+  app.use(require('webpack-hot-middleware')(compiler))
+} else {
+  app.use(express.static('../static'))
+}
 
 app.listen(port)
 console.log(`Listening on ${port}...`)
