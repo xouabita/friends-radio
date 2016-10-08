@@ -9,6 +9,9 @@ const { fbOptions, secret, port } = require('../config.js')
 
 const knex = require('./knex.js')
 
+const {apolloExpress, graphiqlExpress} = require('apollo-server')
+const schema = require('./schema')
+
 passport.use(new FbStrategy(fbOptions, (token, refresh, profile, done) => {
   const {id} = profile
   knex('users').where('id', id).then(rows => {
@@ -51,6 +54,15 @@ app.get('/auth/facebook/callback', passport.authenticate('facebook', {session: f
 app.get('/disconnect', (req, res) => res.clearCookie('jwt_token').redirect('/'))
 
 app.get('/', (req, res) => res.end(`<a href='/auth/facebook'>Connect</a><a href='/disconnect'>Disconnect</a>`))
+
+app.use('/graphql', bodyParser.json(), apolloExpress((req, res) => ({
+  schema,
+  context: {me: req.user}
+})))
+
+app.use('/graphiql', graphiqlExpress({
+  endpointURL: '/graphql',
+}))
 
 app.listen(port)
 console.log(`Listening on ${port}...`)
