@@ -7,6 +7,9 @@ module.exports = {
     },
     migrations: {
       directory: './server/migrations'
+    },
+    seeds: {
+      directory: './server/seeds'
     }
   },
 }
