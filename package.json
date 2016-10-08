@@ -33,7 +33,8 @@
     "react-redux": "^4.4.5",
     "react-router": "^4.0.0-alpha.4",
     "redux": "^3.6.0",
-    "stylus": "^0.54.5"
+    "stylus": "^0.54.5",
+    "uuid-v4": "^0.1.0"
   },
   "devDependencies": {
     "babel-core": "^6.17.0",

@@ -4,6 +4,8 @@ const Query = `
 type Query {
   user(id: String!): User!
   me: User!
+  media(id: String!): Media!
+  medias: [Media]!
 }
 `
 
