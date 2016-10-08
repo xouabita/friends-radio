@@ -1,0 +1,31 @@
+{
+  "name": "radiozizi",
+  "version": "0.0.1",
+  "description": "Enjoy music with your friends",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/xouabita/radiozizi.git"
+  },
+  "author": "xouabita",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/xouabita/radiozizi/issues"
+  },
+  "homepage": "https://github.com/xouabita/radiozizi#readme",
+  "dependencies": {
+    "apollo-server": "^0.3.2",
+    "body-parser": "^1.15.2",
+    "cookie-parser": "^1.4.3",
+    "express": "^4.14.0",
+    "graphql": "^0.7.1",
+    "jsonwebtoken": "^7.1.9",
+    "knex": "^0.12.2",
+    "passport": "^0.3.2",
+    "passport-facebook": "^2.1.1",
+    "pg": "^6.1.0"
+  }
+}
