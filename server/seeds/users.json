@@ -1,4 +1,4 @@
-const users = [{
+[{
   "name": "Maxime Chllx",
   "id": "10204356502977896",
   "gender": true
@@ -29,9 +29,3 @@ const users = [{
   "gender": true
 }]
 
-exports.seed = function(knex, Promise) {
-  return knex('users').del()
-    .then(function () {
-      return Promise.all(users.map(user => knex('users').insert(user)))
-    });
-};
