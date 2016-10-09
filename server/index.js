@@ -17,12 +17,13 @@ passport.use(new FbStrategy(fbOptions, (token, refresh, profile, done) => {
   knex('users').where('id', id).then(rows => {
     if (rows.length)
       done(null, profile)
-
-    const {displayName, gender} = profile
-    knex('users').insert({id, name: displayName, gender: gender === 'male'})
-    .then((user) => {
-      done(null, profile)
-    })
+    else {
+      const {displayName, gender} = profile
+      knex('users').insert({id, name: displayName, gender: gender === 'male'})
+        .then((user) => {
+          done(null, profile)
+        })
+    }
   })
 }))
 
@@ -51,7 +52,7 @@ app.use((req, res, next) => {
 app.get('/auth/facebook', passport.authenticate('facebook'))
 app.get('/auth/facebook/callback', passport.authenticate('facebook', {session: false}), (req, res) => {
   const token = jwt.sign({id: req.user.id}, secret)
-  res.cookie('jwt_token', token).redirect('/')
+  res.cookie('jwt_token', token, { httpOnly: true }).redirect('/')
 })
 app.get('/disconnect', (req, res) => res.clearCookie('jwt_token').redirect('/'))
 
