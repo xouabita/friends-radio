@@ -13,6 +13,7 @@ const mediasQuery = gql`
       thumbnail
       title
       description
+      url
     }
   }
 `

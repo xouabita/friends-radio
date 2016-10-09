@@ -36,6 +36,7 @@
     "react-addons-transition-group": "^15.3.2",
     "react-apollo": "^0.5.8",
     "react-dom": "^15.3.2",
+    "react-player": "^0.11.0",
     "react-redux": "^4.4.5",
     "react-router": "^4.0.0-alpha.4",
     "react-truncate": "^1.1.4",

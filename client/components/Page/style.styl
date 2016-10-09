@@ -1,7 +1,18 @@
+$playerWidth = 250px
+$navHeight   = 54px
+
 .nav
   position fixed
   width 100vw
   z-index 100
-.content
-  padding-top 54px
+.page
+  padding-top $navHeight
   width 100vw
+.content
+  width 'calc(100% - %s + 50px)' % $playerWidth
+.player
+  width $playerWidth
+  height 'calc(100vh - %s)' % $navHeight
+  position fixed
+  top $navHeight
+  right 0
