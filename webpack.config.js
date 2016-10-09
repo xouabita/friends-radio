@@ -1,5 +1,6 @@
 const webpack = require('webpack')
 const path = require('path')
+const autoprefixer = require('autoprefixer-stylus')
 
 module.exports = {
   devtool: 'eval',
@@ -57,5 +58,8 @@ module.exports = {
     new webpack.DefinePlugin({
       'process.env': { NODE_ENV: JSON.stringify(process.env.NODE_ENV || 'development') }
     })
-  ]
+  ],
+  stylus: {
+    use: [autoprefixer()]
+  }
 }

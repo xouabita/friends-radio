@@ -2,7 +2,7 @@ import React from 'react'
 import ApolloClient, { createNetworkInterface } from 'apollo-client'
 import { ApolloProvider } from 'react-apollo'
 
-import Navigation from './components/Navigation'
+import Page from './components/Page'
 import Homepage from './views/Homepage.js'
 
 const networkInterface = createNetworkInterface('/graphql', {
@@ -12,10 +12,9 @@ const client = new ApolloClient({networkInterface})
 
 const App = () => (
   <ApolloProvider client={client}>
-    <div>
-      <Navigation />
+    <Page>
       <Homepage />
-    </div>
+    </Page>
   </ApolloProvider>
 )
 

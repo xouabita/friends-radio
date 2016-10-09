@@ -40,8 +40,8 @@ const ProfileButton = ({me}) => (
   </NavItem>
 )
 
-const Navigation = ({data}) => (
-  <div>
+const Navigation = ({data, className}) => (
+  <div className={className}>
     <Navbar color="faded">
       <Container>
         <NavbarBrand>RadioZizi</NavbarBrand>

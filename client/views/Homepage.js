@@ -18,18 +18,16 @@ const mediasQuery = gql`
 `
 
 const Homepage = ({data}) => (
-  <Row>
-    <Col xs='9'>
-      {
-        data.loading?
-        <h2>Loading...</h2>
-        :
-        <Container>
-          {data.medias.map((media, i) => <Media key={i} {...media} />)}
-        </Container>
-      }
-    </Col>
-  </Row>
+  <div>
+    {
+      data.loading?
+      <h2>Loading...</h2>
+      :
+      <div>
+        {data.medias.map((media, i) => <Media key={i} {...media} />)}
+      </div>
+    }
+  </div>
 )
 
 export default graphql(mediasQuery)(Homepage)
