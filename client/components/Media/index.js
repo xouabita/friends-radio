@@ -2,6 +2,12 @@ import React from 'react'
 import style from './style.styl'
 
 import { Row } from 'reactstrap'
+import Truncate from 'react-truncate'
+
+const Ô = ({children}) =>
+  <Truncate ellipsis='…'>
+    {children}
+  </Truncate>
 
 const Media = (media) => (
   <div className={style.card}>
@@ -9,8 +15,8 @@ const Media = (media) => (
       <img src={media.thumbnail} />
     </div>
     <div className={style.content}>
-      <h5>{media.title}</h5>
-      <p>{media.description}</p>
+      <h5><Ô>{media.title}</Ô></h5>
+      <p><Ô>{media.description}</Ô></p>
     </div>
   </div>
 )

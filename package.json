@@ -38,6 +38,7 @@
     "react-dom": "^15.3.2",
     "react-redux": "^4.4.5",
     "react-router": "^4.0.0-alpha.4",
+    "react-truncate": "^1.1.4",
     "reactstrap": "^3.4.0",
     "redux": "^3.6.0",
     "stylus": "^0.54.5",
