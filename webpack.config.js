@@ -33,7 +33,7 @@ module.exports = {
         test: /\.styl$/,
         loaders: [
           'style-loader',
-          'css-loader',
+          'css-loader?modules&sourceMap&importLoaders=1&localIdentName=[local]___[hash:base64:5]',
           'stylus-loader'
         ]
       },

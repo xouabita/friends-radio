@@ -1,10 +1,19 @@
 import React from 'react'
-import { Navbar, NavbarBrand, Nav, NavItem, NavLink } from 'reactstrap'
+import {
+  Navbar,
+  NavbarBrand,
+  Nav,
+  NavItem,
+  NavLink,
+  Button,
+  Container,
+} from 'reactstrap'
 
 import { graphql } from 'react-apollo'
 import gql from 'graphql-tag'
 
 import avatarUrl from '../../utils/avatarUrl.js'
+import {profilePic} from './style.styl'
 
 const currentUser = gql`
   query getMe {
@@ -18,9 +27,15 @@ const ProfileButton = ({me}) => (
   <NavItem>
     {
       me ?
-        <img src={avatarUrl(me.id)} />
+        <div>
+          <img className={profilePic} src={avatarUrl(me.id)} />
+        </div>
       :
-        <NavLink href="/auth/facebook">Login</NavLink>
+      <NavLink href="/auth/facebook">
+        <Button color="primary" size="sm">
+          Login
+        </Button>
+      </NavLink>
     }
   </NavItem>
 )
@@ -28,15 +43,17 @@ const ProfileButton = ({me}) => (
 const Navigation = ({data}) => (
   <div>
     <Navbar color="faded">
-      <NavbarBrand>RadioZizi</NavbarBrand>
-      <Nav className="pull-xs-right" navbar>
-        {
-          data.loading ?
+      <Container>
+        <NavbarBrand>RadioZizi</NavbarBrand>
+        <Nav className="pull-xs-right" navbar>
+          {
+            data.loading ?
             <NavItem>Loading....</NavItem>
-          :
+            :
             <ProfileButton me={data.me} />
-        }
-      </Nav>
+          }
+        </Nav>
+      </Container>
     </Navbar>
   </div>
 )

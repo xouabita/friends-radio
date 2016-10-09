@@ -1,0 +1,26 @@
+$size = 100px
+$border = 2px
+$thumbSize = $size - $border * 2
+
+body
+  background #fafafa
+
+.card
+  height $size
+  width calc(100% - 100px)
+  background #fff
+  margin 20px 50px
+  border solid $border rgba(0, 0, 0, .05)
+  .thumbnail
+    width $thumbSize
+    height $thumbSize
+    display inline-block
+    img
+      width 100%
+      height 100%
+      object-fit cover
+  .content
+    display inline-block
+    vertical-align top
+    margin 10px 20px
+    width "calc(100% - %s - 40px)" % $size
