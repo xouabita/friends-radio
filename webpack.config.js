@@ -1,10 +1,15 @@
-var webpack = require('webpack')
-var path = require('path')
+const webpack = require('webpack')
+const path = require('path')
 
 module.exports = {
+  devtool: 'eval',
   context: path.join(__dirname, './client'),
   entry: {
-    jsx: './index.js',
+    jsx: [
+      'react-hot-loader/patch',
+      'webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000',
+      './index.js'
+    ],
     html: './index.html',
     vendor: [
       'react',
@@ -12,7 +17,7 @@ module.exports = {
       'react-redux',
       'react-router',
       'redux'
-    ]
+    ],
   },
   output: {
     path: path.join(__dirname, './static'),
@@ -39,10 +44,7 @@ module.exports = {
       {
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
-        loaders: [
-          'react-hot-loader/webpack',
-          'babel-loader'
-        ]
+        loaders: ['babel-loader']
       },
     ],
   },
@@ -50,13 +52,10 @@ module.exports = {
     extensions: ['', '.js', '.jsx']
   },
   plugins: [
+    new webpack.HotModuleReplacementPlugin(),
     new webpack.optimize.CommonsChunkPlugin('vendor', 'vendor.bundle.js'),
     new webpack.DefinePlugin({
       'process.env': { NODE_ENV: JSON.stringify(process.env.NODE_ENV || 'development') }
     })
-  ],
-  devServer: {
-    contentBase: './client',
-    hot: true
-  }
+  ]
 }

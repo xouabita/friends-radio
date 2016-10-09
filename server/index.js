@@ -74,7 +74,10 @@ if (process.env.NODE_ENV !== 'production') {
   const compiler = webpack(webpackConfig)
 
   app.use(require('webpack-dev-middleware')(compiler, {
-    noInfo: true, publicPath: webpackConfig.output.publicPath
+    noInfo: true,
+    publicPath: webpackConfig.output.publicPath,
+    hot: true,
+    historyApiFallback: true
   }))
   app.use(require('webpack-hot-middleware')(compiler))
 } else {
