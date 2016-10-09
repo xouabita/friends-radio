@@ -1,5 +1,3 @@
-const User = require('./user.js')
-
 const MediaInput = `
 input MediaInput {
   title: String!
@@ -28,4 +26,4 @@ type Media {
 }
 `
 
-module.exports = () => [Media, User, MediaInput]
+module.exports = [Media, MediaInput]
