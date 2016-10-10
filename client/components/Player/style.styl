@@ -14,6 +14,7 @@ $playButtonSize = 90px
   width $thumbSize
   height $thumbSize
   margin auto
+  position relative
 .title
   font-size 15px
   width $thumbSize
@@ -24,12 +25,24 @@ $playButtonSize = 90px
 .playButton
   width $playButtonSize
   height $playButtonSize
-  position relative
+  position absolute
   top 50%
   left 50%
   transform translate(-50%, -50%)
   &:hover
     cursor pointer
+.prevIcon, .nextIcon
+  $size = $playButtonSize * .8
+  position absolute
+  height $size
+  width $size
+  color white
+  top 50%
+  transform translateY(-50%)
+  &:hover
+    cursor pointer
+.nextIcon
+  right 0
 .queue
   overflow scroll
   height 100%

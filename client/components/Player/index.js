@@ -5,6 +5,11 @@ import ReactPlayer from 'react-player'
 import PlayButton from '../PlayButton'
 import Thumbnail from '../Thumbnail'
 
+import PrevIcon from 'react-icons/lib/io/ios-arrow-back'
+import NextIcon from 'react-icons/lib/io/ios-arrow-forward'
+
+import { play, pause, next, prev } from '../../actions/player.js'
+
 import style from './style.styl'
 
 const Queue = ({medias}) => (
@@ -58,12 +63,23 @@ class Player extends Component {
 
     return (
       <div className={style.container}>
-        <Thumbnail src={thumbnail} className={style.thumbnail}>
+        <Thumbnail
+          src={thumbnail}
+          className={style.thumbnail}
+        >
+          <PrevIcon
+            className={style.prevIcon}
+            onClick={this.props.prev}
+          />
           <PlayButton
             className={style.playButton}
             playing={this.props.playing}
-            onClick={() => this.setState({playing: !this.state.playing})}
+            onClick={() => this.props.playing ? this.props.pause() : this.props.play()}
             color='white'
+          />
+          <NextIcon
+            className={style.nextIcon}
+            onClick={this.props.next}
           />
         </Thumbnail>
         <p className={style.title}>{title}</p>
@@ -100,4 +116,11 @@ const mapStateToProps = ({player}) => ({
   ...player
 })
 
-export default connect(mapStateToProps)(Player)
+const mapDispatchToProps = (dispatch) => ({
+  play: () => dispatch(play()),
+  pause: () => dispatch(pause()),
+  next: () => dispatch(next()),
+  prev: () => dispatch(prev())
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(Player)
