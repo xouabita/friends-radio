@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 
 import ReactPlayer from 'react-player'
 import PlayButton from '../PlayButton'
+import Thumbnail from '../Thumbnail'
 
 import style from './style.styl'
 
@@ -43,19 +44,14 @@ class Player extends Component {
 
     return (
       <div className={style.container}>
-        <div
-          className={style.thumbnail}
-          style={thumbnailStyle}
-        >
-          <div className={style.wrapper}>
-            <PlayButton
-              className={style.playButton}
-              playing={this.state.playing}
-              onClick={() => this.setState({playing: !this.state.playing})}
-              color='white'
-            />
-          </div>
-        </div>
+        <Thumbnail src={thumbnail} className={style.thumbnail}>
+          <PlayButton
+            className={style.playButton}
+            playing={this.state.playing}
+            onClick={() => this.setState({playing: !this.state.playing})}
+            color='white'
+          />
+        </Thumbnail>
         <p className={style.title}>{title}</p>
         {
           this.state.current ?

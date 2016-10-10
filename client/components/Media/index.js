@@ -26,7 +26,9 @@ const Media = (media) => (
   </div>
 )
 
-const mapStateToProps = () => ({})
+const mapStateToProps = ({player}) => ({
+  current: player.current
+})
 const mapDispatchToProps = (dispatch, ownProps) => ({
   play: () => dispatch(play(ownProps))
 })
