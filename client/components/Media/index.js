@@ -23,7 +23,7 @@ const Media = (media) => (
       <PlayButton
         playing={media.playing} color='white'
         className={style.playButton}
-        onClick={() => media.playing ? media.pause() : media.play()}
+        onClick={media.onPlay}
       />
     </Thumbnail>
     <div className={style.content}>
@@ -36,9 +36,5 @@ const Media = (media) => (
 const mapStateToProps = ({player}, ownProps) => ({
   playing: player.current && player.playing && player.current.id === ownProps.id
 })
-const mapDispatchToProps = (dispatch, ownProps) => ({
-  play: () => dispatch(play(ownProps)),
-  pause: () => dispatch(pause())
-})
 
-export default connect(mapStateToProps, mapDispatchToProps)(Media)
+export default connect(mapStateToProps)(Media)

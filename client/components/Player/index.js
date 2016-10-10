@@ -7,6 +7,16 @@ import Thumbnail from '../Thumbnail'
 
 import style from './style.styl'
 
+const Queue = ({medias}) => (
+  <div>
+    {
+      medias.map((media, i) => (
+        <p>{media.title}</p>
+      ))
+    }
+  </div>
+)
+
 class Player extends Component {
   constructor(props) {
     super(props)
@@ -51,6 +61,7 @@ class Player extends Component {
           />
         </Thumbnail>
         <p className={style.title}>{title}</p>
+        <Queue medias={this.props.queue} />
         {
           this.state.current ?
             <ReactPlayer
