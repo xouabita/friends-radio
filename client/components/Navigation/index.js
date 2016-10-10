@@ -13,7 +13,8 @@ import { graphql } from 'react-apollo'
 import gql from 'graphql-tag'
 
 import avatarUrl from '../../utils/avatarUrl.js'
-import {profilePic} from './style.styl'
+import style from './style.styl'
+import radioEmoji from '../../assets/emojis/radio.png'
 
 const currentUser = gql`
   query getMe {
@@ -27,9 +28,7 @@ const ProfileButton = ({me}) => (
   <NavItem>
     {
       me ?
-        <div>
-          <img className={profilePic} src={avatarUrl(me.id)} />
-        </div>
+        <img className={style.profilePic} src={avatarUrl(me.id)} />
       :
       <NavLink href="/auth/facebook">
         <Button color="primary" size="sm">
@@ -42,9 +41,12 @@ const ProfileButton = ({me}) => (
 
 const Navigation = ({data, className}) => (
   <div className={className}>
-    <Navbar color='danger' style={{borderRadius: 0}}>
+    <Navbar className={style.nav} style={{borderRadius: 0}}>
       <Container>
-        <NavbarBrand>RadioZizi</NavbarBrand>
+        <NavbarBrand className={style.brand}>
+          <img src={radioEmoji} />
+          <span>RADIO ZIZI</span>
+        </NavbarBrand>
         <Nav className="pull-xs-right" navbar>
           {
             data.loading ?

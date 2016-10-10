@@ -47,6 +47,13 @@ module.exports = {
         exclude: /node_modules/,
         loaders: ['babel-loader']
       },
+      {
+        test: /\.png$/,
+        loaders: [
+          'file?hash=sha512&digest=hex&name=[hash].[ext]',
+          'image-webpack?bypassOnDebug&optimizationLevel=7&interlaced=false'
+        ]
+      }
     ],
   },
   resolve: {

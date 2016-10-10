@@ -61,6 +61,9 @@ class Player extends Component {
       backgroundPosition: 'center center'
     }
 
+    const prevStyle = !this.props.history.length ? { display: 'none' } : null
+    const nextStyle = !this.props.queue.length ? { display: 'none' } : null
+
     return (
       <div className={style.container}>
         <Thumbnail
@@ -70,6 +73,7 @@ class Player extends Component {
           <PrevIcon
             className={style.prevIcon}
             onClick={this.props.prev}
+            style={prevStyle}
           />
           <PlayButton
             className={style.playButton}
@@ -80,6 +84,7 @@ class Player extends Component {
           <NextIcon
             className={style.nextIcon}
             onClick={this.props.next}
+            style={nextStyle}
           />
         </Thumbnail>
         <p className={style.title}>{title}</p>
@@ -89,6 +94,7 @@ class Player extends Component {
             <ReactPlayer
               url={this.state.current.url}
               hidden={true}
+              onEnded={this.props.next}
               playing={this.props.playing}
             />
           :
