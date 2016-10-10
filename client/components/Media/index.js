@@ -21,7 +21,7 @@ const Media = (media) => (
       />
     </Thumbnail>
     <div className={style.content}>
-      <h5>{media.title}</h5>
+      <h5>{(media.artist ? `${media.artist} - ` : '') + media.title}</h5>
       <p>{media.description}</p>
     </div>
   </div>

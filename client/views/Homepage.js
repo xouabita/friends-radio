@@ -7,13 +7,16 @@ import gql from 'graphql-tag'
 import { Container, Row, Col } from 'reactstrap'
 import Media from '../components/Media'
 
+import { Button } from 'reactstrap'
+
 import { start, play, pause } from '../actions/player.js'
 
-const mediasQuery = gql`
-  query getMedias {
-    medias {
+const MEDIAS_QUERY = gql`
+  query getMedias($skip: Int!) {
+    medias(skip: $skip, limit: 50) {
       id
       thumbnail
+      artist
       title
       description
       url
@@ -21,7 +24,27 @@ const mediasQuery = gql`
   }
 `
 
-const Homepage = ({data, play}) => (
+const withMedias = graphql(MEDIAS_QUERY, {
+  options: () => ({
+    variables: { skip: 0 },
+    forceFetch: true
+  }),
+  props: ({data}) => ({
+    data,
+    loadMore: () => data.fetchMore({
+      variables: { skip: data.medias.length },
+      updateQuery: (prev, { fetchMoreResult }) => {
+        if (!fetchMoreResult.data) return prev
+        return {
+          ...prev,
+          medias: [...prev.medias, ...fetchMoreResult.data.medias]
+        }
+      }
+    })
+  })
+})
+
+const Homepage = ({data, play, loadMore}) => (
   <div>
     {
       data.loading?
@@ -35,6 +58,7 @@ const Homepage = ({data, play}) => (
         }
       </div>
     }
+    <Button onClick={loadMore}>Load More...</Button>
   </div>
 )
 
@@ -58,4 +82,4 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
 
 const connected = connect(mapStateToProps, mapDispatchToProps)(Homepage)
 
-export default graphql(mediasQuery)(connected)
+export default withMedias(connected)
