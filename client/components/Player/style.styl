@@ -1,3 +1,39 @@
+@import '../Page/style.styl'
+
+$margin = 20px
+$thumbSize = $playerWidth - 2 * $margin
+$playButtonSize = 90px
+
 .container
   width 100%
   height 100%
+  background white
+  padding 20px
+  border-left solid 2px rgba(0, 0, 0, .05)
+.thumbnail
+  width $thumbSize
+  height $thumbSize
+.title
+  font-size 15px
+  width $thumbSize
+  margin auto
+  font-weight bold
+  white-space nowrap
+  overflow hidden
+.wrapper
+  background rgba(0, 0, 0, .5)
+  opacity 0
+  transition all ease-in-out 300ms
+  &:hover
+    opacity 1
+  width 100%
+  height 100%
+.playButton
+  width $playButtonSize
+  height $playButtonSize
+  position relative
+  top 50%
+  left 50%
+  transform translate(-50%, -50%)
+  &:hover
+    cursor pointer

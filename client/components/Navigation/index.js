@@ -42,7 +42,7 @@ const ProfileButton = ({me}) => (
 
 const Navigation = ({data, className}) => (
   <div className={className}>
-    <Navbar color="faded">
+    <Navbar color='danger' style={{borderRadius: 0}}>
       <Container>
         <NavbarBrand>RadioZizi</NavbarBrand>
         <Nav className="pull-xs-right" navbar>
