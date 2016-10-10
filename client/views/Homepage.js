@@ -10,6 +10,7 @@ import Media from '../components/Media'
 const mediasQuery = gql`
   query getMedias {
     medias {
+      id
       thumbnail
       title
       description

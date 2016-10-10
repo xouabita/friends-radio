@@ -2,7 +2,7 @@ import React from 'react'
 
 import style from './style.styl'
 
-const Thumbnail = ({src, children, ...otherProps}) => {
+const Thumbnail = ({src, children, active = false, ...otherProps}) => {
   const thumbnailStyle = {
     backgroundImage: `url(${src})`,
     backgroundSize: 'cover',
@@ -15,7 +15,7 @@ const Thumbnail = ({src, children, ...otherProps}) => {
 
   return (
     <div {...otherProps} style={thumbnailStyle}>
-      <div className={style.wrapper}>
+      <div className={style.wrapper} style={active ? {opacity: 1} : null}>
         {children}
       </div>
     </div>

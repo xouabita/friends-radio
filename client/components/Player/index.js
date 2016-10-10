@@ -11,7 +11,6 @@ class Player extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      playing: false,
       current: null
     }
   }
@@ -20,8 +19,7 @@ class Player extends Component {
     console.log(nextProps)
     if (nextProps.current != this.props.current) {
       this.setState({
-        current: nextProps.current,
-        playing: true
+        current: nextProps.current
       })
     }
   }
@@ -47,7 +45,7 @@ class Player extends Component {
         <Thumbnail src={thumbnail} className={style.thumbnail}>
           <PlayButton
             className={style.playButton}
-            playing={this.state.playing}
+            playing={this.props.playing}
             onClick={() => this.setState({playing: !this.state.playing})}
             color='white'
           />
@@ -58,7 +56,7 @@ class Player extends Component {
             <ReactPlayer
               url={this.state.current.url}
               hidden={true}
-              playing={this.state.playing}
+              playing={this.props.playing}
             />
           :
             undefined
@@ -75,6 +73,7 @@ const mediaType = t.shape({
 })
 
 Player.propTypes = {
+  playing: t.bool.isRequired,
   history: t.arrayOf(mediaType),
   current: mediaType,
   queue: t.arrayOf(mediaType)

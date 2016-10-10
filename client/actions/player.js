@@ -4,3 +4,9 @@ export function play(media) {
     payload: media
   }
 }
+
+export function pause() {
+  return {
+    type: 'PAUSE'
+  }
+}

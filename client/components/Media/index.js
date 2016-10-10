@@ -1,10 +1,12 @@
 import React from 'react'
 import style from './style.styl'
 import { connect } from 'react-redux'
-import { play } from '../../actions/player.js'
+import { play, pause } from '../../actions/player.js'
 
 import { Row } from 'reactstrap'
 import Truncate from 'react-truncate'
+import Thumbnail from '../Thumbnail'
+import PlayButton from '../PlayButton'
 
 const Ô = ({children}) =>
   <Truncate ellipsis='…'>
@@ -13,12 +15,17 @@ const Ô = ({children}) =>
 
 const Media = (media) => (
   <div className={style.card}>
-    <div className={style.thumbnail}>
-      <img
-        src={media.thumbnail}
-        onClick={media.play}
+    <Thumbnail
+      src={media.thumbnail}
+      className={style.thumbnail}
+      active={media.playing}
+    >
+      <PlayButton
+        playing={media.playing} color='white'
+        className={style.playButton}
+        onClick={() => media.playing ? media.pause() : media.play()}
       />
-    </div>
+    </Thumbnail>
     <div className={style.content}>
       <h5><Ô>{media.title}</Ô></h5>
       <p><Ô>{media.description}</Ô></p>
@@ -26,11 +33,12 @@ const Media = (media) => (
   </div>
 )
 
-const mapStateToProps = ({player}) => ({
-  current: player.current
+const mapStateToProps = ({player}, ownProps) => ({
+  playing: player.current && player.playing && player.current.id === ownProps.id
 })
 const mapDispatchToProps = (dispatch, ownProps) => ({
-  play: () => dispatch(play(ownProps))
+  play: () => dispatch(play(ownProps)),
+  pause: () => dispatch(pause())
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Media)
