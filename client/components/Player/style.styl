@@ -8,11 +8,12 @@ $playButtonSize = 90px
   width 100%
   height 100%
   background white
-  padding 20px
+  padding 20px 0
   border-left solid 2px rgba(0, 0, 0, .05)
 .thumbnail
   width $thumbSize
   height $thumbSize
+  margin auto
 .title
   font-size 15px
   width $thumbSize
@@ -29,3 +30,24 @@ $playButtonSize = 90px
   transform translate(-50%, -50%)
   &:hover
     cursor pointer
+.queue
+  overflow scroll
+  height 100%
+  $thumbSize = 30px
+  .queueItem
+    border-top 2px solid rgba(0, 0, 0, .05)
+    padding $thumbSize * 0.25
+  .queueThumbnail
+    height $thumbSize
+    width $thumbSize
+  p
+    width calc(100% - 40px - 10px)
+    overflow hidden
+    white-space nowrap
+    font-size 12px
+    font-weight bold
+    text-overflow ellipsis
+    margin 0 10px
+  p, .queueThumbnail
+    display inline-block
+    vertical-align middle

@@ -4,21 +4,15 @@ import { connect } from 'react-redux'
 import { play, pause } from '../../actions/player.js'
 
 import { Row } from 'reactstrap'
-import Truncate from 'react-truncate'
 import Thumbnail from '../Thumbnail'
 import PlayButton from '../PlayButton'
-
-const Ô = ({children}) =>
-  <Truncate ellipsis='…'>
-    {children}
-  </Truncate>
 
 const Media = (media) => (
   <div className={style.card}>
     <Thumbnail
       src={media.thumbnail}
       className={style.thumbnail}
-      active={media.playing}
+      active={media.playing ? true : undefined}
     >
       <PlayButton
         playing={media.playing} color='white'
@@ -27,8 +21,8 @@ const Media = (media) => (
       />
     </Thumbnail>
     <div className={style.content}>
-      <h5><Ô>{media.title}</Ô></h5>
-      <p><Ô>{media.description}</Ô></p>
+      <h5>{media.title}</h5>
+      <p>{media.description}</p>
     </div>
   </div>
 )

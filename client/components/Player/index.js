@@ -8,10 +8,17 @@ import Thumbnail from '../Thumbnail'
 import style from './style.styl'
 
 const Queue = ({medias}) => (
-  <div>
+  <div className={style.queue}>
     {
       medias.map((media, i) => (
-        <p>{media.title}</p>
+        <div key={i} className={style.queueItem}>
+          <Thumbnail
+            src={media.thumbnail}
+            className={style.queueThumbnail}
+            active={false}
+          />
+          <p>{media.title}</p>
+        </div>
       ))
     }
   </div>
@@ -26,7 +33,6 @@ class Player extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log(nextProps)
     if (nextProps.current != this.props.current) {
       this.setState({
         current: nextProps.current
