@@ -33,7 +33,10 @@ class Player extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      current: null
+      current: null,
+      played: 0,
+      seeking: false,
+      duration: 0
     }
   }
 
@@ -44,6 +47,14 @@ class Player extends Component {
       })
     }
   }
+
+  onSeekMouseDown = e => this.setState({seeking: true})
+  onSeekChange = e => this.setState({played: parseFloat(e.target.value)})
+  onSeekMouseUp = e => {
+    this.setState({seeking: false})
+    this.player.seekTo(parseFloat(e.target.value))
+  }
+  onProgress = ({played}) => this.setState({played})
 
   render() {
     const thumbnail = this.state.current ?
@@ -87,6 +98,13 @@ class Player extends Component {
             style={nextStyle}
           />
         </Thumbnail>
+        <input
+          type='range' min={0} max={1} step='any' value={this.state.played}
+          onMouseDown={this.onSeekMouseDown}
+          onChange={this.onSeekChange}
+          onMouseUp={this.onSeekMouseUp}
+          className={style.slider}
+        />
         <p className={style.title}>{title}</p>
         <Queue medias={this.props.queue} />
         {
@@ -96,6 +114,10 @@ class Player extends Component {
               hidden={true}
               onEnded={this.props.next}
               playing={this.props.playing}
+              ref={player => this.player = player}
+              onProgress={this.onProgress}
+              onDuration={duration => this.setState({duration})}
+              volume={1}
             />
           :
             undefined
