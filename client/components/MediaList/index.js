@@ -14,6 +14,12 @@ class MediaList extends Component {
     super(props)
   }
 
+  componentWillReceiveProps(props) {
+    if (!props.data.loading) {
+      props.updateList(props.data.medias)
+    }
+  }
+
   render() {
     const { data, play, loadMore } = this.props
     return (
@@ -64,15 +70,14 @@ const mapStateToProps = ({player}) => ({
 })
 const mapDispatchToProps = (dispatch, ownProps) => ({
   play: (index) => {
-    const { medias } = ownProps.data
-    if (ownProps.current && ownProps.current.id === medias[index].id)
-      dispatch(ownProps.playing ? pause() : play())
-    else {
-      const history = medias.slice(0, index)
-      const current = medias[index]
-      const queue   = medias.slice(index + 1, medias.length)
-      dispatch(start(history, current, queue))
-    }
+    dispatch({ type: 'START', payload: {
+      current: index,
+      list: ownProps.uniqueId,
+      play: true
+    }})
+  },
+  updateList: (list) => {
+    dispatch(updateList(ownProps.uniqueId, list))
   }
 })
 

@@ -1,8 +1,7 @@
 const initialState = {
-  playing: false,
+  list: null,
   current: null,
-  queue: [],
-  history: []
+  playing: false,
 }
 
 export default function playerReducer(state = initialState, action) {
@@ -10,30 +9,25 @@ export default function playerReducer(state = initialState, action) {
     case 'PLAY':
       return { ...state, playing: true }
     case 'START':
-      const { history, current, queue } = action.payload
+      const { list, current, play } = action.payload
       return {
         ...state,
-        playing: true,
-        history,
+        playing: play,
         current,
-        queue
+        list,
       }
     case 'PAUSE':
       return { ...state, playing: false }
     case 'NEXT':
-      if (state.queue.length === 0)
-        return { ...state, playing: false }
-      const newState = Object.assign({}, state)
-      newState.history.push(newState.current)
-      newState.current = newState.queue.shift()
-      return newState
+      return {
+        ...state,
+        current: state.current + 1
+      }
     case 'PREV':
-      if (state.history.length === 0)
-        return state
-      const newStateBis = Object.assign({}, state)
-      newStateBis.queue.unshift(newStateBis.current)
-      newStateBis.current = newStateBis.history.pop()
-      return newStateBis
+      return {
+        ...state,
+        current: state.current - 1
+      }
     default:
       return state
   }

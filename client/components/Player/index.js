@@ -38,7 +38,7 @@ class Player extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.current != this.props.current) {
+    if (nextProps.current != this.state.current) {
       this.setState({
         current: nextProps.current
       })
@@ -61,7 +61,7 @@ class Player extends Component {
       backgroundPosition: 'center center'
     }
 
-    const prevStyle = !this.props.history.length ? { display: 'none' } : null
+    const prevStyle = !this.props.index > 0 ? { display: 'none' } : null
     const nextStyle = !this.props.queue.length ? { display: 'none' } : null
 
     return (
@@ -118,9 +118,23 @@ Player.propTypes = {
   queue: t.arrayOf(mediaType)
 }
 
-const mapStateToProps = ({player}) => ({
-  ...player
-})
+const mapStateToProps = ({player, medias}) => {
+  const list = medias[player.list]
+  if (!list)
+    return {
+      playing: false,
+      current: null,
+      index: 0,
+      queue: []
+    }
+  else
+    return {
+      playing: player.playing,
+      current: list[player.current],
+      index: player.current,
+      queue: list.slice(player.current, list.length)
+    }
+}
 
 const mapDispatchToProps = (dispatch) => ({
   play: () => dispatch(play()),
