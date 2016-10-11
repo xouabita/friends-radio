@@ -9,6 +9,8 @@ import { start, play, pause } from '../../actions/player.js'
 import { graphql } from 'react-apollo'
 import { connect } from 'react-redux'
 
+import style from './style.styl'
+
 class MediaList extends Component {
   constructor(props) {
     super(props)
@@ -18,6 +20,9 @@ class MediaList extends Component {
     if (!props.data.loading) {
       props.updateList(props.data.medias)
     }
+
+    if (props.data.medias.length - props.current < 10)
+      this.props.loadMore()
   }
 
   render() {
@@ -36,7 +41,13 @@ class MediaList extends Component {
             }
           </div>
         }
-        <Button onClick={loadMore}>Load More...</Button>
+        <Button
+          outline
+          onClick={loadMore}
+          className={style.loadMore}
+        >
+          Load More...
+        </Button>
       </div>
     )
   }

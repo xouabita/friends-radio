@@ -132,7 +132,7 @@ const mapStateToProps = ({player, medias}) => {
       playing: player.playing,
       current: list[player.current],
       index: player.current,
-      queue: list.slice(player.current, list.length)
+      queue: list.slice(player.current + 1, list.length)
     }
 }
 
