@@ -10,15 +10,17 @@ export function pause() {
   }
 }
 
-export function next() {
+export function next(skip = 1) {
   return {
-    type: 'NEXT'
+    type: 'NEXT',
+    payload: skip
   }
 }
 
-export function prev() {
+export function prev(skip = 1) {
   return {
-    type: 'PREV'
+    type: 'PREV',
+    payload: skip
   }
 }
 

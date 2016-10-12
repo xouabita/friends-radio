@@ -12,11 +12,14 @@ import { play, pause, next, prev } from '../../actions/player.js'
 
 import style from './style.styl'
 
-const Queue = ({medias}) => (
+const Queue = ({medias, next}) => (
   <div className={style.queue}>
     {
       medias.map((media, i) => (
-        <div key={i} className={style.queueItem}>
+        <div
+          onClick={() => next(i + 1)}
+          key={i}
+          className={style.queueItem}>
           <Thumbnail
             src={media.thumbnail}
             className={style.queueThumbnail}
@@ -83,7 +86,7 @@ class Player extends Component {
         >
           <PrevIcon
             className={style.prevIcon}
-            onClick={this.props.prev}
+            onClick={() => this.props.prev()}
             style={prevStyle}
           />
           <PlayButton
@@ -94,7 +97,7 @@ class Player extends Component {
           />
           <NextIcon
             className={style.nextIcon}
-            onClick={this.props.next}
+            onClick={() => this.props.next()}
             style={nextStyle}
           />
         </Thumbnail>
@@ -106,7 +109,7 @@ class Player extends Component {
           className={style.slider}
         />
         <p className={style.title}>{title}</p>
-        <Queue medias={this.props.queue} />
+        <Queue medias={this.props.queue} next={this.props.next} />
         {
           this.state.current ?
             <ReactPlayer
@@ -154,15 +157,16 @@ const mapStateToProps = ({player, medias}) => {
       playing: player.playing,
       current: list[player.current],
       index: player.current,
-      queue: list.slice(player.current + 1, list.length)
+      queue: list.slice(player.current + 1, list.length),
+      listName: player.list
     }
 }
 
 const mapDispatchToProps = (dispatch) => ({
   play: () => dispatch(play()),
   pause: () => dispatch(pause()),
-  next: () => dispatch(next()),
-  prev: () => dispatch(prev())
+  next: i => dispatch(next(i)),
+  prev: i => dispatch(prev(i))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Player)

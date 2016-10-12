@@ -17,7 +17,7 @@ class MediaList extends Component {
   }
 
   componentWillReceiveProps(props) {
-    if (!props.data.loading) {
+    if (!props.data.loading && props.data.medias !== this.props.data.medias) {
       props.updateList(props.data.medias)
     }
 
@@ -36,7 +36,14 @@ class MediaList extends Component {
           <div>
             {
               data.medias.map((media, i) =>
-                <Media key={i} onPlay={() => play(i)} {...media} />
+                <Media
+                  key={i}
+                  list={this.props.uniqueId}
+
+                  index={i}
+                  onPlay={() => play(this.props.player, i)}
+                  {...media}
+                />
               )
             }
           </div>
@@ -77,15 +84,19 @@ MediaList.propTypes = {
 
 const mapStateToProps = ({player}) => ({
   current: player.current,
-  playing: player.playing
+  playing: player.playing,
+  player
 })
 const mapDispatchToProps = (dispatch, ownProps) => ({
-  play: (index) => {
-    dispatch({ type: 'START', payload: {
-      current: index,
-      list: ownProps.uniqueId,
-      play: true
-    }})
+  play: (player, index) => {
+    if (player.list === ownProps.uniqueId && index === player.current)
+      player.playing ? dispatch(pause()) : dispatch(play())
+    else
+      dispatch({ type: 'START', payload: {
+        current: index,
+        list: ownProps.uniqueId,
+        play: true
+      }})
   },
   updateList: (list) => {
     dispatch(updateList(ownProps.uniqueId, list))

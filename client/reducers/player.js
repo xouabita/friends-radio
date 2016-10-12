@@ -21,12 +21,12 @@ export default function playerReducer(state = initialState, action) {
     case 'NEXT':
       return {
         ...state,
-        current: state.current + 1
+        current: state.current + action.payload
       }
     case 'PREV':
       return {
         ...state,
-        current: state.current - 1
+        current: state.current - action.payload
       }
     default:
       return state

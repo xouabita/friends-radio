@@ -12,6 +12,10 @@ const MEDIAS_QUERY = gql`
       thumbnail
       artist
       description
+      posted_by {
+        id
+        name
+      }
     }
   }
 `

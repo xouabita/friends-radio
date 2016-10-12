@@ -23,12 +23,14 @@ const Media = (media) => (
     <div className={style.content}>
       <h5>{(media.artist ? `${media.artist} - ` : '') + media.title}</h5>
       <p>{media.description}</p>
+      <p className={style.postedBy}>Posted by <span>{media.posted_by.name}</span></p>
     </div>
   </div>
 )
 
 const mapStateToProps = ({player}, ownProps) => ({
-  playing: player.current && player.playing && player.current.id === ownProps.id
+  playing: player.playing && player.list === ownProps.list &&
+    ownProps.index === player.current
 })
 
 export default connect(mapStateToProps)(Media)

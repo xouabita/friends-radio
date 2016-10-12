@@ -1,4 +1,4 @@
-$size = 100px
+$size = 120px
 $border = 2px
 $thumbSize = $size - $border * 2
 
@@ -11,6 +11,7 @@ body
   background #fff
   margin 20px auto
   border solid $border rgba(0, 0, 0, .05)
+  position relative
   .thumbnail
     width $thumbSize
     height $thumbSize
@@ -33,3 +34,10 @@ body
       overflow hidden
       white-space nowrap
       text-overflow ellipsis
+    .postedBy
+      font-size 13px
+      position absolute
+      bottom 0
+      right 20px
+      span
+        font-weight bold
