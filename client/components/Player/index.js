@@ -115,7 +115,7 @@ class Player extends Component {
             <ReactPlayer
               url={this.state.current.url}
               hidden={true}
-              onEnded={this.props.next}
+              onEnded={() => this.props.next()}
               playing={this.props.playing}
               ref={player => this.player = player}
               onProgress={this.onProgress}
