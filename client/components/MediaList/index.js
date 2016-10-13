@@ -9,6 +9,9 @@ import { start, play, pause } from '../../actions/player.js'
 import { graphql } from 'react-apollo'
 import { connect } from 'react-redux'
 
+import _get from 'lodash.get'
+import _set from 'lodash.set'
+
 import style from './style.styl'
 
 class MediaList extends Component {
@@ -72,7 +75,6 @@ const mediaType = t.shape({
 const dataType = t.shape({
   loading: t.bool.isRequired,
   medias: t.arrayOf(mediaType),
-  fetchMore: t.func.isRequired
 })
 
 MediaList.propTypes = {
@@ -103,23 +105,30 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
   }
 })
 
-export function withMedias(graphqlQuery, uniqueId) {
+export function withMedias(
+  graphqlQuery,
+  uniqueId,
+  mediasPath = 'medias',
+  vars = () => {}
+) {
   return graphql(graphqlQuery, {
-    options: () => ({
-      variables: { skip: 0 },
+    options: (props) => ({
+      variables: { ...vars(props), skip: 0 },
       forceFetch: true
     }),
-    props: ({data}) => ({
+    props: ({data, ownProps: props}) => ({
       data,
-      uniqueId,
+      uniqueId: typeof uniqueId === 'string' ? uniqueId : uniqueId(props),
       loadMore: () => data.fetchMore({
-        variables: { skip: data.medias.length },
+        variables: { skip: _get(props.data, mediasPath).length },
         updateQuery: (prev, { fetchMoreResult }) => {
           if (!fetchMoreResult.data) return prev
-          return {
-            ...prev,
-            medias: [...prev.medias, ...fetchMoreResult.data.medias]
-          }
+          let newData = Object.assign({}, prev)
+          _set(newData, mediasPath, [
+            ..._get(prev, mediasPath),
+            ..._get(fetchMoreResult.data, mediasPath)
+          ])
+          return newData
         }
       })
     })

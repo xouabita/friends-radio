@@ -3,7 +3,7 @@ const path = require('path')
 const autoprefixer = require('autoprefixer-stylus')
 
 module.exports = {
-  devtool: 'eval',
+  devtool: 'source-map',
   context: path.join(__dirname, './client'),
   entry: {
     jsx: [
@@ -22,6 +22,7 @@ module.exports = {
   },
   output: {
     path: path.join(__dirname, './static'),
+    publicPath: '/',
     filename: 'bundle.js',
   },
   module: {

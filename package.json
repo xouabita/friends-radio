@@ -28,6 +28,8 @@
     "graphql-tools": "^0.7.2",
     "jsonwebtoken": "^7.1.9",
     "knex": "^0.12.2",
+    "lodash.get": "^4.4.2",
+    "lodash.set": "^4.3.2",
     "passport": "^0.3.2",
     "passport-facebook": "^2.1.1",
     "pg": "^6.1.0",

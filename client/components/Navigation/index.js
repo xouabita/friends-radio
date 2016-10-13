@@ -1,13 +1,14 @@
 import React from 'react'
 import {
   Navbar,
-  NavbarBrand,
   Nav,
   NavItem,
   NavLink,
   Button,
   Container,
 } from 'reactstrap'
+
+import NavbarBrand from '../NavbarBrand'
 
 import { graphql } from 'react-apollo'
 import gql from 'graphql-tag'
@@ -43,7 +44,7 @@ const Navigation = ({data, className}) => (
   <div className={className}>
     <Navbar className={style.nav} style={{borderRadius: 0}}>
       <Container>
-        <NavbarBrand className={style.brand}>
+        <NavbarBrand className={style.brand} to='/'>
           <img src={radioEmoji} />
           <span>RADIO ZIZI</span>
         </NavbarBrand>

@@ -10,6 +10,7 @@ const { fbOptions, secret, port } = require('../config.js')
 const knex = require('./knex.js')
 
 const {apolloExpress, graphiqlExpress} = require('apollo-server')
+const history = require('connect-history-api-fallback')
 const schema = require('./schema')
 
 passport.use(new FbStrategy(fbOptions, (token, refresh, profile, done) => {
@@ -64,12 +65,16 @@ app.use('/graphql', bodyParser.json(), apolloExpress((req, res) => ({
   context: {me: req.user}
 })))
 
-// renderer
+// graphiql endpoint only for developement
 if (process.env.NODE_ENV !== 'production') {
   app.use('/graphiql', graphiqlExpress({
     endpointURL: '/graphql',
   }))
+}
 
+app.use(history())
+
+if (process.env.NODE_ENV !== 'production') {
   const webpack = require('webpack')
   const webpackConfig = require('../webpack.config.js')
   const compiler = webpack(webpackConfig)

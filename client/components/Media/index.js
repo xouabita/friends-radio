@@ -7,6 +7,8 @@ import { Row } from 'reactstrap'
 import Thumbnail from '../Thumbnail'
 import PlayButton from '../PlayButton'
 
+import Link from 'react-router/Link'
+
 const Media = (media) => (
   <div className={style.card}>
     <Thumbnail
@@ -23,7 +25,16 @@ const Media = (media) => (
     <div className={style.content}>
       <h5>{(media.artist ? `${media.artist} - ` : '') + media.title}</h5>
       <p>{media.description}</p>
-      <p className={style.postedBy}>Posted by <span>{media.posted_by.name}</span></p>
+      {
+        media.posted_by ?
+          <Link to={`/u/${media.posted_by.id}`}>
+            <p className={style.postedBy}>
+              Posted by <span>{media.posted_by.name}</span>
+            </p>
+          </Link>
+        :
+          undefined
+      }
     </div>
   </div>
 )

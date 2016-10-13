@@ -3,8 +3,11 @@ import ApolloClient, { createNetworkInterface } from 'apollo-client'
 import { ApolloProvider } from 'react-apollo'
 import { createStore, combineReducers, applyMiddleware, compose } from 'redux'
 
+import { BrowserRouter, Match } from 'react-router'
+
 import Page from './components/Page'
 import Homepage from './views/Homepage.js'
+import User from './views/User.js'
 
 import playerReducer from './reducers/player.js'
 import mediasReducer from './reducers/medias.js'
@@ -28,9 +31,12 @@ const store = createStore(
 
 const App = () => (
   <ApolloProvider client={client} store={store}>
-    <Page>
-      <Homepage />
-    </Page>
+    <BrowserRouter>
+      <Page>
+        <Match exactly pattern='/' component={Homepage} />
+        <Match exactly pattern='/u/:user_id' component={User} />
+      </Page>
+    </BrowserRouter>
   </ApolloProvider>
 )
 
