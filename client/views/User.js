@@ -9,6 +9,7 @@ query getUser($id: String!, $skip: Int!) {
   user(id: $id) {
     name
     gender
+    mediaCount
     medias(skip: $skip, limit: 50) {
       id
       title
@@ -35,6 +36,7 @@ const User = ({data, loadMore, uniqueId, params}) => {
           <UserCard
             id={params.user_id}
             name={data.user.name}
+            mediaCount={data.user.mediaCount}
           />
         :
           undefined
