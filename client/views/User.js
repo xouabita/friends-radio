@@ -1,6 +1,7 @@
 import React from 'react'
 
 import MediaList, { withMedias } from '../components/MediaList'
+import UserCard from '../components/UserCard'
 import gql from 'graphql-tag'
 
 const QUERY = gql`
@@ -15,16 +16,12 @@ query getUser($id: String!, $skip: Int!) {
       thumbnail
       artist
       description
-      posted_by {
-        id
-        name
-      }
     }
   }
 }
 `
 
-const User = ({data, loadMore, uniqueId}) => {
+const User = ({data, loadMore, uniqueId, params}) => {
 
   const mediaListData = {
     loading: data.loading,
@@ -32,7 +29,22 @@ const User = ({data, loadMore, uniqueId}) => {
   }
 
   return (
-    <MediaList data={mediaListData} uniqueId={uniqueId} loadMore={loadMore} />
+    <div>
+      {
+        !data.loading ?
+          <UserCard
+            id={params.user_id}
+            name={data.user.name}
+          />
+        :
+          undefined
+      }
+      <MediaList
+        data={mediaListData}
+        uniqueId={uniqueId}
+        loadMore={loadMore}
+      />
+    </div>
   )
 }
 

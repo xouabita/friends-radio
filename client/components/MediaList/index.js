@@ -120,7 +120,7 @@ export function withMedias(
       data,
       uniqueId: typeof uniqueId === 'string' ? uniqueId : uniqueId(props),
       loadMore: () => data.fetchMore({
-        variables: { skip: _get(props.data, mediasPath).length },
+        variables: { skip: _get(data, mediasPath).length },
         updateQuery: (prev, { fetchMoreResult }) => {
           if (!fetchMoreResult.data) return prev
           let newData = Object.assign({}, prev)
