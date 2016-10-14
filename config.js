@@ -5,7 +5,7 @@ const fbOptions = {
   clientID: process.env.FACEBOOK_APP_ID,
   clientSecret: process.env.FACEBOOK_APP_SECRET,
   callbackURL: `${baseUrl}/auth/facebook/callback`,
-  profileFields: ['id', 'displayName', 'gender']
+  profileFields: ['id', 'displayName']
 }
 
 const secret = process.env.SECRET || 'jesuisunananas'

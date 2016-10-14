@@ -19,8 +19,8 @@ passport.use(new FbStrategy(fbOptions, (token, refresh, profile, done) => {
     if (rows.length)
       done(null, profile)
     else {
-      const {displayName, gender} = profile
-      knex('users').insert({id, name: displayName, gender: gender === 'male'})
+      const {displayName} = profile
+      knex('users').insert({id, name: displayName})
         .then((user) => {
           done(null, profile)
         })

@@ -1,12 +1,28 @@
 const {exec} = require('child-process-promise')
-const input = require('./input.json')
 const {writeFileSync} = require('fs')
+const {fbOptions: {clientID, clientSecret}} = require('../config.js')
+const fetch = require('node-fetch')
 
 const formatInfo = feed => Promise.resolve({
   user_id: feed.from.id,
   url: feed.link,
-  description: feed.message
+  description: feed.message,
+  created_at: feed.created_time
 })
+
+const FACEBOOK_GROUP_ID = process.env.FACEBOOK_GROUP_ID
+const USER_ACCESS_TOKEN = process.env.USER_ACCESS_TOKEN
+
+const BASE_URL  = 'https://graph.facebook.com'
+const URL_FEED  = `/${FACEBOOK_GROUP_ID}`
+const FIELDS    = 'fields=feed.limit(500){message,link,from,created_time}'
+
+const getInput = async () => {
+  const url = BASE_URL + URL_FEED +`?access_token=${USER_ACCESS_TOKEN}&${FIELDS}`
+  console.log(url)
+  const feed = await fetch(url)
+  return await feed.json()
+}
 
 const fetchInfo = info =>
   exec(`youtube-dl -j ${info.url}`)
@@ -32,16 +48,21 @@ const resolveChunk = (input_data) => new Promise(done => {
   Promise.all(promises).then(done).catch(err => console.log(err))
 })
 
-let result = []
-const resolveChunks = (step, i) => {
-  if (i > input.data.length) {
+const resolveChunks = (input, step, i, result = []) => {
+  if (i > input.feed.data.length) {
     writeFileSync('./result.json', JSON.stringify(result))
     return
   }
-  resolveChunk(input.data.slice(i, i+step)).then(chunks => {
+  resolveChunk(input.feed.data.slice(i, i+step)).then(chunks => {
     result.push(...chunks)
-    resolveChunks(step, i + step)
+    resolveChunks(input, step, i + step, result)
   })
 }
 
-resolveChunks(40, 0)
+const getFeedAndSaveData = async () => {
+  const input = await getInput()
+  console.log(input)
+  resolveChunks(input, 30, 0)
+}
+
+getFeedAndSaveData()

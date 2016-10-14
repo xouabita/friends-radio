@@ -8,7 +8,6 @@ const QUERY = gql`
 query getUser($id: String!, $skip: Int!) {
   user(id: $id) {
     name
-    gender
     mediaCount
     medias(skip: $skip, limit: 50) {
       id
