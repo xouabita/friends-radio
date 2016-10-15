@@ -24,7 +24,7 @@ class MediaList extends Component {
       props.updateList(props.data.medias)
     }
 
-    if (props.data.medias.length - props.current < 10)
+    if (!props.data.loading && props.data.medias.length - props.current < 10)
       this.props.loadMore()
   }
 
