@@ -5,7 +5,29 @@ import thumbDown from '../../assets/emojis/thumb_down.png'
 
 import style from './style.styl'
 
-const ReactionButton = ({status, type, ...props}) => {
+import gql from 'graphql-tag'
+import { graphql } from 'react-apollo'
+
+const MUTATION = gql`
+mutation addReaction($mediaId: String!, $type: ReactionType) {
+  addReaction(media_id: $mediaId, type: $type) {
+    type
+  }
+}
+`
+
+const withPerform = graphql(MUTATION, {
+  props: ({mutate, ownProps: {mediaId, type}}) => ({
+    perform: () => mutate({
+      variables: {
+        mediaId,
+        type: type.toUpperCase()
+      }
+    })
+  })
+})
+
+const ReactionButton = ({status, type, mediaId, perform, ...props}) => {
 
   const emoji = type === 'dislike' ? thumbDown : thumbUp
 
@@ -19,10 +41,10 @@ const ReactionButton = ({status, type, ...props}) => {
   return (
     <div {...props}>
       <div className={style.wrapper}>
-        <img src={emoji} className={emojiClassName} />
+        <img src={emoji} className={emojiClassName} onClick={perform} />
       </div>
     </div>
   )
 }
 
-export default ReactionButton
+export default withPerform(ReactionButton)

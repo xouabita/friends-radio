@@ -90,6 +90,8 @@ class Player extends Component {
       :
       'normal'
 
+    const mediaId = (this.state.current || {}).id
+
     return (
       <div className={style.container}>
         <Thumbnail
@@ -116,11 +118,13 @@ class Player extends Component {
             type='dislike'
             className={style.reactionDislike}
             status={dislikeStatus}
+            mediaId={mediaId}
           />
           <ReactionButton
             type='like'
             className={style.reactionLike}
             status={likeStatus}
+            mediaId={mediaId}
           />
         </Thumbnail>
         <input
