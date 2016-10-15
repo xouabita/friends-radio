@@ -5,5 +5,5 @@ const Reaction = module.exports = {
     knex('medias').where('id', media_id).then(([media]) => media),
   user: ({user_id}) =>
     knex('users').where('id', user_id).then(([user]) => user),
-  type: (_, {type}) => type.toUpperCase()
+  type: ({type}) => type.toUpperCase()
 }

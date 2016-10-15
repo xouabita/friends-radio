@@ -13,9 +13,9 @@ const Mutation = module.exports = {
     const reaction = knex('reactions').where(data)
     const count = await reaction.update({type})
     if (!count)
-      await knex('reaction').insert({...data, type})
+      await knex('reactions').insert({...data, type})
 
-    return (await reaction)[0]
+    return (await knex.select().from('reactions').where(data))[0]
   },
   deleteReaction: async (_, {media_id, type}) => {
     type = type.toLowerCase()

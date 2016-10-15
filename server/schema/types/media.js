@@ -22,6 +22,8 @@ type Media {
   description: String
   thumbnail: String
 
+  myReaction: Reaction
+
   posted_by: User!
 }
 `
