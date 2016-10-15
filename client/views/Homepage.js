@@ -16,6 +16,9 @@ const MEDIAS_QUERY = gql`
         id
         name
       }
+      myReaction {
+        type
+      }
     }
   }
 `

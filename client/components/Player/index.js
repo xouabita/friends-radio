@@ -80,6 +80,16 @@ class Player extends Component {
     const prevStyle = !this.props.index > 0 ? { display: 'none' } : null
     const nextStyle = !this.props.queue.length ? { display: 'none' } : null
 
+
+    const likeStatus = this.state.current && this.state.current.myReaction ?
+      this.state.current.myReaction.type === 'LIKE' ? 'active' : 'inactive'
+      :
+      'normal'
+    const dislikeStatus = this.state.current && this.state.current.myReaction ?
+      this.state.current.myReaction.type === 'DISLIKE' ? 'active' : 'inactive'
+      :
+      'normal'
+
     return (
       <div className={style.container}>
         <Thumbnail
@@ -105,10 +115,12 @@ class Player extends Component {
           <ReactionButton
             type='dislike'
             className={style.reactionDislike}
+            status={dislikeStatus}
           />
           <ReactionButton
             type='like'
             className={style.reactionLike}
+            status={likeStatus}
           />
         </Thumbnail>
         <input

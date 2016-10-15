@@ -16,6 +16,9 @@ query getUser($id: String!, $skip: Int!) {
       thumbnail
       artist
       description
+      myReaction {
+        type
+      }
     }
   }
 }
