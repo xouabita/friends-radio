@@ -108,13 +108,15 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
 export function withMedias(
   graphqlQuery,
   uniqueId,
+  fragments,
   mediasPath = 'medias',
   vars = () => {}
 ) {
   return graphql(graphqlQuery, {
     options: (props) => ({
       variables: { ...vars(props), skip: 0 },
-      forceFetch: true
+      forceFetch: true,
+      fragments
     }),
     props: ({data, ownProps: props}) => ({
       data,

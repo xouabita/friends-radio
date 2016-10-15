@@ -60,4 +60,4 @@ const User = ({data, loadMore, uniqueId, params}) => {
 const vars     = ({params}) => ({ id: params.user_id })
 const uniqueId = ({params}) => `u(${params.user_id})`
 
-export default withMedias(QUERY, uniqueId, 'user.medias', vars)(User)
+export default withMedias(QUERY, uniqueId, [], 'user.medias', vars)(User)

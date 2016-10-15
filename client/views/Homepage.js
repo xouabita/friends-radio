@@ -23,4 +23,4 @@ const MEDIAS_QUERY = gql`
   }
 `
 
-export default withMedias(MEDIAS_QUERY, 'homepage')(MediaList)
+export default withMedias(MEDIAS_QUERY, 'homepage', [])(MediaList)
