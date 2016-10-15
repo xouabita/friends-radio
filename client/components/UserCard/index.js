@@ -3,7 +3,7 @@ import React from 'react'
 import style from './style.styl'
 import avatarUrl from '../../utils/avatarUrl.js'
 
-const UserCard = ({id, name, gender, mediaCount}) => (
+const UserCard = ({id, name, gender, mediaCount, likeCount, dislikeCount}) => (
   <div className={style.card}>
     <img src={avatarUrl(id)} />
     <div className={style.content}>
@@ -14,11 +14,11 @@ const UserCard = ({id, name, gender, mediaCount}) => (
           <div className={style.label}>Posts</div>
         </div>
         <div className={style.boxCount}>
-          <div className={style.count}>42</div>
+          <div className={style.count}>{likeCount}</div>
           <div className={style.label}>Likes 👍</div>
         </div>
         <div className={style.boxCount}>
-          <div className={style.count}>88</div>
+          <div className={style.count}>{dislikeCount}</div>
           <div className={style.label}>Dislikes 👎</div>
         </div>
       </div>
