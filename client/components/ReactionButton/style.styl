@@ -1,0 +1,36 @@
+@import './tada.styl'
+
+$sizeInactive = 50%
+$sizeNormal   = 75%
+$sizeActive   = 100%
+
+.emojiBase
+  position absolute
+  height auto
+  top 50%
+  left 50%
+  transform translate(-50%, -50%)
+  transition all ease-in-out 1s
+  &:hover
+    cursor pointer
+.emojiNormal
+  @extend .emojiBase
+  width 75%
+  &:hover
+    tada(translate(-50%, -50%))
+    animation-duration 1s
+.emojiActive
+  @extend .emojiBase
+  width 100%
+  &:hover
+    width $sizeNormal
+.emojiInactive
+  @extend .emojiBase
+  width 50%
+  &:hover
+    width $sizeNormal
+
+.wrapper
+  width 100%
+  height 100%
+  position relative

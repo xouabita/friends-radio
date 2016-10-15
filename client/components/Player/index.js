@@ -8,6 +8,8 @@ import Thumbnail from '../Thumbnail'
 import PrevIcon from 'react-icons/lib/io/ios-arrow-back'
 import NextIcon from 'react-icons/lib/io/ios-arrow-forward'
 
+import ReactionButton from '../ReactionButton'
+
 import { play, pause, next, prev } from '../../actions/player.js'
 
 import style from './style.styl'
@@ -99,6 +101,14 @@ class Player extends Component {
             className={style.nextIcon}
             onClick={() => this.props.next()}
             style={nextStyle}
+          />
+          <ReactionButton
+            type='dislike'
+            className={style.reactionDislike}
+          />
+          <ReactionButton
+            type='like'
+            className={style.reactionLike}
           />
         </Thumbnail>
         <input

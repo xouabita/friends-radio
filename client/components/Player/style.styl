@@ -42,6 +42,16 @@ $playButtonSize = 90px
   transform translateY(-50%)
   &:hover
     cursor pointer
+.reactionLike, .reactionDislike
+  $size = $playButtonSize * .7
+  position absolute
+  height $size
+  width $size
+  bottom $margin
+.reactionLike
+  right $margin
+.reactionDislike
+  left $margin
 .nextIcon
   right 0
 .slider
