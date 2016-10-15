@@ -7,6 +7,7 @@ import gql from 'graphql-tag'
 const QUERY = gql`
 query getUser($id: String!, $skip: Int!) {
   user(id: $id) {
+    id
     name
     mediaCount
     likeCount

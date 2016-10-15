@@ -11,7 +11,15 @@ import { graphql } from 'react-apollo'
 const MUTATION = gql`
 mutation addReaction($mediaId: String!, $type: ReactionType) {
   addReaction(media_id: $mediaId, type: $type) {
-    type
+    media {
+      id
+      myReaction { type }
+    }
+    user {
+      id
+      likeCount
+      dislikeCount
+    }
   }
 }
 `

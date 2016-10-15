@@ -7,9 +7,10 @@ enum ReactionType {
 
 const Reaction = `
 type Reaction {
-  type: ReactionType
-  media: Media
-  user: User
+  id: String!
+  type: ReactionType!
+  media: Media!
+  user: User!
 }
 `
 

@@ -15,7 +15,10 @@ import mediasReducer from './reducers/medias.js'
 const networkInterface = createNetworkInterface('/graphql', {
   credentials: 'same-origin'
 })
-const client = new ApolloClient({networkInterface})
+const client = new ApolloClient({
+  networkInterface,
+  dataIdFromObject: r => r.id
+})
 
 const store = createStore(
   combineReducers({
