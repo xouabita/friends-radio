@@ -4,6 +4,22 @@ import MediaList, { withMedias } from '../components/MediaList'
 import UserCard from '../components/UserCard'
 import gql from 'graphql-tag'
 
+import { createFragment } from 'apollo-client'
+
+const mediaInfoFragment = createFragment(gql`
+fragment MediaInfo on Media {
+  id
+  title
+  url
+  thumbnail
+  artist
+  description
+  myReaction {
+    type
+  }
+}
+`)
+
 const QUERY = gql`
 query getUser($id: String!, $skip: Int!) {
   user(id: $id) {
@@ -13,15 +29,7 @@ query getUser($id: String!, $skip: Int!) {
     likeCount
     dislikeCount
     medias(skip: $skip, limit: 50) {
-      id
-      title
-      url
-      thumbnail
-      artist
-      description
-      myReaction {
-        type
-      }
+      ... MediaInfo
     }
   }
 }
@@ -60,4 +68,10 @@ const User = ({data, loadMore, uniqueId, params}) => {
 const vars     = ({params}) => ({ id: params.user_id })
 const uniqueId = ({params}) => `u(${params.user_id})`
 
-export default withMedias(QUERY, uniqueId, [], 'user.medias', vars)(User)
+export default withMedias(
+  QUERY,
+  uniqueId,
+  [mediaInfoFragment],
+  'user.medias',
+  vars
+)(User)
