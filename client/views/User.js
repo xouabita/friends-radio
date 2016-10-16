@@ -20,15 +20,15 @@ fragment MediaInfo on Media {
 }
 `)
 
-const QUERY = gql`
-query getUser($id: String!, $skip: Int!) {
+const queryUserWith = (source) => gql`
+query getUserWith_${source}($id: String!, $skip: Int!) {
   user(id: $id) {
     id
     name
     mediaCount
     likeCount
     dislikeCount
-    medias(skip: $skip, limit: 50) {
+    medias: ${source}(skip: $skip, limit: 50) {
       ... MediaInfo
     }
   }
@@ -65,13 +65,16 @@ const User = ({data, loadMore, uniqueId, params}) => {
   )
 }
 
-const vars     = ({params}) => ({ id: params.user_id })
-const uniqueId = ({params}) => `u(${params.user_id})`
+const UserWithMedias = ({params}) => {
+  const WithMedias = withMedias(
+    queryUserWith(params.source || 'medias'),
+    () => `u(${params.user_id}).${params.source || 'medias'}`,
+    [mediaInfoFragment],
+    'user.medias',
+    () => ({ id: params.user_id })
+  )((props) => <User params={params} {...props} />)
 
-export default withMedias(
-  QUERY,
-  uniqueId,
-  [mediaInfoFragment],
-  'user.medias',
-  vars
-)(User)
+  return <WithMedias />
+}
+
+export default UserWithMedias

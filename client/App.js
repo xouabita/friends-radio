@@ -37,7 +37,7 @@ const App = () => (
     <BrowserRouter>
       <Page>
         <Match exactly pattern='/' component={Homepage} />
-        <Match exactly pattern='/u/:user_id' component={User} />
+        <Match exactly pattern='/u/:user_id/:source(likes|dislikes)?' foo='bar' component={User} />
       </Page>
     </BrowserRouter>
   </ApolloProvider>
