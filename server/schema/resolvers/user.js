@@ -8,13 +8,13 @@ const User = module.exports = {
   likes: ({id}, {skip, limit}) =>
     knex.select('medias.*').from('reactions')
       .innerJoin('medias', 'medias.id', 'reactions.media_id')
-      .where({'reactions.type': 'like'})
+      .where({'reactions.type': 'like', 'reactions.user_id': id})
       .limit(Math.min(50, limit)).offset(skip)
       .orderBy('created_at', 'asc'),
   dislikes: ({id}, {skip, limit}) =>
     knex.select('medias.*').from('reactions')
       .innerJoin('medias', 'medias.id', 'reactions.media_id')
-      .where({'reactions.type': 'dislike'})
+      .where({'reactions.type': 'like', 'reactions.user_id': id})
       .limit(Math.min(50, limit)).offset(skip)
       .orderBy('created_at', 'asc'),
   mediaCount: ({id}) =>
