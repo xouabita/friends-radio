@@ -17,9 +17,6 @@ import style from './style.styl'
 class MediaList extends Component {
   constructor(props) {
     super(props)
-    this.state = {
-      noMore: false
-    }
   }
 
   componentWillReceiveProps(props) {
@@ -30,10 +27,7 @@ class MediaList extends Component {
       props.updateList(props.data.medias)
     }
 
-    if (!isLoading && this.props.data.medias.length === props.data.medias.length)
-        this.setState({noMore: true})
-
-    if (!this.state.noMore && !isLoading && props.data.medias.length - props.current < 10)
+    if (!isLoading && props.data.medias.length - props.current < 10)
       this.props.loadMore()
   }
 
@@ -60,18 +54,13 @@ class MediaList extends Component {
             }
           </div>
         }
-        {
-          this.state.noMore ?
-          <p className={style.loadMore}>Sorry :'( No more...</p>
-          :
-          <Button
-            outline
-            onClick={loadMore}
-            className={style.loadMore}
-          >
-            Load More...
-          </Button>
-        }
+        <Button
+          outline
+          onClick={loadMore}
+          className={style.loadMore}
+        >
+          Load More...
+        </Button>
       </div>
     )
   }
