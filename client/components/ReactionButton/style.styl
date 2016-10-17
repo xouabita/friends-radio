@@ -10,24 +10,24 @@ $sizeActive   = 100%
   top 50%
   left 50%
   transform translate(-50%, -50%)
-  transition all ease-in-out 200ms
+  transition all ease-in-out 1s
   &:hover
     cursor pointer
 .emojiNormal
   @extend .emojiBase
   width 75%
-  &:hover
+  &.animationStarted
     tada(translate(-50%, -50%))
     animation-duration 1s
 .emojiActive
   @extend .emojiBase
   width 100%
-  &:hover
+  &.animationStarted
     width $sizeNormal
 .emojiInactive
   @extend .emojiBase
   width 50%
-  &:hover
+  &.animationStarted
     width $sizeNormal
 
 .wrapper

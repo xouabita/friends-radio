@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {Component} from 'react'
 
 import thumbUp from '../../assets/emojis/thumb_up.png'
 import thumbDown from '../../assets/emojis/thumb_down.png'
@@ -55,24 +55,59 @@ const withPerform = (mutation) => graphql(mutation, {
   })
 })
 
-const ReactionButton = ({status, type, mediaId, perform, ...props}) => {
+class ReactionButton extends Component {
 
-  const emoji = type === 'dislike' ? thumbDown : thumbUp
+  constructor(...props) {
+    super(...props)
+    this.state = {
+      animationStarted: null,
+      justClicked: false
+    }
+  }
 
-  let emojiClassName = style.emojiNormal
+  onClick = () => {
+    this.setState({justClicked: false})
+    this.props.perform()
+  }
 
-  if (status === 'active')
-    emojiClassName = style.emojiActive
-  else if (status === 'inactive')
-    emojiClassName = style.emojiInactive
+  onMouseEnter = () => {
+    if (!this.state.animationStarted) {
+      setTimeout(() => this.setState({animationStarted: false}), 1000)
+      this.setState({animationStarted: true})
+    }
+  }
 
-  return (
-    <div {...props}>
-      <div className={style.wrapper}>
-        <img src={emoji} className={emojiClassName} onClick={perform} />
+  render() {
+    const {status, type, mediaId, ...props} = this.props
+
+    const emoji = type === 'dislike' ? thumbDown : thumbUp
+
+    let emojiClassName = style.emojiNormal
+
+    if (status === 'active')
+      emojiClassName = style.emojiActive
+    else if (status === 'inactive')
+      emojiClassName = style.emojiInactive
+
+    if (this.state.animationStarted)
+      emojiClassName += ' ' + style.animationStarted
+    if (this.state.justClicked)
+      emojiClassName += ' ' + style.justClicked
+
+    return (
+      <div {...props}>
+        <div className={style.wrapper}>
+          <img
+            src={emoji}
+            className={emojiClassName}
+            onClick={this.onClick}
+            onMouseEnter={this.onMouseEnter}
+            onMouseLeave={() => this.setState({justClicked: false})}
+          />
+        </div>
       </div>
-    </div>
-  )
+    )
+  }
 }
 
 const ReactionButtonWithPerform = (props) => {
