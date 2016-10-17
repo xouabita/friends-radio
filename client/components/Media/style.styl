@@ -1,6 +1,7 @@
 $size = 120px
 $border = 2px
 $thumbSize = $size - $border * 2
+$reactionsWidth = $size / 2
 
 body
   background #fafafa
@@ -16,6 +17,7 @@ body
     width $thumbSize
     height $thumbSize
     display inline-block
+    vertical-align top
     .playButton
       position relative
       top 50%
@@ -29,7 +31,7 @@ body
     display inline-block
     vertical-align top
     margin 10px 20px
-    width "calc(100% - %s - 40px)" % $size
+    width "calc(100% - %s - 40px)" % ($size + $reactionsWidth)
     h5, p
       overflow hidden
       white-space nowrap
@@ -38,6 +40,20 @@ body
       font-size 13px
       position absolute
       bottom 0
-      right 20px
       span
         font-weight bold
+  .reactions
+    display inline-block
+    width $reactionsWidth
+    height $size
+    position relative
+    .reactionDislike, .reactionLike
+      width $reactionsWidth * .6
+      height $reactionsWidth * .6
+      position absolute
+      display block
+    .reactionLike
+      top 10%
+    .reactionDislike
+      bottom 10%
+      transform rotateY(180deg)
