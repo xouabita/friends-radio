@@ -17,9 +17,12 @@ const Mutation = module.exports = {
 
     return (await knex.select().from('reactions').where(data))[0]
   },
-  deleteReaction: async (_, {media_id, type}) => {
-    type = type.toLowerCase()
-    const count = await knex('reactions').where({media_id, type}).del()
-    return !!count
+  deleteReaction: async (_, {media_id, type}, {me}) => {
+    const data = {user_id: me.id, media_id, user_id: me.id}
+    const [media] = await knex.select().from('reactions').where(data)
+
+    await knex('reactions').where(data).del()
+
+    return media
   }
 }
