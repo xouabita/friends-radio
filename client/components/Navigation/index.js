@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Component } from 'react'
 import {
   Navbar,
   Nav,
@@ -6,6 +6,9 @@ import {
   NavLink,
   Button,
   Container,
+  Dropdown,
+  DropdownToggle,
+  DropdownItem,
 } from 'reactstrap'
 
 import NavbarBrand from '../NavbarBrand'
@@ -25,20 +28,31 @@ const currentUser = gql`
   }
 `
 
-const ProfileButton = ({me}) => (
-  <NavItem>
-    {
-      me ?
-        <img className={style.profilePic} src={avatarUrl(me.id)} />
-      :
-      <NavLink href="/auth/facebook">
-        <Button color="primary" size="sm">
-          Login
-        </Button>
-      </NavLink>
-    }
-  </NavItem>
-)
+class ProfileButton extends Component {
+  constructor (...props) {
+    super(...props)
+  }
+
+  render() {
+
+    const { me } = this.props
+
+    return (
+      <NavItem>
+        {
+          me ?
+          <img className={style.profilePic} src={avatarUrl(me.id)} />
+          :
+          <NavLink href="/auth/facebook">
+            <Button color="primary" size="sm">
+              Login
+            </Button>
+          </NavLink>
+        }
+      </NavItem>
+    )
+  }
+}
 
 const Navigation = ({data, className}) => (
   <div className={className}>
