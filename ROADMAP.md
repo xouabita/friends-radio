@@ -7,6 +7,12 @@ Roadmap :clipboard:
 - [x] fix likes for user in resolvers
 - [x] can like/unlike on media
 - [ ] media upload
+
+## Release
+
+## Rush #2
+
+- [ ] Media page
 - [ ] add column notify people
 - [ ] tag system
 - [ ] playlists
@@ -15,8 +21,9 @@ Roadmap :clipboard:
 ## Clean the code 
 
 - [ ] Use connection for all arrays
+- [ ] Use new es2015+ in server side
 
-## Rush #2
+## Rush #3
 
 - [ ] Add realtime for player
 - [ ] Add party mode
