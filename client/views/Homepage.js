@@ -1,6 +1,8 @@
 import React from 'react'
 
+import Uploader from '../components/Uploader'
 import MediaList, { withMedias } from '../components/MediaList'
+
 import gql from 'graphql-tag'
 
 const MEDIAS_QUERY = gql`
@@ -23,4 +25,13 @@ const MEDIAS_QUERY = gql`
   }
 `
 
-export default withMedias(MEDIAS_QUERY, 'homepage', [])(MediaList)
+const MediaListWithMedias = withMedias(MEDIAS_QUERY, 'homepage', [])(MediaList)
+
+const Homepage = () => (
+  <div>
+    <Uploader />
+    <MediaListWithMedias />
+  </div>
+)
+
+export default Homepage
