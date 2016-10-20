@@ -2,15 +2,19 @@ const webpack = require('webpack')
 const path = require('path')
 const autoprefixer = require('autoprefixer-stylus')
 
+const jsx = process.env.NODE_ENV === 'production'
+  ? './index.js'
+  : [
+       'react-hot-loader/patch',
+       'webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000',
+       './index.js'
+    ]
+
 module.exports = {
   devtool: 'source-map',
   context: path.join(__dirname, './client'),
   entry: {
-    jsx: [
-      'react-hot-loader/patch',
-      'webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000',
-      './index.js'
-    ],
+    jsx: jsx,
     html: './index.html',
     vendor: [
       'react',

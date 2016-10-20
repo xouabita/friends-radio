@@ -3,6 +3,7 @@ const bodyParser   = require('body-parser')
 const cookieParser = require('cookie-parser')
 const passport     = require('passport')
 const jwt          = require('jsonwebtoken')
+const morgan       = require('morgan')
 
 const FbStrategy = require('passport-facebook').Strategy
 const { fbOptions, secret, port } = require('../config.js')
@@ -30,7 +31,9 @@ passport.use(new FbStrategy(fbOptions, (token, refresh, profile, done) => {
 
 const app = express()
 
+app.use(morgan('combined'))
 app.use(cookieParser())
+
 app.use((req, res, next) => {
   if (req.cookies.jwt_token) {
     const {id} = jwt.verify(req.cookies.jwt_token, secret)
@@ -87,7 +90,7 @@ if (process.env.NODE_ENV !== 'production') {
   }))
   app.use(require('webpack-hot-middleware')(compiler))
 } else {
-  app.use(express.static('../static'))
+  app.use(express.static(__dirname + '/static'))
 }
 
 app.listen(port)
