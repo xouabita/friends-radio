@@ -8,11 +8,29 @@ import {
   ModalBody,
   ModalFooter,
   FormGroup,
+  Button,
   Label
 } from 'reactstrap'
 import ReactPlayer from 'react-player'
+import Thumbnail from '../Thumbnail'
 
 import style from './style.styl'
+
+const infoFromYt = ({player}) => {
+  const duration = player.getDuration()
+  const { title, video_id } = player.getVideoData()
+  const thumbnail = `http://img.youtube.com/vi/${video_id}/0.jpg`
+  return {
+    thumbnail,
+    duration,
+    title
+  }
+}
+
+const getInfo = (player) => {
+  if (player.constructor.name === 'YouTube')
+    return infoFromYt(player)
+}
 
 class Uploader extends Component {
 
@@ -23,7 +41,9 @@ class Uploader extends Component {
       url: '',
       title: '',
       artist: '',
+      thumbnail: '',
       description: '',
+      duration: 0,
       ready: false,
       loading: false
     }
@@ -34,9 +54,8 @@ class Uploader extends Component {
   }
 
   mediaReady = () => {
-    const { title } = this.player.player.player.getVideoData()
-    console.log(title)
-    this.setState({ready: true, loading: false, title})
+    const { title, thumbnail, duration } = getInfo(this.player.player)
+    this.setState({ready: true, loading: false, title, thumbnail, duration})
   }
 
   mediaError = () => {
@@ -68,6 +87,7 @@ class Uploader extends Component {
         <Modal isOpen={this.state.modal} toggle={this.toggle}>
           <ModalHeader toggle={this.toggle}>Add a song</ModalHeader>
           <ModalBody>
+            <Thumbnail className={style.thumbnail} src={this.state.thumbnail} active={false} />
             <FormGroup>
               <Label for="title">Title</Label>
               <Input
@@ -77,6 +97,30 @@ class Uploader extends Component {
                 onChange={e => this.setState({title: e.target.value})}
               />
             </FormGroup>
+            <FormGroup>
+              <Label for="artist">Artist</Label>
+              <Input
+                name="artist"
+                placeholder='Artist'
+                value={this.state.artist}
+                onChange={e => this.setState({artist: e.target.value})}
+              />
+            </FormGroup>
+            <FormGroup>
+              <Label for="description">Description</Label>
+              <Input
+                type='textarea'
+                name="artist"
+                placeholder='Description'
+                value={this.state.description}
+                onChange={e => this.setState({description: e.target.value})}
+              />
+            </FormGroup>
+            <Button
+              color='primary'
+              children='Add a song'
+              block
+            />
           </ModalBody>
         </Modal>
         <ReactPlayer
