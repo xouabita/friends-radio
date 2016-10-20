@@ -14,6 +14,9 @@ import {
 import ReactPlayer from 'react-player'
 import Thumbnail from '../Thumbnail'
 
+import gql from 'graphql-tag'
+import { graphql } from 'react-apollo'
+
 import style from './style.styl'
 
 const infoFromYt = ({player}) => {
@@ -27,35 +30,103 @@ const infoFromYt = ({player}) => {
   }
 }
 
-const getInfo = (player) => {
+const infoFromSc = async (player, url) => {
+  const info = await player.getSongData(url)
+  return {
+    thumbnail: info.artwork_url,
+    duration: info.duration / 1000,
+    title: info.title,
+    artist: info.user.username
+  }
+}
+
+const getInfo = async (player, url) => {
   if (player.constructor.name === 'YouTube')
     return infoFromYt(player)
+  else if (player.constructor.name === 'SoundCloud')
+    return infoFromSc(player, url)
 }
+
+const initialState = {
+  modal: false,
+  url: '',
+  title: '',
+  artist: '',
+  thumbnail: '',
+  description: '',
+  duration: 0,
+  ready: false,
+  loading: false
+}
+
+
+const ADD_MEDIA_MUTATION = gql`
+mutation addMedia($media: MediaInput!) {
+  addMedia(media: $media) {
+    id
+    title
+    url
+    thumbnail
+    artist
+    description
+    posted_by {
+      id
+      name
+    }
+    myReaction {
+      type
+    }
+  }
+}
+`
+
+const withAddMedia = graphql(ADD_MEDIA_MUTATION, {
+  props: ({mutate}) => ({
+    addMedia: ({url, title, duration, artist, description, thumbnail}) => mutate({
+      variables: {
+        media: {
+          url,
+          title,
+          duration,
+          artist,
+          description,
+          thumbnail
+        }
+      },
+      refetchQueries: [
+        `getUserWith_medias`,
+        `getMedias`
+      ]
+    })
+  })
+})
 
 class Uploader extends Component {
 
   constructor(...props) {
     super(...props)
-    this.state = {
-      modal: false,
-      url: '',
-      title: '',
-      artist: '',
-      thumbnail: '',
-      description: '',
-      duration: 0,
-      ready: false,
-      loading: false
-    }
+    this.state = initialState
   }
 
   toggle = () => {
     this.setState({modal: !this.state.modal})
   }
 
-  mediaReady = () => {
-    const { title, thumbnail, duration } = getInfo(this.player.player)
-    this.setState({ready: true, loading: false, title, thumbnail, duration})
+  async mediaReady() {
+    const {
+      title,
+      thumbnail,
+      duration,
+      artist
+    } = await getInfo(this.player.player, this.state.url)
+    this.setState({
+      ready: true,
+      loading: false,
+      title,
+      thumbnail,
+      duration,
+      artist
+    })
   }
 
   mediaError = () => {
@@ -64,6 +135,17 @@ class Uploader extends Component {
 
   inputChange = (e) => {
     this.setState({loading: true, url: e.target.value})
+  }
+
+  submit = () => {
+    this.props.addMedia({
+      url: this.state.url,
+      title: this.state.title,
+      duration: this.state.duration,
+      artist: this.state.artist,
+      description: this.state.description,
+      thumbnail: this.state.thumbnail
+    }).then(() => this.setState(initialState))
   }
 
   render() {
@@ -120,13 +202,14 @@ class Uploader extends Component {
               color='primary'
               children='Add a song'
               block
+              onClick={this.submit}
             />
           </ModalBody>
         </Modal>
         <ReactPlayer
           url={this.state.url}
           hidden={true}
-          onReady={this.mediaReady}
+          onReady={this.mediaReady.bind(this)}
           onError={this.mediaError}
           ref={player => this.player = player}
         />
@@ -135,4 +218,4 @@ class Uploader extends Component {
   }
 }
 
-export default Uploader
+export default withAddMedia(Uploader)
