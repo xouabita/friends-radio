@@ -11,6 +11,8 @@ import {
   DropdownItem,
 } from 'reactstrap'
 
+import { Link } from 'react-router'
+
 import NavbarBrand from '../NavbarBrand'
 
 import { graphql } from 'react-apollo'
@@ -41,7 +43,9 @@ class ProfileButton extends Component {
       <NavItem>
         {
           me ?
-          <img className={style.profilePic} src={avatarUrl(me.id)} />
+          <Link to={`/u/${me.id}`}>
+            <img className={style.profilePic} src={avatarUrl(me.id)} />
+          </Link>
           :
           <NavLink href="/auth/facebook">
             <Button color="primary" size="sm">
@@ -62,7 +66,7 @@ const Navigation = ({data, className}) => (
           <img src={radioEmoji} />
           <span>RADIO ZIZI</span>
         </NavbarBrand>
-        <Nav className="pull-xs-right" navbar>
+        <Nav className="float-xs-right" navbar>
           {
             data.loading ?
             <NavItem>Loading....</NavItem>
