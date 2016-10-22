@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 
-import thumbUp from '../../assets/emojis/thumb_up.png'
-import thumbDown from '../../assets/emojis/thumb_down.png'
+import thumbUp from '../../assets/emojis/heart.png'
+import thumbDown from '../../assets/emojis/poop.png'
 
 import style from './style.styl'
 

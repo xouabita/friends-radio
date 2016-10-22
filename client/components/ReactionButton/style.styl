@@ -1,7 +1,7 @@
 @import './tada.styl'
 
-$sizeInactive = 50%
-$sizeNormal   = 75%
+$sizeInactive = 40%
+$sizeNormal   = 70%
 $sizeActive   = 100%
 
 .emojiBase
@@ -11,22 +11,23 @@ $sizeActive   = 100%
   left 50%
   transform translate(-50%, -50%)
   transition all ease-in-out 1s
+  filter: drop-shadow(.5px .5px 1px rgba(0, 0, 0, .5))
   &:hover
     cursor pointer
 .emojiNormal
   @extend .emojiBase
-  width 75%
+  width $sizeNormal
   &.animationStarted
     tada(translate(-50%, -50%))
     animation-duration 1s
 .emojiActive
   @extend .emojiBase
-  width 100%
+  width $sizeActive
   &.animationStarted
     width $sizeNormal
 .emojiInactive
   @extend .emojiBase
-  width 50%
+  width $sizeInactive
   &.animationStarted
     width $sizeNormal
 

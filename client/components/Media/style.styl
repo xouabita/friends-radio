@@ -43,13 +43,15 @@ body
       span
         font-weight bold
   .reactions
+    opacity 0
     display inline-block
     width $reactionsWidth
     height $size
+    transition all ease-in-out 400ms
     position relative
     .reactionDislike, .reactionLike
-      width $reactionsWidth * .6
-      height $reactionsWidth * .6
+      width $reactionsWidth * .8
+      height $reactionsWidth * .8
       position absolute
       display block
     .reactionLike
@@ -57,3 +59,6 @@ body
     .reactionDislike
       bottom 10%
       transform rotateY(180deg)
+  &:hover
+    .reactions
+      opacity 1

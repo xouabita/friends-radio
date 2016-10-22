@@ -25,7 +25,7 @@ const UserCard = ({id, name, gender, mediaCount, likeCount, dislikeCount}) => (
           to={`/u/${id}/likes`}
         >
           <div className={style.count}>{likeCount}</div>
-          <div className={style.label}>Likes 👍</div>
+          <div className={style.label}>Likes 💖</div>
         </Link>
         <Link
           className={style.boxCount}
@@ -33,7 +33,7 @@ const UserCard = ({id, name, gender, mediaCount, likeCount, dislikeCount}) => (
           to={`/u/${id}/dislikes`}
         >
           <div className={style.count}>{dislikeCount}</div>
-          <div className={style.label}>Dislikes 👎</div>
+          <div className={style.label}>Dislikes 💩</div>
         </Link>
       </div>
     </div>
