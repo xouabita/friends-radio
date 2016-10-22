@@ -66,9 +66,13 @@ const User = ({data, loadMore, uniqueId, params}) => {
 }
 
 const UserWithMedias = ({params}) => {
+  // fix because undefined => "undefined"
+  const source = params.source === 'likes' || params.source == 'dislikes'
+    ? params.source
+    : 'medias'
   const WithMedias = withMedias(
-    queryUserWith(params.source || 'medias'),
-    () => `u(${params.user_id}).${params.source || 'medias'}`,
+    queryUserWith(source),
+    () => `u(${params.user_id}).${source}`,
     [mediaInfoFragment],
     'user.medias',
     () => ({ id: params.user_id })
