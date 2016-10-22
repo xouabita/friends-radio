@@ -14,7 +14,7 @@ const UserCard = ({id, name, gender, mediaCount, likeCount, dislikeCount}) => (
         <Link
           className={style.boxCount}
           activeClassName={style.active}
-          to={`/u/${id}/`}
+          to={`/u/${id}`}
         >
           <div className={style.count}>{mediaCount}</div>
           <div className={style.label}>Posts</div>
