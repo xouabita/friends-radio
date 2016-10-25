@@ -7,6 +7,21 @@ const Mutation = module.exports = {
       return knex('medias').where('id', id).then(([media]) => media)
     })
   },
+  editMedia: async (_, {media_id, media}, {me}) => {
+    let [m] = await knex('medias').where({id: media_id})
+    if (m.user_id !== me.id) {
+      return m
+    }
+    (await knex('medias').where({id: media_id}).update(media))
+    [m] = await knex('medias').where({id: media_id})
+    return m
+  },
+  deleteMedia: async (_, {media_id}, {me}) => {
+    let [media] = await knex('medias').where({id: media_id, user_id: me.id})
+    if (media)
+      await knex('medias').where({id: media_id}).del()
+    return media
+  },
   addReaction: async (_, {media_id, type}, {me}) => {
     const data = {user_id: me.id, media_id}
     type = type.toLowerCase()

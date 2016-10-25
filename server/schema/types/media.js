@@ -1,9 +1,20 @@
-const MediaInput = `
-input MediaInput {
+const AddMediaInput = `
+input AddMediaInput {
   title: String!
   url: String!
   duration: Int!
 
+  artist: String
+  description: String
+  thumbnail: String!
+}
+`
+
+const EditMediaInput = `
+input EditMediaInput {
+  title: String
+  url: String
+  duration: Int
   artist: String
   description: String
   thumbnail: String
@@ -20,7 +31,7 @@ type Media {
 
   artist: String
   description: String
-  thumbnail: String
+  thumbnail: String!
 
   myReaction: Reaction
 
@@ -28,4 +39,4 @@ type Media {
 }
 `
 
-module.exports = [Media, MediaInput]
+module.exports = [Media, AddMediaInput, EditMediaInput]
