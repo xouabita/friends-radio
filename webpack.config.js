@@ -68,7 +68,11 @@ module.exports = {
     new webpack.HotModuleReplacementPlugin(),
     new webpack.optimize.CommonsChunkPlugin('vendor', 'vendor.bundle.js'),
     new webpack.DefinePlugin({
-      'process.env': { NODE_ENV: JSON.stringify(process.env.NODE_ENV || 'development') }
+      'process.env': {
+        NODE_ENV: JSON.stringify(process.env.NODE_ENV || 'development'),
+        FACEBOOK_APP_ID: JSON.stringify(process.env.FACEBOOK_APP_ID),
+        FACEBOOK_APP_SECRET: JSON.stringify(process.env.FACEBOOK_APP_SECRET)
+      }
     })
   ],
   stylus: {

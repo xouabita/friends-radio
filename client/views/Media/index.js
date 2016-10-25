@@ -7,6 +7,10 @@ import style from './style.styl'
 import { Media, Row } from 'reactstrap'
 import Link from 'react-router/Link'
 
+import Facebook, { Comments } from 'react-facebook'
+
+import { fbOptions } from '../../../config.js'
+
 const GET_MEDIA_QUERY = gql`
   query getMedia($id: String!) {
     media(id: $id) {
@@ -59,6 +63,12 @@ class MediaView extends Component {
             </Link>
           </Media>
         </Media>
+        <Facebook appID={fbOptions.clientID}>
+          <Comments
+            width='100%'
+            href={`${location.host}/m/${this.props.params.id}`}
+          />
+        </Facebook>
       </div>
     )
   }
