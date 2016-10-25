@@ -56,6 +56,15 @@ class MediaFormModal extends Component {
             />
           </FormGroup>
           <FormGroup>
+            <Label for="thumbnail">Thumbnail</Label>
+            <Input
+              name="thumbnail"
+              placeholder='Thumbnail'
+              value={this.state.thumbnail}
+              onChange={e => this.setState({thumbnail: e.target.value})}
+            />
+          </FormGroup>
+          <FormGroup>
             <Label for="description">Description</Label>
             <Input
               type='textarea'
@@ -69,7 +78,7 @@ class MediaFormModal extends Component {
             color='primary'
             children='Add a song'
             block
-            onClick={this.props.onSubmit}
+            onClick={() => this.props.onSubmit(this.state)}
           />
         </ModalBody>
       </Modal>

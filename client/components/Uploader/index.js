@@ -132,15 +132,8 @@ class Uploader extends Component {
     this.setState({loading: true, url: e.target.value})
   }
 
-  submit = () => {
-    this.props.addMedia({
-      url: this.state.url,
-      title: this.state.title,
-      duration: this.state.duration,
-      artist: this.state.artist,
-      description: this.state.description,
-      thumbnail: this.state.thumbnail
-    }).then(() => this.setState(initialState))
+  submit = (media) => {
+    this.props.addMedia(media).then(() => this.setState(initialState))
   }
 
   render() {
