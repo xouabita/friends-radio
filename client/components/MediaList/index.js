@@ -1,7 +1,7 @@
 import React, { Component, PropTypes as t } from 'react'
 
 import { Button } from 'reactstrap'
-import Media from '../Media'
+import MediaCard from '../MediaCard'
 
 import { updateList } from '../../actions/medias.js'
 import { start, play, pause } from '../../actions/player.js'
@@ -42,7 +42,7 @@ class MediaList extends Component {
           <div>
             {
               data.medias.map((media, i) =>
-                <Media
+                <MediaCard
                   key={i}
                   list={this.props.uniqueId}
 

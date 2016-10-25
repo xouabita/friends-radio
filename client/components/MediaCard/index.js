@@ -11,7 +11,7 @@ import ReactionButton from '../ReactionButton'
 
 import Link from 'react-router/Link'
 
-const Media = (media) => {
+const MediaCard = (media) => {
 
   const likeStatus = media.myReaction
     ? media.myReaction.type === 'LIKE' ? 'active' : 'inactive'
@@ -70,4 +70,4 @@ const mapStateToProps = ({player}, ownProps) => ({
     ownProps.index === player.current
 })
 
-export default connect(mapStateToProps)(Media)
+export default connect(mapStateToProps)(MediaCard)
