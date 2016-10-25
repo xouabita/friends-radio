@@ -11,6 +11,7 @@ $navHeight   = 54px
   background #f7f7f9
 .content
   width 'calc(100% - %s + 50px)' % $playerWidth
+  min-height 'calc(100vh - %s)' % ($navHeight + 20px)
 .player
   width $playerWidth
   height 'calc(100vh - %s)' % $navHeight

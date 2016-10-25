@@ -6,8 +6,9 @@ import { createStore, combineReducers, applyMiddleware, compose } from 'redux'
 import { BrowserRouter, Match } from 'react-router'
 
 import Page from './components/Page'
-import Homepage from './views/Homepage.js'
-import User from './views/User.js'
+import Homepage from './views/Homepage'
+import User from './views/User'
+import Media from './views/Media'
 
 import playerReducer from './reducers/player.js'
 import mediasReducer from './reducers/medias.js'
@@ -38,6 +39,7 @@ const App = () => (
       <Page>
         <Match exactly pattern='/' component={Homepage} />
         <Match exactly pattern='/u/:user_id/:source(likes|dislikes)?' foo='bar' component={User} />
+        <Match exactly pattern='/m/:id' component={Media} />
       </Page>
     </BrowserRouter>
   </ApolloProvider>

@@ -34,7 +34,9 @@ const MediaCard = (media) => {
         />
       </Thumbnail>
       <div className={style.content}>
-        <h5>{(media.artist ? `${media.artist} - ` : '') + media.title}</h5>
+        <Link to={`/m/${media.id}`} className={style.title}>
+          <h5>{(media.artist ? `${media.artist} - ` : '') + media.title}</h5>
+        </Link>
         <p>{media.description}</p>
         {
           media.posted_by ?
