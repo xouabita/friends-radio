@@ -9,7 +9,10 @@ import Link from 'react-router/Link'
 
 import Facebook, { Comments } from 'react-facebook'
 
+import { Button } from 'reactstrap'
+
 import { fbOptions } from '../../../config.js'
+import MediaFormModal from '../../components/MediaFormModal'
 
 const GET_MEDIA_QUERY = gql`
   query getMedia($id: String!) {
@@ -61,15 +64,33 @@ class MediaForm extends Component {
 }
 
 class MediaView extends Component {
+  constructor(...props) {
+    super(...props)
+    this.state = {
+      modalOpen: false
+    }
+  }
+
+  toggleModal = () => this.setState({modalOpen: !this.state.modalOpen})
+
   render() {
     const { data } = this.props
     if (data.loading)
       return (<h3>Loading...</h3>)
 
-    const {media} = data
+    const {media, me} = data
 
     return(
       <div className={style.card}>
+        {
+          me.id === media.posted_by.id ?
+            <MediaFormModal
+              isOpen={this.state.modalOpen}
+              toggle={this.toggleModal}
+              {...media}
+            />
+          : undefined
+        }
         <Media>
           <Media left href={media.url} target='_blank'>
             <Media
@@ -78,13 +99,27 @@ class MediaView extends Component {
             />
           </Media>
           <Media body className={style.body}>
-            <h5>
-              {
-                media.artist
+            <div>
+              <h5 className={style.artist}>
+                {
+                  media.artist
                   ? media.artist
                   : (<i>Unknown</i>)
+                }
+              </h5>
+              {
+                me.id === media.posted_by.id ?
+                  <Button
+                    children='Edit'
+                    size='sm'
+                    color='primary'
+                    outline
+                    className={style.editButton}
+                    onClick={this.toggleModal}
+                  />
+                : undefined
               }
-            </h5>
+            </div>
             <h4>{media.title}</h4>
             <p>{media.description}</p>
             <Link to={`/u/${media.posted_by.id}`}>
