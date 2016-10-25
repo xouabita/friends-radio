@@ -27,9 +27,38 @@ const GET_MEDIA_QUERY = gql`
         id
         name
       }
+    },
+    me {
+      id
     }
   }
 `
+
+class MediaForm extends Component {
+  constructor(...props) {
+    super(...props)
+    this.state = {
+      title: this.props.title,
+      url: this.props.url,
+      thumbnail: this.props.thumbnail,
+      artist: this.props.artist,
+      description: this.props.description
+    }
+  }
+
+  render() {
+    return (
+      <Media>
+        <Media left>
+          <Media
+            className={style.thumbail}
+            objet src={media.thumbnail}
+          />
+        </Media>
+      </Media>
+    )
+  }
+}
 
 class MediaView extends Component {
   render() {
