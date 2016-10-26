@@ -37,31 +37,31 @@ const GET_MEDIA_QUERY = gql`
   }
 `
 
-class MediaForm extends Component {
-  constructor(...props) {
-    super(...props)
-    this.state = {
-      title: this.props.title,
-      url: this.props.url,
-      thumbnail: this.props.thumbnail,
-      artist: this.props.artist,
-      description: this.props.description
+const EDIT_MEDIA_MUTATION = gql`
+  mutation editMedia($id: String!, $media: EditMediaInput!) {
+    media: editMedia(media_id: $id, media: $media) {
+      id
+      title
+      url
+      thumbnail
+      artist
+      description
     }
   }
+`
 
-  render() {
-    return (
-      <Media>
-        <Media left>
-          <Media
-            className={style.thumbail}
-            objet src={media.thumbnail}
-          />
-        </Media>
-      </Media>
-    )
-  }
-}
+const withEditMedia = graphql(EDIT_MEDIA_MUTATION, {
+  props: ({mutate, ownProps}) => ({
+    onSubmit: (media) => mutate({
+      variables: {
+        id: ownProps.id,
+        media
+      }
+    })
+  })
+})
+
+const MediaFormModalEditable = withEditMedia(MediaFormModal)
 
 class MediaView extends Component {
   constructor(...props) {
@@ -84,7 +84,8 @@ class MediaView extends Component {
       <div className={style.card}>
         {
           me.id === media.posted_by.id ?
-            <MediaFormModal
+            <MediaFormModalEditable
+              edit
               isOpen={this.state.modalOpen}
               toggle={this.toggleModal}
               {...media}

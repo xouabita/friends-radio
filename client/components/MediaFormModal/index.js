@@ -27,10 +27,27 @@ class MediaFormModal extends Component {
     }
   }
 
+  onDelete() {
+    const sure = confirm('Are you sure you want to delete ?')
+    if (sure) {
+      this.props.onDelete(this.props.data.media.id)
+      this.props.toggle()
+    }
+  }
+
+  async onSubmit() {
+    await this.props.onSubmit(this.state)
+    this.props.toggle()
+  }
+
   render() {
+    const submitText = this.props.edit ?
+      'Update song' : 'Add a song'
+    const modalTitle = this.props.edit ?
+      'Edit song' : 'Add a song'
     return (
       <Modal isOpen={this.props.isOpen} toggle={this.props.toggle}>
-        <ModalHeader toggle={this.props.toggle}>Add a song</ModalHeader>
+        <ModalHeader toggle={this.props.toggle}>{modalTitle}</ModalHeader>
         <ModalBody>
           <Thumbnail
             className={style.thumbnail}
@@ -76,10 +93,20 @@ class MediaFormModal extends Component {
           </FormGroup>
           <Button
             color='primary'
-            children='Add a song'
+            children={submitText}
             block
-            onClick={() => this.props.onSubmit(this.state)}
+            onClick={::this.onSubmit}
           />
+          {
+            this.props.edit ?
+            <Button
+              color='danger'
+              children='Delete this song'
+              block
+              onClick={::this.onDelete}
+            />
+            : undefined
+          }
         </ModalBody>
       </Modal>
     )
