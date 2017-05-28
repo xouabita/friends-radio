@@ -77,19 +77,7 @@ if (process.env.NODE_ENV !== 'production') {
 
 app.use(history())
 
-if (process.env.NODE_ENV !== 'production') {
-  const webpack = require('webpack')
-  const webpackConfig = require('../webpack.config.js')
-  const compiler = webpack(webpackConfig)
-
-  app.use(require('webpack-dev-middleware')(compiler, {
-    noInfo: true,
-    publicPath: webpackConfig.output.publicPath,
-    hot: true,
-    historyApiFallback: true
-  }))
-  app.use(require('webpack-hot-middleware')(compiler))
-} else {
+if (process.env.NODE_ENV === 'production') {
   app.use(express.static(__dirname + '/static'))
 }
 
