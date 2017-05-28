@@ -6,7 +6,7 @@ input AddMediaInput {
 
   artist: String
   description: String
-  thumbnail: String!
+  thumbnail: String
 }
 `
 
@@ -31,7 +31,7 @@ type Media {
 
   artist: String
   description: String
-  thumbnail: String!
+  thumbnail: String
 
   myReaction: Reaction
 

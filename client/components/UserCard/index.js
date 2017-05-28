@@ -3,7 +3,7 @@ import React from 'react'
 import style from './style.styl'
 import avatarUrl from '../../utils/avatarUrl.js'
 
-import Link from 'react-router/Link'
+import {Link} from 'react-router-dom'
 
 const UserCard = ({id, name, gender, mediaCount, likeCount, dislikeCount}) => (
   <div className={style.card}>

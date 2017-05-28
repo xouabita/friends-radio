@@ -65,7 +65,7 @@ const User = ({data, loadMore, uniqueId, params}) => {
   )
 }
 
-const UserWithMedias = ({params}) => {
+const UserWithMedias = ({match: {params}}) => {
   // fix because undefined => "undefined"
   const source = params.source === 'likes' || params.source == 'dislikes'
     ? params.source

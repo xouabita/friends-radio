@@ -1,4 +1,4 @@
-import React, { Component, PropTypes as t } from 'react'
+import React, {Component} from 'react'
 
 import { Button } from 'reactstrap'
 import MediaCard from '../MediaCard'
@@ -64,27 +64,6 @@ class MediaList extends Component {
       </div>
     )
   }
-}
-
-const mediaType = t.shape({
-  id: t.string.isRequired,
-  title: t.string.isRequired,
-  url: t.string.isRequired,
-  thumbnail: t.string,
-  artist: t.string,
-  description: t.string,
-})
-
-const dataType = t.shape({
-  loading: t.bool.isRequired,
-  medias: t.arrayOf(mediaType),
-})
-
-MediaList.propTypes = {
-  data: dataType,
-  uniqueId: t.string.isRequired,
-  loadMore: t.func,
-  play: t.func.isRequired,
 }
 
 const mapStateToProps = ({player}) => ({

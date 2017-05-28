@@ -11,7 +11,7 @@ import {
   DropdownItem,
 } from 'reactstrap'
 
-import { Link } from 'react-router'
+import { Link } from 'react-router-dom'
 
 import NavbarBrand from '../NavbarBrand'
 

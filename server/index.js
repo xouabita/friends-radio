@@ -4,6 +4,7 @@ const cookieParser = require('cookie-parser')
 const passport     = require('passport')
 const jwt          = require('jsonwebtoken')
 const morgan       = require('morgan')
+const cors         = require('cors')
 
 const FbStrategy = require('passport-facebook').Strategy
 const { fbOptions, secret, port } = require('../config.js')
@@ -31,6 +32,7 @@ passport.use(new FbStrategy(fbOptions, (token, refresh, profile, done) => {
 
 const app = express()
 
+app.use(cors())
 app.use(morgan('combined'))
 app.use(cookieParser())
 

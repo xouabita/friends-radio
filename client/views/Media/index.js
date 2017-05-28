@@ -5,7 +5,7 @@ import gql from 'graphql-tag'
 import style from './style.styl'
 
 import { Media, Row } from 'reactstrap'
-import Link from 'react-router/Link'
+import {Link} from 'react-router-dom'
 
 import Facebook, { Comments } from 'react-facebook'
 
@@ -140,7 +140,7 @@ class MediaView extends Component {
 }
 
 const withMedia = graphql(GET_MEDIA_QUERY, {
-  options: ({params}) => ({
+  options: ({match: {params}}) => ({
     variables: {
       id: params.id
     }

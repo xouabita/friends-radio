@@ -1,4 +1,4 @@
-import React, {Component, PropTypes as t} from 'react'
+import React, {Component} from 'react'
 import { connect } from 'react-redux'
 
 import ReactPlayer from 'react-player'
@@ -154,19 +154,6 @@ class Player extends Component {
       </div>
     )
   }
-}
-
-const mediaType = t.shape({
-  thumbnail: t.string,
-  url: t.string.isRequired,
-  title: t.string.isRequired
-})
-
-Player.propTypes = {
-  playing: t.bool.isRequired,
-  history: t.arrayOf(mediaType),
-  current: mediaType,
-  queue: t.arrayOf(mediaType)
 }
 
 const mapStateToProps = ({player, medias}) => {

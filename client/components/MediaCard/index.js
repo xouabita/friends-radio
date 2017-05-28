@@ -9,7 +9,7 @@ import PlayButton from '../PlayButton'
 
 import ReactionButton from '../ReactionButton'
 
-import Link from 'react-router/Link'
+import {Link} from 'react-router-dom'
 
 const MediaCard = (media) => {
 
