@@ -78,10 +78,28 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 app.use(history())
+app.use(express.static(process.env.RAZZLE_PUBLIC_DIR))
 
-if (process.env.NODE_ENV === 'production') {
-  app.use(express.static(__dirname + '/static'))
-}
+const assets = require(process.env.RAZZLE_ASSETS_MANIFEST)
+app.get('*', (req, res) => {
+  res.send(`
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Radio Zizi 📻</title>
+    ${
+      assets.client.css
+        ? `<link rel="stylesheet" href="${assets.client.css}">`
+        : ''
+    }
+    <script src="${assets.client.js}" defer></script>
+  </head>
+  <body>
+    <div id="root"></div>
+  </body>
+</html>
+  `)
+})
 
-app.listen(port)
-console.log(`Listening on ${port}...`)
+export default app

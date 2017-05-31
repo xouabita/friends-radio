@@ -6,9 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node ./dist/index.js",
-    "build": "./scripts/build.sh",
-    "dev-server": "backpack dev",
-    "dev-client": "webpack-dev-server --hot --history-api-fallback",
+    "build": "razzle build",
+    "dev": "razzle start",
     "heroku-postbuild": "npm run build"
   },
   "repository": {
@@ -48,6 +47,7 @@
     "passport": "^0.3.2",
     "passport-facebook": "^2.1.1",
     "pg": "^6.1.0",
+    "razzle": "^0.6.3",
     "react": "^15.3.2",
     "react-addons-css-transition-group": "^15.3.2",
     "react-addons-transition-group": "^15.3.2",

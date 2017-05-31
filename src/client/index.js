@@ -9,8 +9,5 @@ const rootEl = document.getElementById('root')
 ReactDOM.render(<AppContainer><App /></AppContainer>, rootEl)
 
 if (module.hot) {
-  module.hot.accept('./App.js', () => {
-    const NextApp = require('./App').default
-    ReactDOM.render(<AppContainer><NextApp /></AppContainer>, rootEl)
-  })
+  module.hot.accept()
 }
