@@ -3,6 +3,5 @@
   "plugins": [
     "transform-function-bind",
     "transform-runtime",
-    "react-hot-loader/babel"
   ]
 }
