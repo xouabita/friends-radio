@@ -9,14 +9,18 @@ import {
   Dropdown,
   DropdownToggle,
   DropdownItem,
+  NavbarToggler,
+  Collapse,
 } from 'reactstrap'
 
 import { Link } from 'react-router-dom'
 
-import NavbarBrand from '../NavbarBrand'
-
 import { graphql } from 'react-apollo'
 import gql from 'graphql-tag'
+
+import {Img} from 'glamorous'
+
+import NavbarBrand from '../NavbarBrand'
 
 import avatarUrl from '../../utils/avatarUrl.js'
 import style from './style.styl'
@@ -44,7 +48,10 @@ class ProfileButton extends Component {
         {
           me ?
           <Link to={`/u/${me.id}`}>
-            <img className={style.profilePic} src={avatarUrl(me.id)} />
+            <Img
+              borderRadius={3}
+              src={avatarUrl(me.id)}
+            />
           </Link>
           :
           <NavLink href="/auth/facebook">
@@ -60,20 +67,23 @@ class ProfileButton extends Component {
 
 const Navigation = ({data, className}) => (
   <div className={className}>
-    <Navbar className={style.nav} style={{borderRadius: 0}}>
+    <Navbar className={style.nav} light toggleable>
       <Container>
-        <NavbarBrand className={style.brand} to='/'>
+        <NavbarToggler right />
+        <NavbarBrand className={style.brand} to="/">
           <img src={radioEmoji} />
           <span>RADIO ZIZI</span>
         </NavbarBrand>
-        <Nav className="float-xs-right" navbar>
-          {
-            data.loading ?
-            <NavItem>Loading....</NavItem>
-            :
-            <ProfileButton me={data.me} />
-          }
-        </Nav>
+        <Collapse navbar>
+          <Nav className="ml-auto" navbar>
+            {
+              data.loading ?
+                <NavItem>Loading....</NavItem>
+                :
+                <ProfileButton me={data.me} />
+            }
+          </Nav>
+        </Collapse>
       </Container>
     </Navbar>
   </div>

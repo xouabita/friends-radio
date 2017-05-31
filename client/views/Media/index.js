@@ -83,7 +83,7 @@ class MediaView extends Component {
     return(
       <div className={style.card}>
         {
-          me.id === media.posted_by.id ?
+          me && me.id === media.posted_by.id ?
             <MediaFormModalEditable
               edit
               isOpen={this.state.modalOpen}
@@ -131,7 +131,7 @@ class MediaView extends Component {
         <Facebook appID={fbOptions.clientID}>
           <Comments
             width='100%'
-            href={`${location.host}/m/${this.props.params.id}`}
+            href={`${location.host}/m/${this.props.match.params.id}`}
           />
         </Facebook>
       </div>
@@ -142,7 +142,8 @@ class MediaView extends Component {
 const withMedia = graphql(GET_MEDIA_QUERY, {
   options: ({match: {params}}) => ({
     variables: {
-      id: params.id
+      id: params.id,
+      f: console.log('here')
     }
   })
 })
