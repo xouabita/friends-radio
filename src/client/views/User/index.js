@@ -6,20 +6,6 @@ import gql from 'graphql-tag'
 
 import { createFragment } from 'apollo-client'
 
-const mediaInfoFragment = createFragment(gql`
-fragment MediaInfo on Media {
-  id
-  title
-  url
-  thumbnail
-  artist
-  description
-  myReaction {
-    type
-  }
-}
-`)
-
 const queryUserWith = (source) => gql`
 query getUserWith_${source}($id: String!, $skip: Int!) {
   user(id: $id) {
@@ -29,7 +15,15 @@ query getUserWith_${source}($id: String!, $skip: Int!) {
     likeCount
     dislikeCount
     medias: ${source}(skip: $skip, limit: 50) {
-      ... MediaInfo
+      id
+      title
+      url
+      thumbnail
+      artist
+      description
+      myReaction {
+        type
+      }
     }
   }
 }
@@ -73,7 +67,7 @@ const UserWithMedias = ({match: {params}}) => {
   const WithMedias = withMedias(
     queryUserWith(source),
     () => `u(${params.user_id}).${source}`,
-    [mediaInfoFragment],
+    [],
     'user.medias',
     () => ({ id: params.user_id })
   )((props) => <User params={params} {...props} />)

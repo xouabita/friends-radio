@@ -128,7 +128,7 @@ class MediaView extends Component {
             </Link>
           </Media>
         </Media>
-        <Facebook appID={fbOptions.clientID}>
+        <Facebook appId={fbOptions.clientID}>
           <Comments
             width='100%'
             href={`${location.host}/m/${this.props.match.params.id}`}
@@ -143,7 +143,6 @@ const withMedia = graphql(GET_MEDIA_QUERY, {
   options: ({match: {params}}) => ({
     variables: {
       id: params.id,
-      f: console.log('here')
     }
   })
 })

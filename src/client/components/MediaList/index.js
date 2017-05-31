@@ -97,7 +97,6 @@ export function withMedias(
   return graphql(graphqlQuery, {
     options: (props) => ({
       variables: { ...vars(props), skip: 0 },
-      forceFetch: true,
       fragments
     }),
     props: ({data, ownProps: props}) => ({
