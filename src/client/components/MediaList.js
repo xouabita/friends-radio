@@ -1,10 +1,10 @@
 import React, {Component} from 'react'
 
 import { Button } from 'reactstrap'
-import MediaCard from '../MediaCard'
+import MediaCard from './MediaCard'
 
-import { updateList } from '../../actions/medias.js'
-import { start, play, pause } from '../../actions/player.js'
+import { updateList } from '../actions/medias.js'
+import { start, play, pause } from '../actions/player.js'
 
 import { graphql } from 'react-apollo'
 import { connect } from 'react-redux'
@@ -12,7 +12,21 @@ import { connect } from 'react-redux'
 import _get from 'lodash.get'
 import _set from 'lodash.set'
 
-import style from './style.styl'
+import {css} from 'glamor'
+import mainColor from '../styles/mainColor'
+
+const loadMoreStyle = css({
+  margin: '20px auto',
+  display: 'block !important',
+  transition: 'all ease-in-out 300ms',
+  color: `${mainColor} !important`,
+  borderColor: `${mainColor} !important`,
+  ':hover, :focus': {
+    background: `${mainColor} !important`,
+    color: `white !important`,
+    outline: `none`,
+  }
+})
 
 class MediaList extends Component {
   constructor(props) {
@@ -55,9 +69,9 @@ class MediaList extends Component {
           </div>
         }
         <Button
+          {...loadMoreStyle}
           outline
           onClick={loadMore}
-          className={style.loadMore}
         >
           Load More...
         </Button>

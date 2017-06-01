@@ -20,11 +20,41 @@ import gql from 'graphql-tag'
 
 import {Img} from 'glamorous'
 
-import NavbarBrand from '../NavbarBrand'
+import NavbarBrand from './NavbarBrand'
 
-import avatarUrl from '../../utils/avatarUrl.js'
-import style from './style.styl'
-import radioEmoji from '../../assets/emojis/radio.png'
+import avatarUrl from '../utils/avatarUrl'
+import radioEmoji from '../assets/emojis/radio.png'
+import mainColor from '../styles/mainColor'
+
+import {css} from 'glamor'
+
+const style = {}
+
+const navStyle = css({
+  background: mainColor,
+  borderRadius: 0,
+  '& img': {
+    height: 38,
+    width: 'auto',
+  },
+})
+
+const brandStyle = css({
+  margin: 0,
+  padding: 0,
+  '& span, & img': {
+    display: 'inline-block',
+    verticalAlign: 'bottom',
+  },
+  '& img': {
+    marginRight: 10,
+  },
+  '& span': {
+    fontFamily: 'Open Sans',
+    fontWeight: 600,
+    color: 'white',
+  },
+})
 
 const currentUser = gql`
   query getMe {
@@ -67,10 +97,10 @@ class ProfileButton extends Component {
 
 const Navigation = ({data, className}) => (
   <div className={className}>
-    <Navbar className={style.nav} light toggleable>
+    <Navbar {...navStyle} light toggleable>
       <Container>
         <NavbarToggler right />
-        <NavbarBrand className={style.brand} to="/">
+        <NavbarBrand {...brandStyle} to="/">
           <img src={radioEmoji} />
           <span>RADIO ZIZI</span>
         </NavbarBrand>

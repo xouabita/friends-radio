@@ -10,9 +10,15 @@ import {
   Button
 } from 'reactstrap'
 
-import style from './style.styl'
+import Thumbnail from './Thumbnail'
+import {css} from 'glamor'
 
-import Thumbnail from '../Thumbnail'
+const size = 170
+const thumbnail = css({
+  width: size,
+  height: size,
+  margin: '10px auto',
+})
 
 class MediaFormModal extends Component {
   constructor(...props) {
@@ -50,7 +56,7 @@ class MediaFormModal extends Component {
         <ModalHeader toggle={this.props.toggle}>{modalTitle}</ModalHeader>
         <ModalBody>
           <Thumbnail
-            className={style.thumbnail}
+            {...thumbnail}
             src={this.state.thumbnail}
             active={false}
           />

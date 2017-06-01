@@ -88,6 +88,10 @@ app.get('*', (req, res) => {
   <head>
     <meta charset="utf-8">
     <title>Radio Zizi 📻</title>
+    <link
+      href="https://fonts.googleapis.com/css?family=Open+Sans"
+      rel="stylesheet"
+    >
     ${
       assets.client.css
         ? `<link rel="stylesheet" href="${assets.client.css}">`
