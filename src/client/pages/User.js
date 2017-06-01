@@ -1,7 +1,7 @@
 import React from 'react'
 
-import MediaList, { withMedias } from '../../components/MediaList'
-import UserCard from '../../components/UserCard'
+import MediaList, { withMedias } from '../components/MediaList'
+import UserCard from '../components/UserCard'
 import gql from 'graphql-tag'
 
 import { createFragment } from 'apollo-client'

@@ -1,7 +1,7 @@
 import React from 'react'
 
-import Uploader from '../../components/Uploader'
-import MediaList, { withMedias } from '../../components/MediaList'
+import Uploader from '../components/Uploader'
+import MediaList, { withMedias } from '../components/MediaList'
 
 import gql from 'graphql-tag'
 

@@ -2,17 +2,36 @@ import React, { Component } from 'react'
 import { graphql } from 'react-apollo'
 import gql from 'graphql-tag'
 
-import style from './style.styl'
-
 import { Media, Row } from 'reactstrap'
 import {Link} from 'react-router-dom'
+import {
+  Div,
+  H5,
+} from 'glamorous'
+import {css} from 'glamor'
 
 import Facebook, { Comments } from 'react-facebook'
 
 import { Button } from 'reactstrap'
 
-import { fbOptions } from '../../../config.js'
-import MediaFormModal from '../../components/MediaFormModal'
+import { fbOptions } from '../../config.js'
+import MediaFormModal from '../components/MediaFormModal'
+
+
+const style = {}
+const styles = {
+  thumbnail: css({
+    width: 250,
+    height: 250,
+    marginRight: 20,
+  }),
+  inlineBlock: css({
+    display: 'inline-block',
+  }),
+  floatRight: css({
+    float: 'right',
+  }),
+}
 
 const GET_MEDIA_QUERY = gql`
   query getMedia($id: String!) {
@@ -81,7 +100,13 @@ class MediaView extends Component {
     const {media, me} = data
 
     return(
-      <div className={style.card}>
+      <Div
+        width="calc(100% - 100px)"
+        background="#fff"
+        margin="20px auto"
+        border="solid 2px rgba(0, 0, 0, .05)"
+        padding={10}
+      >
         {
           me && me.id === media.posted_by.id ?
             <MediaFormModalEditable
@@ -95,13 +120,13 @@ class MediaView extends Component {
         <Media>
           <Media left href={media.url} target='_blank'>
             <Media
-              className={style.thumbnail}
+              {...styles.thumbnail}
               object src={media.thumbnail}
             />
           </Media>
           <Media body className={style.body}>
             <div>
-              <h5 className={style.artist}>
+              <h5 {...styles.inlineBlock}>
                 {
                   media.artist
                   ? media.artist
@@ -111,11 +136,12 @@ class MediaView extends Component {
               {
                 me.id === media.posted_by.id ?
                   <Button
+                    {...styles.inlineBlock}
+                    {...styles.floatRight}
                     children='Edit'
                     size='sm'
                     color='primary'
                     outline
-                    className={style.editButton}
                     onClick={this.toggleModal}
                   />
                 : undefined
@@ -134,7 +160,7 @@ class MediaView extends Component {
             href={`${location.host}/m/${this.props.match.params.id}`}
           />
         </Facebook>
-      </div>
+      </Div>
     )
   }
 }

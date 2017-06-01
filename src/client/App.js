@@ -6,9 +6,9 @@ import { createStore, combineReducers, applyMiddleware, compose } from 'redux'
 import { BrowserRouter, Route } from 'react-router-dom'
 
 import Page from './components/Page'
-import Homepage from './views/Homepage'
-import User from './views/User'
-import Media from './views/Media'
+import Home from './pages/Home'
+import User from './pages/User'
+import Media from './pages/Media'
 
 import playerReducer from './reducers/player.js'
 import mediasReducer from './reducers/medias.js'
@@ -37,7 +37,7 @@ const App = () => (
   <ApolloProvider client={client} store={store}>
     <BrowserRouter>
       <Page>
-        <Route exact path='/' component={Homepage} />
+        <Route exact path='/' component={Home} />
         <Route exact path='/u/:user_id/:source(likes|dislikes)?' component={User} />
         <Route exact path='/m/:id' component={Media} />
       </Page>
