@@ -2,26 +2,27 @@ import React, {Component} from 'react'
 import { connect } from 'react-redux'
 
 import ReactPlayer from 'react-player'
-import PlayButton from '../PlayButton'
-import Thumbnail from '../Thumbnail'
+import PlayButton from './PlayButton'
+import Thumbnail from './Thumbnail'
 
 import PrevIcon from 'react-icons/lib/io/ios-arrow-back'
 import NextIcon from 'react-icons/lib/io/ios-arrow-forward'
 import RangeSlider from 'react-rangeslider'
 
-import ReactionButton from '../ReactionButton'
-import playerWidth from '../../styles/playerWidth'
+import ReactionButton from './ReactionButton'
+import playerWidth from '../styles/playerWidth'
 
-import { play, pause, next, prev } from '../../actions/player.js'
-
-import style from './style.styl'
+import { play, pause, next, prev } from '../actions/player.js'
 
 import glamorous from 'glamorous'
-import Queue from '../Queue'
+import Queue from './Queue'
 
 const margin = 20
 const thumbSize = playerWidth - 2 * margin
 const handleSize = 12
+const playButtonSize = 90
+const controlButtonSize = playButtonSize * .8
+const reactionSize = playButtonSize * .7
 
 const Slider = glamorous(RangeSlider)({
   width: thumbSize,
@@ -40,6 +41,72 @@ const Slider = glamorous(RangeSlider)({
     top: '50%',
   }
 })
+
+const Container = glamorous.div({
+  width: '100%',
+  height: '100%',
+  background: 'white',
+  padding: '20px 0 0',
+  borderLeft: 'solid 2px rgba(0, 0, 0, .05)',
+  display: 'flex',
+  flexDirection: 'column',
+})
+
+const PlayerThumb = glamorous(Thumbnail)({
+  width: thumbSize,
+  height: thumbSize,
+  margin: 'auto',
+  position: 'relative',
+})
+
+const Title = glamorous.p({
+  fontSize: 15,
+  width: thumbSize,
+  margin: '10px auto',
+  fontWeight: 'bold',
+  whiteSpace: 'nowrap',
+  overflow: 'hidden',
+})
+
+const Play = glamorous(PlayButton)({
+  width: playButtonSize,
+  height: playButtonSize,
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  ':hover': {cursor: 'pointer'},
+})
+
+const controlStyle = {
+  position: 'absolute',
+  height: controlButtonSize,
+  width: controlButtonSize,
+  color: 'white',
+  top: '50%',
+  transform: 'translateY(-50%)',
+  ':hover': {cursor: 'pointer'}
+}
+const Prev = glamorous(PrevIcon)(controlStyle)
+const Next = glamorous(NextIcon)({
+  ...controlStyle,
+  right: 0,
+})
+
+const Reaction = glamorous(ReactionButton)({
+  position: 'absolute',
+  height: reactionSize,
+  width: reactionSize,
+  bottom: margin,
+})
+function Like() {
+  const Styled = glamorous(Reaction)({right: margin})
+  return <Styled type="like"/>
+}
+function Dislike() {
+  const Styled = glamorous(Reaction)({left: margin})
+  return <Styled type="dislike"/>
+}
 
 class Player extends Component {
   constructor(props) {
@@ -62,6 +129,9 @@ class Player extends Component {
   onSeekChange = value => this.setState({played: value})
   onSeekChangeComplete = () => this.player.seekTo(this.state.played)
   onProgress = ({played}) => this.setState({played})
+  onPlay = () => this.props.playing ?
+    this.props.pause()
+  : this.props.play()
 
   render() {
     const thumbnail = this.state.current ?
@@ -72,16 +142,8 @@ class Player extends Component {
     const title = this.state.current ?
       this.state.current.title : ''
 
-    const thumbnailStyle = {
-      backgroundImage: `url(${thumbnail})`,
-      backgroundSize: 'cover',
-      backgroundRepeat: 'no-repeat',
-      backgroundPosition: 'center center'
-    }
-
     const prevStyle = !this.props.index > 0 ? { display: 'none' } : null
     const nextStyle = !this.props.queue.length ? { display: 'none' } : null
-
 
     const likeStatus = this.state.current && this.state.current.myReaction ?
       this.state.current.myReaction.type === 'LIKE' ? 'active' : 'inactive'
@@ -95,40 +157,18 @@ class Player extends Component {
     const mediaId = (this.state.current || {}).id
 
     return (
-      <div className={style.container}>
-        <Thumbnail
-          src={thumbnail}
-          className={style.thumbnail}
-        >
-          <PrevIcon
-            className={style.prevIcon}
-            onClick={() => this.props.prev()}
-            style={prevStyle}
-          />
-          <PlayButton
-            className={style.playButton}
+      <Container>
+        <PlayerThumb src={thumbnail}>
+          <Prev onClick={() => this.props.prev()} style={prevStyle}/>
+          <Play
             playing={this.props.playing}
-            onClick={() => this.props.playing ? this.props.pause() : this.props.play()}
+            onClick={this.onPlay}
             color='white'
           />
-          <NextIcon
-            className={style.nextIcon}
-            onClick={() => this.props.next()}
-            style={nextStyle}
-          />
-          <ReactionButton
-            type='dislike'
-            className={style.reactionDislike}
-            status={dislikeStatus}
-            mediaId={mediaId}
-          />
-          <ReactionButton
-            type='like'
-            className={style.reactionLike}
-            status={likeStatus}
-            mediaId={mediaId}
-          />
-        </Thumbnail>
+          <Next onClick={() => this.props.next()} style={nextStyle}/>
+          <Dislike status={dislikeStatus} mediaId={mediaId}/>
+          <Like status={likeStatus} mediaId={mediaId}/>
+        </PlayerThumb>
         <Slider
           tooltip={false}
           min={0}
@@ -138,7 +178,7 @@ class Player extends Component {
           onChange={this.onSeekChange}
           onChangeComplete={this.onSeekChangeComplete}
         />
-        <p className={style.title}>{title}</p>
+        <Title>{title}</Title>
         <Queue medias={this.props.queue} next={this.props.next} />
         {
           this.state.current ?
@@ -155,7 +195,7 @@ class Player extends Component {
           :
             undefined
         }
-      </div>
+      </Container>
     )
   }
 }
