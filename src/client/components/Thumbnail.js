@@ -1,6 +1,16 @@
 import React from 'react'
+import glamorous from 'glamorous'
 
-import style from './style.styl'
+const Wrapper = glamorous.div({
+  background: 'rgba(0, 0, 0, .5)',
+  opacity: 0,
+  transition: 'all ease-in-out 300ms',
+  ':hover': {
+    opacity: 1,
+  },
+  width: '100%',
+  height: '100%',
+})
 
 const Thumbnail = ({src, children, active, ...otherProps}) => {
   const thumbnailStyle = {
@@ -21,9 +31,9 @@ const Thumbnail = ({src, children, active, ...otherProps}) => {
 
   return (
     <div {...otherProps} style={thumbnailStyle}>
-      <div className={style.wrapper} style={activeStyle}>
+      <Wrapper style={activeStyle}>
         {children}
-      </div>
+      </Wrapper>
     </div>
   )
 }

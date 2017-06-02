@@ -1,12 +1,51 @@
 import React, {Component} from 'react'
 
-import thumbUp from '../../assets/emojis/heart.png'
-import thumbDown from '../../assets/emojis/poop.png'
-
-import style from './style.styl'
+import thumbUp from '../assets/emojis/heart.png'
+import thumbDown from '../assets/emojis/poop.png'
 
 import gql from 'graphql-tag'
 import { graphql } from 'react-apollo'
+import {css} from 'glamor'
+import tada from '../styles/tada'
+
+const sizeInactive = '40%'
+const sizeNormal = '70%'
+const sizeActive = '100%'
+
+const emojiBaseStyle = css({
+  position: 'absolute',
+  height: 'auto',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  transition: 'all ease-in-out 1s',
+  filter: 'drop-shadow(.5px .5px 1px rgba(0, 0, 0, .5))',
+  ':hover': {
+    cursor: 'pointer',
+  },
+})
+
+const emojiNormalStyle = css({
+  width: sizeNormal,
+})
+
+const emojiActiveStyle = css({
+  width: sizeActive,
+})
+
+const emojiInactiveStyle = css({
+  width: sizeInactive,
+})
+
+const animationStyle = css({
+  animation: `${tada('translate(-50%, -50%)')} 1s`,
+})
+
+const wrapperStyle = css({
+  width: '100%',
+  height: '100%',
+  position: 'relative',
+})
 
 const ADD_REACTION_MUTATION = gql`
 mutation addReaction($mediaId: String!, $type: ReactionType) {
@@ -82,24 +121,28 @@ class ReactionButton extends Component {
 
     const emoji = type === 'dislike' ? thumbDown : thumbUp
 
-    let emojiClassName = style.emojiNormal
-
-    if (status === 'active')
-      emojiClassName = style.emojiActive
-    else if (status === 'inactive')
-      emojiClassName = style.emojiInactive
+    const styles = [emojiBaseStyle]
+    switch (status) {
+      case 'active':
+        styles.push(emojiActiveStyle)
+        break
+      case 'inactive':
+        styles.push(emojiInactiveStyle)
+        break
+      default:
+        styles.push(emojiNormalStyle)
+        break
+    }
 
     if (this.state.animationStarted)
-      emojiClassName += ' ' + style.animationStarted
-    if (this.state.justClicked)
-      emojiClassName += ' ' + style.justClicked
+      styles.push(animationStyle)
 
     return (
       <div {...props}>
-        <div className={style.wrapper}>
+        <div {...wrapperStyle}>
           <img
+            {...Object.assign({}, ...styles)}
             src={emoji}
-            className={emojiClassName}
             onClick={this.onClick}
             onMouseEnter={this.onMouseEnter}
             onMouseLeave={() => this.setState({justClicked: false})}

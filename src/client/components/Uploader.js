@@ -6,13 +6,13 @@ import {
   InputGroupButton
 } from 'reactstrap'
 import ReactPlayer from 'react-player'
-import Thumbnail from '../Thumbnail'
+import Thumbnail from './Thumbnail'
 
 import gql from 'graphql-tag'
 import { graphql } from 'react-apollo'
+import {Div} from 'glamorous'
 
-import style from './style.styl'
-import MediaFormModal from '../MediaFormModal'
+import MediaFormModal from './MediaFormModal'
 
 const infoFromYt = ({player}) => {
   const duration = player.getDuration()
@@ -139,7 +139,7 @@ class Uploader extends Component {
   render() {
     return (
       <div>
-        <div className={style.inputGroup}>
+        <Div width="calc(100% - 100px)" margin="20px auto">
           <InputGroup>
             <Input
               value={this.state.url}
@@ -153,7 +153,7 @@ class Uploader extends Component {
               Add Song
             </InputGroupButton>
           </InputGroup>
-        </div>
+        </Div>
         {
           !this.state.loading && this.state.ready
           ?
