@@ -17,6 +17,7 @@ import { play, pause, next, prev } from '../../actions/player.js'
 import style from './style.styl'
 
 import glamorous from 'glamorous'
+import Queue from '../Queue'
 
 const margin = 20
 const thumbSize = playerWidth - 2 * margin
@@ -39,26 +40,6 @@ const Slider = glamorous(RangeSlider)({
     top: '50%',
   }
 })
-
-const Queue = ({medias, next}) => (
-  <div className={style.queue}>
-    {
-      medias.map((media, i) => (
-        <div
-          onClick={() => next(i + 1)}
-          key={i}
-          className={style.queueItem}>
-          <Thumbnail
-            src={media.thumbnail}
-            className={style.queueThumbnail}
-            active={false}
-          />
-          <p>{media.title}</p>
-        </div>
-      ))
-    }
-  </div>
-)
 
 class Player extends Component {
   constructor(props) {
