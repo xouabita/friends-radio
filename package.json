@@ -54,6 +54,7 @@
     "react-facebook": "^4.0.8",
     "react-icons": "^2.2.1",
     "react-player": "^0.18.0",
+    "react-rangeslider": "^2.0.1",
     "react-redux": "^5.0.5",
     "react-router-dom": "^4.1.1",
     "react-transition-group": "^1.1.3",

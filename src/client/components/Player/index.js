@@ -7,12 +7,38 @@ import Thumbnail from '../Thumbnail'
 
 import PrevIcon from 'react-icons/lib/io/ios-arrow-back'
 import NextIcon from 'react-icons/lib/io/ios-arrow-forward'
+import RangeSlider from 'react-rangeslider'
 
 import ReactionButton from '../ReactionButton'
+import playerWidth from '../../styles/playerWidth'
 
 import { play, pause, next, prev } from '../../actions/player.js'
 
 import style from './style.styl'
+
+import glamorous from 'glamorous'
+
+const margin = 20
+const thumbSize = playerWidth - 2 * margin
+const handleSize = 12
+
+const Slider = glamorous(RangeSlider)({
+  width: thumbSize,
+  margin: '10px auto',
+  display: 'block',
+  height: 3,
+  background: 'rgba(0, 0, 0, .2)',
+  position: 'relative',
+  '& .rangeslider__handle': {
+    height: handleSize,
+    width: handleSize,
+    borderRadius: handleSize / 2,
+    background: 'rgb(127, 127, 127)',
+    position: 'absolute',
+    transform: 'translateY(-50%)',
+    top: '50%',
+  }
+})
 
 const Queue = ({medias, next}) => (
   <div className={style.queue}>
@@ -40,7 +66,6 @@ class Player extends Component {
     this.state = {
       current: null,
       played: 0,
-      seeking: false,
       duration: 0
     }
   }
@@ -53,12 +78,8 @@ class Player extends Component {
     }
   }
 
-  onSeekMouseDown = e => this.setState({seeking: true})
-  onSeekChange = e => this.setState({played: parseFloat(e.target.value)})
-  onSeekMouseUp = e => {
-    this.setState({seeking: false})
-    this.player.seekTo(parseFloat(e.target.value))
-  }
+  onSeekChange = value => this.setState({played: value})
+  onSeekChangeComplete = () => this.player.seekTo(this.state.played)
   onProgress = ({played}) => this.setState({played})
 
   render() {
@@ -127,12 +148,14 @@ class Player extends Component {
             mediaId={mediaId}
           />
         </Thumbnail>
-        <input
-          type='range' min={0} max={1} step='any' value={this.state.played}
-          onMouseDown={this.onSeekMouseDown}
+        <Slider
+          tooltip={false}
+          min={0}
+          max={1}
+          step={0.0000001}
+          value={this.state.played}
           onChange={this.onSeekChange}
-          onMouseUp={this.onSeekMouseUp}
-          className={style.slider}
+          onChangeComplete={this.onSeekChangeComplete}
         />
         <p className={style.title}>{title}</p>
         <Queue medias={this.props.queue} next={this.props.next} />
