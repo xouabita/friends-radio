@@ -30,7 +30,7 @@ const QueueItem = glamorous.div({
 
 export default function Queue({medias, next}) {
   return (
-    <Div overflow="scroll" height="55%">
+    <Div overflow="scroll" flex={1}>
       {
         medias.map((media, i) => (
           <QueueItem onClick={() => next(i + 1)} key={i}>
