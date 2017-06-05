@@ -11,7 +11,10 @@ const { fbOptions, secret, port } = require('../config.js')
 
 const knex = require('./knex.js')
 
-const {apolloExpress, graphiqlExpress} = require('apollo-server')
+const {
+  graphqlExpress,
+  graphiqlExpress
+} = require('graphql-server-express')
 const history = require('connect-history-api-fallback')
 const schema = require('./schema')
 
@@ -65,7 +68,7 @@ app.get('/disconnect', (req, res) => res.clearCookie('jwt_token').redirect('/'))
 
 
 // Graphql routes
-app.use('/graphql', bodyParser.json(), apolloExpress((req, res) => ({
+app.use('/graphql', bodyParser.json(), graphqlExpress((req, res) => ({
   schema,
   context: {me: req.user}
 })))
