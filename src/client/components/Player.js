@@ -24,12 +24,25 @@ const playButtonSize = 90
 const controlButtonSize = playButtonSize * .8
 const reactionSize = playButtonSize * .7
 
+function line(color, from, to) {
+  from = from || 40
+  to = to || 100 - from
+  const transparent = 'rgba(0, 0, 0, 0)'
+  return `linear-gradient(
+    top,
+    ${transparent} ${from - 1}%,
+    ${color} ${from}%,
+    ${color} ${to}%,
+    ${transparent} ${to + 1}%
+  )`
+}
+
 const Slider = glamorous(RangeSlider)({
   width: thumbSize,
   margin: '10px auto',
   display: 'block',
-  height: 3,
-  background: 'rgba(0, 0, 0, .2)',
+  height: handleSize,
+  background: line('rgba(0, 0, 0, .2)'),
   position: 'relative',
   '& .rangeslider__handle': {
     height: handleSize,
