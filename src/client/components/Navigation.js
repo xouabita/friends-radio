@@ -102,7 +102,7 @@ const Navigation = ({data, className}) => (
         <NavbarToggler right />
         <NavbarBrand {...brandStyle} to="/">
           <img src={radioEmoji} />
-          <span>RADIO ZIZI</span>
+          <span>FRIENDS RADIO</span>
         </NavbarBrand>
         <Collapse navbar>
           <Nav className="ml-auto" navbar>

@@ -2,8 +2,8 @@ module.exports = {
   development: {
     client: 'pg',
     connection: {
-      user: 'radiozizi_user',
-      database: 'radiozizi_development'
+      user: 'friendsradio_user',
+      database: 'friendsradio_dev'
     },
     migrations: {
       directory: './server/migrations'

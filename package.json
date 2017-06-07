@@ -1,5 +1,5 @@
 {
-  "name": "radiozizi",
+  "name": "friends-radio",
   "version": "0.0.1",
   "description": "Enjoy music with your friends",
   "main": "index.js",
@@ -13,18 +13,18 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/xouabita/radiozizi.git"
+    "url": "git+https://github.com/xouabita/friends-radio.git"
   },
   "author": "xouabita",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/xouabita/radiozizi/issues"
+    "url": "https://github.com/xouabita/friends-radio/issues"
   },
   "engines": {
     "node": "6.8.1",
     "npm": "3.10.8"
   },
-  "homepage": "https://github.com/xouabita/radiozizi#readme",
+  "homepage": "https://github.com/xouabita/friends-radio#readme",
   "dependencies": {
     "apollo-client": "^1.3.0",
     "body-parser": "^1.15.2",
