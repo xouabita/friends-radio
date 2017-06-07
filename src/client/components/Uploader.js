@@ -29,7 +29,7 @@ const infoFromSc = async (player, url) => {
   const info = await player.getSongData(url)
   return {
     thumbnail: info.artwork_url.replace('-large', '-t500x500'),
-    duration: info.duration / 1000,
+    duration: parseInt(info.duration / 1000),
     title: info.title,
     artist: info.user.username
   }

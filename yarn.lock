@@ -39,8 +39,8 @@
   resolved "https://registry.yarnpkg.com/@types/mime/-/mime-0.0.29.tgz#fbcfd330573b912ef59eeee14602bface630754b"
 
 "@types/node@*":
-  version "7.0.27"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-7.0.27.tgz#ba5e1a87aca2b4f5817289615ffe56472927687e"
+  version "7.0.28"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-7.0.28.tgz#3a8c62b718a73bbb89ede4aba5ab12c8f822c36e"
 
 "@types/serve-static@*":
   version "1.7.31"
@@ -1304,12 +1304,12 @@ caniuse-api@^1.5.2:
     lodash.uniq "^4.5.0"
 
 caniuse-db@^1.0.30000529, caniuse-db@^1.0.30000634, caniuse-db@^1.0.30000639:
-  version "1.0.30000677"
-  resolved "https://registry.yarnpkg.com/caniuse-db/-/caniuse-db-1.0.30000677.tgz#13f421d40ae1434702103c494d2c4d716e2a8fcb"
+  version "1.0.30000679"
+  resolved "https://registry.yarnpkg.com/caniuse-db/-/caniuse-db-1.0.30000679.tgz#dd7be12f16577e5d6ae6db880c6d619e77dca365"
 
 caniuse-lite@^1.0.30000670:
-  version "1.0.30000677"
-  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30000677.tgz#43090233d4b2c7190657f95455983d94d264baaa"
+  version "1.0.30000679"
+  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30000679.tgz#0fb5bb3658d4d4448f8f86a1c48df15664aa05ef"
 
 caseless@~0.12.0:
   version "0.12.0"
@@ -1759,13 +1759,13 @@ date-now@^0.1.4:
   version "0.1.4"
   resolved "https://registry.yarnpkg.com/date-now/-/date-now-0.1.4.tgz#eaf439fd4d4848ad74e5cc7dbef200672b9e345b"
 
-debug@2.6.7, debug@^2.1.3, debug@^2.2.0:
+debug@2.6.7, debug@^2.2.0:
   version "2.6.7"
   resolved "https://registry.yarnpkg.com/debug/-/debug-2.6.7.tgz#92bad1f6d05bbb6bba22cca88bcd0ec894c2861e"
   dependencies:
     ms "2.0.0"
 
-debug@2.6.8, debug@^2.1.1, debug@^2.6.0, debug@^2.6.6, debug@^2.6.8:
+debug@2.6.8, debug@^2.1.1, debug@^2.1.3, debug@^2.6.0, debug@^2.6.6, debug@^2.6.8:
   version "2.6.8"
   resolved "https://registry.yarnpkg.com/debug/-/debug-2.6.8.tgz#e731531ca2ede27d188222427da17821d68ff4fc"
   dependencies:
@@ -2146,8 +2146,8 @@ fbjs@^0.8.4, fbjs@^0.8.8, fbjs@^0.8.9:
     ua-parser-js "^0.7.9"
 
 fetch-jsonp@^1.0.2:
-  version "1.0.7"
-  resolved "https://registry.yarnpkg.com/fetch-jsonp/-/fetch-jsonp-1.0.7.tgz#021c6abf3297d5d63824735805726edbf28976e5"
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/fetch-jsonp/-/fetch-jsonp-1.1.0.tgz#620c652d5c718b0c42a73229cfee20ac01d780a7"
 
 figures@^2.0.0:
   version "2.0.0"
@@ -2393,8 +2393,8 @@ global-prefix@^0.1.4:
     which "^1.2.12"
 
 globals@^9.0.0:
-  version "9.17.0"
-  resolved "https://registry.yarnpkg.com/globals/-/globals-9.17.0.tgz#0c0ca696d9b9bb694d2e5470bd37777caad50286"
+  version "9.18.0"
+  resolved "https://registry.yarnpkg.com/globals/-/globals-9.18.0.tgz#aa3896b3e69b487f17e31ed2143d69a8e30c2d8a"
 
 graceful-fs@^4.1.2, graceful-fs@^4.1.6:
   version "4.1.11"
@@ -2433,8 +2433,8 @@ graphql-tag@^0.1.14:
   resolved "https://registry.yarnpkg.com/graphql-tag/-/graphql-tag-0.1.17.tgz#1dfd6f2310d395b309a1077bc8cdc5d6604c5e89"
 
 graphql-tag@^2.0.0:
-  version "2.2.1"
-  resolved "https://registry.yarnpkg.com/graphql-tag/-/graphql-tag-2.2.1.tgz#1da61feb6c6fc119ee8c579c4de424d389bee0c2"
+  version "2.2.2"
+  resolved "https://registry.yarnpkg.com/graphql-tag/-/graphql-tag-2.2.2.tgz#2b16175a4d0b3ed43ae8d53d94b9b6e01bbb4905"
 
 graphql-tools@^1.0.0:
   version "1.0.0"
@@ -3306,8 +3306,8 @@ loose-envify@^1.0.0, loose-envify@^1.1.0, loose-envify@^1.2.0, loose-envify@^1.3
     js-tokens "^3.0.0"
 
 lru-cache@^4.0.1:
-  version "4.0.2"
-  resolved "https://registry.yarnpkg.com/lru-cache/-/lru-cache-4.0.2.tgz#1d17679c069cda5d040991a09dbc2c0db377e55e"
+  version "4.1.0"
+  resolved "https://registry.yarnpkg.com/lru-cache/-/lru-cache-4.1.0.tgz#59be49a683b8d986a939f1ca60fdb6989f4b2046"
   dependencies:
     pseudomap "^1.0.1"
     yallist "^2.0.0"
@@ -4434,7 +4434,7 @@ react-icons@^2.2.1:
 
 react-player@xouabita/react-player:
   version "0.18.0"
-  resolved "https://codeload.github.com/xouabita/react-player/tar.gz/84de3db480d47265d74ba73664aabf0fb4b381c0"
+  resolved "https://codeload.github.com/xouabita/react-player/tar.gz/aeef75472bac2171a374137649813a9196c0dc5a"
   dependencies:
     fetch-jsonp "^1.0.2"
     load-script "^1.0.0"
@@ -4551,14 +4551,14 @@ readable-stream@^1.1.12:
     string_decoder "~0.10.x"
 
 readable-stream@^2.0.1, readable-stream@^2.0.2, readable-stream@^2.0.5, readable-stream@^2.0.6, readable-stream@^2.1.4, readable-stream@^2.2.6, readable-stream@^2.2.9:
-  version "2.2.10"
-  resolved "https://registry.yarnpkg.com/readable-stream/-/readable-stream-2.2.10.tgz#effe72bb7c884c0dd335e2379d526196d9d011ee"
+  version "2.2.11"
+  resolved "https://registry.yarnpkg.com/readable-stream/-/readable-stream-2.2.11.tgz#0796b31f8d7688007ff0b93a8088d34aa17c0f72"
   dependencies:
     core-util-is "~1.0.0"
     inherits "~2.0.1"
     isarray "~1.0.0"
     process-nextick-args "~1.0.6"
-    safe-buffer "^5.0.1"
+    safe-buffer "~5.0.1"
     string_decoder "~1.0.0"
     util-deprecate "~1.0.1"
 
@@ -4827,6 +4827,10 @@ rx@^4.1.0:
 safe-buffer@^5.0.1:
   version "5.1.0"
   resolved "https://registry.yarnpkg.com/safe-buffer/-/safe-buffer-5.1.0.tgz#fe4c8460397f9eaaaa58e73be46273408a45e223"
+
+safe-buffer@~5.0.1:
+  version "5.0.1"
+  resolved "https://registry.yarnpkg.com/safe-buffer/-/safe-buffer-5.0.1.tgz#d263ca54696cd8a306b5ca6551e92de57918fbe7"
 
 sax@~1.2.1:
   version "1.2.2"
@@ -5112,10 +5116,10 @@ string_decoder@^0.10.25, string_decoder@~0.10.x:
   resolved "https://registry.yarnpkg.com/string_decoder/-/string_decoder-0.10.31.tgz#62e203bc41766c6c28c9fc84301dab1c5310fa94"
 
 string_decoder@~1.0.0:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/string_decoder/-/string_decoder-1.0.1.tgz#62e200f039955a6810d8df0a33ffc0f013662d98"
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/string_decoder/-/string_decoder-1.0.2.tgz#b29e1f4e1125fa97a10382b8a533737b7491e179"
   dependencies:
-    safe-buffer "^5.0.1"
+    safe-buffer "~5.0.1"
 
 stringify-entities@^1.0.1:
   version "1.3.0"
