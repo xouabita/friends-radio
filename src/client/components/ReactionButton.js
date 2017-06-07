@@ -117,7 +117,7 @@ class ReactionButton extends Component {
   }
 
   render() {
-    const {status, type, mediaId, ...props} = this.props
+    const {status, type, mediaId, perform, ...props} = this.props
 
     const emoji = type === 'dislike' ? thumbDown : thumbUp
 

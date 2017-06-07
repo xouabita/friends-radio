@@ -134,7 +134,7 @@ class MediaView extends Component {
                 }
               </h5>
               {
-                me.id === media.posted_by.id ?
+                me && me.id === media.posted_by.id ?
                   <Button
                     {...styles.inlineBlock}
                     {...styles.floatRight}
@@ -154,12 +154,14 @@ class MediaView extends Component {
             </Link>
           </Media>
         </Media>
-        <Facebook appId={fbOptions.clientID}>
-          <Comments
-            width='100%'
-            href={`${location.host}/m/${this.props.match.params.id}`}
-          />
-        </Facebook>
+        {
+          me && <Facebook appId={fbOptions.clientID}>
+            <Comments
+              width='100%'
+              href={`${location.host}/m/${this.props.match.params.id}`}
+            />
+          </Facebook>
+        }
       </Div>
     )
   }

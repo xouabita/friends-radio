@@ -1,6 +1,9 @@
 import React from 'react'
-import ApolloClient, { createNetworkInterface } from 'apollo-client'
-import { ApolloProvider } from 'react-apollo'
+import {
+  ApolloClient,
+  createNetworkInterface,
+  ApolloProvider,
+} from 'react-apollo'
 import { createStore, combineReducers, applyMiddleware, compose } from 'redux'
 
 import { BrowserRouter, Route } from 'react-router-dom'
@@ -13,9 +16,13 @@ import Media from './pages/Media'
 import playerReducer from './reducers/player.js'
 import mediasReducer from './reducers/medias.js'
 
-const networkInterface = createNetworkInterface('http://localhost:3000/graphql', {
-  credentials: 'same-origin'
+const networkInterface = createNetworkInterface({
+  uri: 'http://localhost:3000/graphql',
+  opts: {
+    credentials: 'same-origin',
+  },
 })
+
 const client = new ApolloClient({
   networkInterface,
   dataIdFromObject: r => r.id
@@ -44,7 +51,5 @@ const App = () => (
     </BrowserRouter>
   </ApolloProvider>
 )
-
-global.App = App
 
 export default App

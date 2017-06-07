@@ -119,11 +119,11 @@ export function withMedias(
       loadMore: () => data.fetchMore({
         variables: { skip: _get(data, mediasPath).length },
         updateQuery: (prev, { fetchMoreResult }) => {
-          if (!fetchMoreResult.data) return prev
+          if (!fetchMoreResult) return prev
           let newData = Object.assign({}, prev)
           _set(newData, mediasPath, [
             ..._get(prev, mediasPath),
-            ..._get(fetchMoreResult.data, mediasPath)
+            ..._get(fetchMoreResult, mediasPath)
           ])
           return newData
         }
