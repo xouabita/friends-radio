@@ -1,5 +1,5 @@
 const port    = process.env.PORT || 3000
-const baseUrl = process.env.BASE_URL || `http://localhost:${port}`
+const baseUrl = process.env.RAZZLE_BASE_URL || `http://localhost:${port}`
 
 const fbOptions = {
   clientID: process.env.RAZZLE_FACEBOOK_APP_ID,
@@ -8,7 +8,7 @@ const fbOptions = {
   profileFields: ['id', 'displayName']
 }
 
-const secret = process.env.SECRET || 'jesuisunananas'
+const secret = process.env.RAZZLE_SECRET || 'jesuisunananas'
 
 module.exports = {
   baseUrl,

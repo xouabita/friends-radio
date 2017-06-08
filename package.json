@@ -22,8 +22,7 @@
     "url": "https://github.com/xouabita/friends-radio/issues"
   },
   "engines": {
-    "node": "6.8.1",
-    "npm": "3.10.8"
+    "node": "7.10.0"
   },
   "homepage": "https://github.com/xouabita/friends-radio#readme",
   "dependencies": {
