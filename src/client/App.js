@@ -17,7 +17,7 @@ import playerReducer from './reducers/player.js'
 import mediasReducer from './reducers/medias.js'
 
 const networkInterface = createNetworkInterface({
-  uri: 'http://localhost:3000/graphql',
+  uri: '/graphql',
   opts: {
     credentials: 'same-origin',
   },
