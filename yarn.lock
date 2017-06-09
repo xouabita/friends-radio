@@ -4453,9 +4453,9 @@ react-icons@^2.2.1:
   dependencies:
     react-icon-base "2.0.7"
 
-react-player@xouabita/react-player:
+react-player@xouabita/react-player#aeef754:
   version "0.18.0"
-  resolved "https://codeload.github.com/xouabita/react-player/tar.gz/aeef75472bac2171a374137649813a9196c0dc5a"
+  resolved "https://codeload.github.com/xouabita/react-player/tar.gz/aeef754"
   dependencies:
     fetch-jsonp "^1.0.2"
     load-script "^1.0.0"

@@ -56,7 +56,7 @@
     "react-dom": "^15.3.2",
     "react-facebook": "^4.0.8",
     "react-icons": "^2.2.1",
-    "react-player": "xouabita/react-player",
+    "react-player": "xouabita/react-player#aeef754",
     "react-rangeslider": "^2.0.1",
     "react-redux": "^5.0.5",
     "react-router-dom": "^4.1.1",

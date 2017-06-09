@@ -36,9 +36,10 @@ const infoFromSc = async (player, url) => {
 }
 
 const getInfo = async (player, url) => {
-  if (player.constructor.name === 'YouTube')
+  console.log(player)
+  if (player.player.getVideoData)
     return infoFromYt(player)
-  else if (player.constructor.name === 'SoundCloud')
+  else if (player.getSongData)
     return infoFromSc(player, url)
 }
 
