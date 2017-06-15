@@ -5,10 +5,11 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "yarn build && NODE_ENV=production node build/server.js",
+    "start": "yarn build && node build/server.js",
     "build": "razzle build",
     "dev": "razzle start",
     "postinstall": "./scripts/___TEMPORARY___fix_soundcloud.sh",
+    "heroku-postbuild": "rm -rf build",
     "db": "knex"
   },
   "repository": {
