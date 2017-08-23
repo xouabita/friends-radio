@@ -2837,6 +2837,10 @@ is-glob@^3.1.0:
   dependencies:
     is-extglob "^2.1.0"
 
+is-heroku@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/is-heroku/-/is-heroku-1.0.1.tgz#46715fcd9d5ce55a9f254e6b9816735ebab38140"
+
 is-hexadecimal@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/is-hexadecimal/-/is-hexadecimal-1.0.0.tgz#5c459771d2af9a2e3952781fd54fcb1bcfe4113c"
@@ -4327,6 +4331,12 @@ raw-body@~2.2.0:
     bytes "2.4.0"
     iconv-lite "0.4.15"
     unpipe "1.0.0"
+
+razzle-heroku@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/razzle-heroku/-/razzle-heroku-1.0.0.tgz#4adce8beaa3ac69551af599b27e350908a6e4572"
+  dependencies:
+    is-heroku "^1.0.1"
 
 razzle@^0.6.3:
   version "0.6.3"

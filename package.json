@@ -5,11 +5,11 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "yarn build && node build/server.js",
+    "start": "node build/server.js",
     "build": "razzle build",
     "dev": "razzle start",
     "postinstall": "./scripts/___TEMPORARY___fix_soundcloud.sh",
-    "heroku-postbuild": "rm -rf build",
+    "heroku-postbuild": "yarn build",
     "db": "knex"
   },
   "repository": {
@@ -50,6 +50,7 @@
     "passport-facebook": "^2.1.1",
     "pg": "^6.1.0",
     "razzle": "^0.6.3",
+    "razzle-heroku": "^1.0.0",
     "react": "^15.3.2",
     "react-addons-css-transition-group": "^15.3.2",
     "react-addons-transition-group": "^15.3.2",
