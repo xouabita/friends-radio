@@ -1,13 +1,13 @@
 module.exports = {
   development: {
-    client: 'pg',
+    client: "pg",
     connection: {
-      user: 'friendsradio_user',
-      database: 'friendsradio_dev'
+      user: "friendsradio_user",
+      database: "friendsradio_dev",
     },
   },
   production: {
-    client: 'pg',
-    connection: process.env.RAZZLE_DATABASE_URL,
-  }
+    client: "pg",
+    connection: process.env.DATABASE_URL,
+  },
 }

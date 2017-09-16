@@ -1,0 +1,27 @@
+{
+  "name": "FriendsRadio",
+  "description": "📻 Stream and share musics with friends",
+  "repository": "https://github.com/xouabita/friends-radio",
+  "keywords": ["graphql", "express", "node", "music", "streaming", "friends"],
+  "env": {
+    "MASTER_KEY": {
+      "description": "The secret key of your application, used to sign jwt token",
+      "generator": "secret"
+    },
+    "RAZZLE_FACEBOOK_APP_ID": {
+      "description": "Facebook App Id (https://developers.facebook.com/docs/apps/register)",
+      "required": true
+    },
+    "FACEBOOK_APP_SECRET": {
+      "description": "Facebook App Secret",
+      "required": true
+    },
+    "NODE_ENV": {
+      "value": "production"
+    },
+    "NPM_CONFIG_PRODUCTION": {
+      "value": "false"
+    }
+  },
+  "addons": ["heroku-postgresql"]
+}
