@@ -29,7 +29,12 @@ app.use((req, res, next) => {
         }
       })
     }
+  } catch (err) {
+    console.error(err)
   } finally {
+    if (!req.user) {
+      res.clearCookie("jwt_token")
+    }
     next()
   }
 })
