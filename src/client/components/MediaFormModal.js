@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, {Component} from "react"
 
 import {
   Modal,
@@ -7,17 +7,17 @@ import {
   FormGroup,
   Label,
   Input,
-  Button
-} from 'reactstrap'
+  Button,
+} from "reactstrap"
 
-import Thumbnail from './Thumbnail'
-import {css} from 'glamor'
+import Thumbnail from "./Thumbnail"
+import {css} from "glamor"
 
 const size = 170
 const thumbnail = css({
   width: size,
   height: size,
-  margin: '10px auto',
+  margin: "10px auto",
 })
 
 class MediaFormModal extends Component {
@@ -29,12 +29,12 @@ class MediaFormModal extends Component {
       artist: this.props.artist,
       thumbnail: this.props.thumbnail,
       description: this.props.description,
-      duration: this.props.duration
+      duration: this.props.duration,
     }
   }
 
   onDelete() {
-    const sure = confirm('Are you sure you want to delete ?')
+    const sure = window.confirm("Are you sure you want to delete ?")
     if (sure) {
       this.props.onDelete(this.props.data.media.id)
       this.props.toggle()
@@ -47,24 +47,20 @@ class MediaFormModal extends Component {
   }
 
   render() {
-    const submitText = this.props.edit ?
-      'Update song' : 'Add a song'
-    const modalTitle = this.props.edit ?
-      'Edit song' : 'Add a song'
+    const submitText = this.props.edit ? "Update song" : "Add a song"
+    const modalTitle = this.props.edit ? "Edit song" : "Add a song"
     return (
       <Modal isOpen={this.props.isOpen} toggle={this.props.toggle}>
-        <ModalHeader toggle={this.props.toggle}>{modalTitle}</ModalHeader>
+        <ModalHeader toggle={this.props.toggle}>
+          {modalTitle}
+        </ModalHeader>
         <ModalBody>
-          <Thumbnail
-            {...thumbnail}
-            src={this.state.thumbnail}
-            active={false}
-          />
+          <Thumbnail {...thumbnail} src={this.state.thumbnail} active={false} />
           <FormGroup>
             <Label for="title">Title</Label>
             <Input
               name="title"
-              placeholder='Title'
+              placeholder="Title"
               value={this.state.title}
               onChange={e => this.setState({title: e.target.value})}
             />
@@ -73,7 +69,7 @@ class MediaFormModal extends Component {
             <Label for="artist">Artist</Label>
             <Input
               name="artist"
-              placeholder='Artist'
+              placeholder="Artist"
               value={this.state.artist}
               onChange={e => this.setState({artist: e.target.value})}
             />
@@ -82,7 +78,7 @@ class MediaFormModal extends Component {
             <Label for="thumbnail">Thumbnail</Label>
             <Input
               name="thumbnail"
-              placeholder='Thumbnail'
+              placeholder="Thumbnail"
               value={this.state.thumbnail}
               onChange={e => this.setState({thumbnail: e.target.value})}
             />
@@ -90,29 +86,27 @@ class MediaFormModal extends Component {
           <FormGroup>
             <Label for="description">Description</Label>
             <Input
-              type='textarea'
+              type="textarea"
               name="artist"
-              placeholder='Description'
+              placeholder="Description"
               value={this.state.description}
               onChange={e => this.setState({description: e.target.value})}
             />
           </FormGroup>
           <Button
-            color='primary'
+            color="primary"
             children={submitText}
             block
             onClick={::this.onSubmit}
           />
-          {
-            this.props.edit ?
-            <Button
-              color='danger'
-              children='Delete this song'
-              block
-              onClick={::this.onDelete}
-            />
-            : undefined
-          }
+          {this.props.edit
+            ? <Button
+                color="danger"
+                children="Delete this song"
+                block
+                onClick={::this.onDelete}
+              />
+            : undefined}
         </ModalBody>
       </Modal>
     )

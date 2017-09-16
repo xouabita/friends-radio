@@ -1,12 +1,13 @@
-const knex = require('../../knex.js')
+const knex = require("../../knex.js")
 
-const Media = module.exports = {
+module.exports = {
   posted_by: ({user_id}) =>
-    knex('users').where('id', user_id).then(([user]) => user),
+    knex("users").where("id", user_id).then(([user]) => user),
   myReaction: ({id}, _, {me}) =>
     !me
       ? null
-      : knex('reactions').where({user_id: me.id, media_id: id})
-                         .limit('1')
-                         .then(([row]) => row)
+      : knex("reactions")
+          .where({user_id: me.id, media_id: id})
+          .limit("1")
+          .then(([row]) => row),
 }

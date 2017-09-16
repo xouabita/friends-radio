@@ -1,76 +1,93 @@
-import React from 'react'
+import React from "react"
 
-import avatarUrl from '../utils/avatarUrl.js'
+import avatarUrl from "../utils/avatarUrl.js"
 
-import {Link} from 'react-router-dom'
-import glamorous from 'glamorous'
+import {Link} from "react-router-dom"
+import glamorous from "glamorous"
 
 const size = 240
 const border = 2
 
 const Card = glamorous.div({
   height: size,
-  width: 'calc(100% - 100px)',
-  background: '#fff',
-  margin: '20px auto',
+  width: "calc(100% - 100px)",
+  background: "#fff",
+  margin: "20px auto",
   border: `solid ${border}px rgba(0, 0, 0, .05)`,
-  position: 'relative',
-  '& img': {
-    height: .84 * size,
-    margin: .08 * size,
+  position: "relative",
+  "& img": {
+    height: 0.84 * size,
+    margin: 0.08 * size,
   },
-  '& h1': {
+  "& h1": {
     marginTop: 20,
   },
 })
 
 const Content = glamorous.div({
-  position: 'absolute',
-  top: .1 * size,
-  height: `calc(100% - ${.2 * size}px)`,
-  width: `calc(100% - ${.1 * size + size}px)`,
+  position: "absolute",
+  top: 0.1 * size,
+  height: `calc(100% - ${0.2 * size}px)`,
+  width: `calc(100% - ${0.1 * size + size}px)`,
   left: size,
-  textAlign: 'center',
+  textAlign: "center",
 })
 
 const Infos = glamorous.div({
-  width: '100%',
-  position: 'absolute',
+  width: "100%",
+  position: "absolute",
   padding: 20,
   bottom: 0,
 })
 
 const BoxCount = glamorous(Link)({
-  textAlign: 'center',
-  width: '33%',
-  display: 'inline-block',
-  color: 'inherit',
-  ':hover': { textDecoration: 'none' },
+  textAlign: "center",
+  width: "33%",
+  display: "inline-block",
+  color: "inherit",
+  ":hover": {textDecoration: "none"},
 })
 
-const Count = glamorous.div({fontWeight: 'bold'})
+const Count = glamorous.div({fontWeight: "bold"})
 
-const UserCard = ({id, name, gender, mediaCount, likeCount, dislikeCount}) => (
+const UserCard = ({id, name, gender, mediaCount, likeCount, dislikeCount}) =>
   <Card>
-    <img src={avatarUrl(id)} />
+    <img src={avatarUrl(id)} alt="" />
     <Content>
-      <h1>{name}</h1>
+      <h1>
+        {name}
+      </h1>
       <Infos>
         <BoxCount to={`/u/${id}`}>
-          <Count>{mediaCount}</Count>
+          <Count>
+            {mediaCount}
+          </Count>
           <div>Posts</div>
         </BoxCount>
         <BoxCount to={`/u/${id}/likes`}>
-          <Count>{likeCount}</Count>
-          <div>Likes 💖</div>
+          <Count>
+            {likeCount}
+          </Count>
+          <div>
+            Likes{" "}
+            <span role="img" aria-label="Heart">
+              💖
+            </span>
+          </div>
         </BoxCount>
         <BoxCount to={`/u/${id}/dislikes`}>
-          <Count>{dislikeCount}</Count>
-          <div>Dislikes 💩</div>
+          <Count>
+            {dislikeCount}
+          </Count>
+          <div>
+            Dislikes{" "}
+            <span role="img" aria-label="Poop">
+              💩
+            </span>
+          </div>
         </BoxCount>
       </Infos>
     </Content>
   </Card>
-)
 
 export default UserCard

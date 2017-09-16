@@ -1,22 +1,18 @@
-import React, { Component } from 'react'
-import { graphql } from 'react-apollo'
-import gql from 'graphql-tag'
+import React, {Component} from "react"
+import {graphql} from "react-apollo"
+import gql from "graphql-tag"
 
-import { Media, Row } from 'reactstrap'
-import {Link} from 'react-router-dom'
-import {
-  Div,
-  H5,
-} from 'glamorous'
-import {css} from 'glamor'
+import {Media} from "reactstrap"
+import {Link} from "react-router-dom"
+import {Div} from "glamorous"
+import {css} from "glamor"
 
-import Facebook, { Comments } from 'react-facebook'
+import Facebook, {Comments} from "react-facebook"
 
-import { Button } from 'reactstrap'
+import {Button} from "reactstrap"
 
-import { fbOptions } from '../../config.js'
-import MediaFormModal from '../components/MediaFormModal'
-
+import {fbOptions} from "../../config.js"
+import MediaFormModal from "../components/MediaFormModal"
 
 const style = {}
 const styles = {
@@ -26,10 +22,10 @@ const styles = {
     marginRight: 20,
   }),
   inlineBlock: css({
-    display: 'inline-block',
+    display: "inline-block",
   }),
   floatRight: css({
-    float: 'right',
+    float: "right",
   }),
 }
 
@@ -49,7 +45,7 @@ const GET_MEDIA_QUERY = gql`
         id
         name
       }
-    },
+    }
     me {
       id
     }
@@ -71,13 +67,14 @@ const EDIT_MEDIA_MUTATION = gql`
 
 const withEditMedia = graphql(EDIT_MEDIA_MUTATION, {
   props: ({mutate, ownProps}) => ({
-    onSubmit: (media) => mutate({
-      variables: {
-        id: ownProps.id,
-        media
-      }
-    })
-  })
+    onSubmit: media =>
+      mutate({
+        variables: {
+          id: ownProps.id,
+          media,
+        },
+      }),
+  }),
 })
 
 const MediaFormModalEditable = withEditMedia(MediaFormModal)
@@ -86,20 +83,19 @@ class MediaView extends Component {
   constructor(...props) {
     super(...props)
     this.state = {
-      modalOpen: false
+      modalOpen: false,
     }
   }
 
   toggleModal = () => this.setState({modalOpen: !this.state.modalOpen})
 
   render() {
-    const { data } = this.props
-    if (data.loading)
-      return (<h3>Loading...</h3>)
+    const {data} = this.props
+    if (data.loading) return <h3>Loading...</h3>
 
     const {media, me} = data
 
-    return(
+    return (
       <Div
         width="calc(100% - 100px)"
         background="#fff"
@@ -107,61 +103,53 @@ class MediaView extends Component {
         border="solid 2px rgba(0, 0, 0, .05)"
         padding={10}
       >
-        {
-          me && me.id === media.posted_by.id ?
-            <MediaFormModalEditable
+        {me && me.id === media.posted_by.id
+          ? <MediaFormModalEditable
               edit
               isOpen={this.state.modalOpen}
               toggle={this.toggleModal}
               {...media}
             />
-          : undefined
-        }
+          : undefined}
         <Media>
-          <Media left href={media.url} target='_blank'>
-            <Media
-              {...styles.thumbnail}
-              object src={media.thumbnail}
-            />
+          <Media left href={media.url} target="_blank">
+            <Media {...styles.thumbnail} object src={media.thumbnail} />
           </Media>
           <Media body className={style.body}>
             <div>
               <h5 {...styles.inlineBlock}>
-                {
-                  media.artist
-                  ? media.artist
-                  : (<i>Unknown</i>)
-                }
+                {media.artist ? media.artist : <i>Unknown</i>}
               </h5>
-              {
-                me && me.id === media.posted_by.id ?
-                  <Button
+              {me && me.id === media.posted_by.id
+                ? <Button
                     {...styles.inlineBlock}
                     {...styles.floatRight}
-                    children='Edit'
-                    size='sm'
-                    color='primary'
+                    children="Edit"
+                    size="sm"
+                    color="primary"
                     outline
                     onClick={this.toggleModal}
                   />
-                : undefined
-              }
+                : undefined}
             </div>
-            <h4>{media.title}</h4>
-            <p>{media.description}</p>
+            <h4>
+              {media.title}
+            </h4>
+            <p>
+              {media.description}
+            </p>
             <Link to={`/u/${media.posted_by.id}`}>
               Posted by <i>{media.posted_by.name}</i>
             </Link>
           </Media>
         </Media>
-        {
-          me && <Facebook appId={fbOptions.clientID}>
+        {me &&
+          <Facebook appId={fbOptions.clientID}>
             <Comments
-              width='100%'
-              href={`${location.host}/m/${this.props.match.params.id}`}
+              width="100%"
+              href={`${window.location.host}/m/${this.props.match.params.id}`}
             />
-          </Facebook>
-        }
+          </Facebook>}
       </Div>
     )
   }
@@ -171,8 +159,8 @@ const withMedia = graphql(GET_MEDIA_QUERY, {
   options: ({match: {params}}) => ({
     variables: {
       id: params.id,
-    }
-  })
+    },
+  }),
 })
 
 export default withMedia(MediaView)

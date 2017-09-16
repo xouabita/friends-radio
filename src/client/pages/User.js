@@ -1,12 +1,10 @@
-import React from 'react'
+import React from "react"
 
-import MediaList, { withMedias } from '../components/MediaList'
-import UserCard from '../components/UserCard'
-import gql from 'graphql-tag'
+import MediaList, {withMedias} from "../components/MediaList"
+import UserCard from "../components/UserCard"
+import gql from "graphql-tag"
 
-import { createFragment } from 'apollo-client'
-
-const queryUserWith = (source) => gql`
+const queryUserWith = source => gql`
 query getUserWith_${source}($id: String!, $skip: Int!) {
   user(id: $id) {
     id
@@ -30,47 +28,40 @@ query getUserWith_${source}($id: String!, $skip: Int!) {
 `
 
 const User = ({data, loadMore, uniqueId, params}) => {
-
   const mediaListData = {
     loading: data.loading,
-    medias: data.loading ? null : data.user.medias
+    medias: data.loading ? null : data.user.medias,
   }
 
   return (
     <div>
-      {
-        !data.loading ?
-          <UserCard
+      {!data.loading
+        ? <UserCard
             id={params.user_id}
             name={data.user.name}
             mediaCount={data.user.mediaCount}
             likeCount={data.user.likeCount}
             dislikeCount={data.user.dislikeCount}
           />
-        :
-          undefined
-      }
-      <MediaList
-        data={mediaListData}
-        uniqueId={uniqueId}
-        loadMore={loadMore}
-      />
+        : undefined}
+      <MediaList data={mediaListData} uniqueId={uniqueId} loadMore={loadMore} />
     </div>
   )
 }
 
 const UserWithMedias = ({match: {params}}) => {
   // fix because undefined => "undefined"
-  const source = params.source === 'likes' || params.source == 'dislikes'
-    ? params.source
-    : 'medias'
+  const source =
+    params.source === "likes" || params.source === "dislikes"
+      ? params.source
+      : "medias"
   const WithMedias = withMedias(
     queryUserWith(source),
     () => `u(${params.user_id}).${source}`,
     [],
-    'user.medias',
-    () => ({ id: params.user_id })
-  )((props) => <User params={params} {...props} />)
+    "user.medias",
+    () => ({id: params.user_id}),
+  )(props => <User params={params} {...props} />)
 
   return <WithMedias />
 }
