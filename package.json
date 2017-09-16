@@ -44,7 +44,6 @@
     "knex": "^0.13.0",
     "lodash.get": "^4.4.2",
     "lodash.set": "^4.3.2",
-    "morgan": "^1.7.0",
     "passport": "^0.3.2",
     "passport-facebook": "^2.1.1",
     "pg": "^7.3.0",

@@ -1,58 +1,41 @@
 const express = require("express")
+const passport = require("passport")
 const bodyParser = require("body-parser")
 const cookieParser = require("cookie-parser")
-const passport = require("passport")
 const jwt = require("jsonwebtoken")
-const morgan = require("morgan")
 const cors = require("cors")
-
-const FbStrategy = require("passport-facebook").Strategy
-const {fbOptions, secret} = require("../config.js")
-
-const knex = require("./knex.js")
-
 const {graphqlExpress, graphiqlExpress} = require("graphql-server-express")
 const history = require("connect-history-api-fallback")
+
+const baseUrl = require("./middlewares/baseUrl")
+const setupFbStrategy = require("./middlewares/setupFbStrategy")
+const {secret} = require("../config")
+const knex = require("./knex.js")
+
 const schema = require("./schema")
 
-passport.use(
-  new FbStrategy(fbOptions, (token, refresh, profile, done) => {
-    const {id} = profile
-    knex("users").where("id", id).then(rows => {
-      if (rows.length) done(null, profile)
-      else {
-        const {displayName} = profile
-        knex("users").insert({id, name: displayName}).then(user => {
-          done(null, profile)
-        })
-      }
-    })
-  }),
-)
-
 const app = express()
-
+app.use(baseUrl)
 app.use(cors())
-app.use(morgan("combined"))
 app.use(cookieParser())
 
 app.use((req, res, next) => {
-  if (req.cookies.jwt_token) {
-    const {id} = jwt.verify(req.cookies.jwt_token, secret)
-    knex("users").where("id", id).then(rows => {
-      if (!rows.length) next()
-
-      req.user = rows[0]
-      next()
-    })
-  } else {
-    req.user = null
+  try {
+    if (req.cookies.jwt_token) {
+      const {id} = jwt.verify(req.cookies.jwt_token, secret)
+      knex("users").where("id", id).then(rows => {
+        if (rows.length) {
+          req.user = rows[0]
+        }
+      })
+    }
+  } finally {
     next()
   }
 })
 
 // Authentication routes
-app.get("/auth/facebook", passport.authenticate("facebook"))
+app.get("/auth/facebook", setupFbStrategy, passport.authenticate("facebook"))
 app.get(
   "/auth/facebook/callback",
   passport.authenticate("facebook", {session: false}),
