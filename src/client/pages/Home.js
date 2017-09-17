@@ -1,9 +1,10 @@
-import React from 'react'
+import React from "react"
+import {graphql} from "react-apollo"
+import gql from "graphql-tag"
 
-import Uploader from '../components/Uploader'
-import MediaList, { withMedias } from '../components/MediaList'
-
-import gql from 'graphql-tag'
+import Uploader from "../components/Uploader"
+import MediaList, {withMedias} from "../components/MediaList"
+import getMe from "../queries/getMe.graphql"
 
 const MEDIAS_QUERY = gql`
   query getMedias($skip: Int!) {
@@ -25,13 +26,12 @@ const MEDIAS_QUERY = gql`
   }
 `
 
-const MediaListWithMedias = withMedias(MEDIAS_QUERY, 'homepage', [])(MediaList)
+const MediaListWithMedias = withMedias(MEDIAS_QUERY, "homepage", [])(MediaList)
 
-const Homepage = () => (
+const Homepage = ({data}) =>
   <div>
-    <Uploader />
+    {!data.loading && data.me && <Uploader />}
     <MediaListWithMedias />
   </div>
-)
 
-export default Homepage
+export default graphql(getMe)(Homepage)

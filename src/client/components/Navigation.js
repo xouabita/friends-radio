@@ -13,7 +13,7 @@ import {
 import {Link} from "react-router-dom"
 
 import {graphql} from "react-apollo"
-import gql from "graphql-tag"
+import getMe from "../queries/getMe.graphql"
 
 import {Img} from "glamorous"
 
@@ -50,14 +50,6 @@ const brandStyle = css({
     color: "white",
   },
 })
-
-const currentUser = gql`
-  query getMe {
-    me {
-      id
-    }
-  }
-`
 
 class ProfileButton extends Component {
   render() {
@@ -99,4 +91,4 @@ const Navigation = ({data, className}) =>
     </Navbar>
   </div>
 
-export default graphql(currentUser)(Navigation)
+export default graphql(getMe)(Navigation)
