@@ -98,4 +98,4 @@ app.get("*", (req, res) => {
   `)
 })
 
-export default app
+module.exports = app
