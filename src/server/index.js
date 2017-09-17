@@ -7,37 +7,18 @@ const cors = require("cors")
 const {graphqlExpress, graphiqlExpress} = require("graphql-server-express")
 const history = require("connect-history-api-fallback")
 
+const {secret} = require("../config")
+const schema = require("./schema")
+
 const baseUrl = require("./middlewares/baseUrl")
 const setupFbStrategy = require("./middlewares/setupFbStrategy")
-const {secret} = require("../config")
-const knex = require("./knex.js")
-
-const schema = require("./schema")
+const attachUser = require("./middlewares/attachUser")
 
 const app = express()
 app.use(baseUrl)
 app.use(cors())
 app.use(cookieParser())
-
-app.use((req, res, next) => {
-  try {
-    if (req.cookies.jwt_token) {
-      const {id} = jwt.verify(req.cookies.jwt_token, secret)
-      knex("users").where("id", id).then(rows => {
-        if (rows.length) {
-          req.user = rows[0]
-        }
-      })
-    }
-  } catch (err) {
-    console.error(err)
-  } finally {
-    if (!req.user) {
-      res.clearCookie("jwt_token")
-    }
-    next()
-  }
-})
+app.use(attachUser)
 
 // Authentication routes
 app.get("/auth/facebook", setupFbStrategy, passport.authenticate("facebook"))

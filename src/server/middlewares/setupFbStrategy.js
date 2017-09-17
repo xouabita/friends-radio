@@ -9,7 +9,6 @@ module.exports = function setupFbStrategy(req, res, next) {
       ...fbOptions,
       callbackURL: `${req.baseUrl}/auth/facebook/callback`,
     }
-    console.log(options)
     passport.use(
       new FbStrategy(options, (token, refresh, profile, done) => {
         const {id} = profile
