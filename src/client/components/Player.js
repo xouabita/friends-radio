@@ -1,7 +1,10 @@
 import React, {Component} from "react"
 import {connect} from "react-redux"
 
+import SoundcloudPlayer from "react-player/lib/players/SoundCloud"
+import YoutubePlayer from "react-player/lib/players/YouTube"
 import ReactPlayer from "react-player"
+
 import PlayButton from "./PlayButton"
 import Thumbnail from "./Thumbnail"
 
@@ -14,7 +17,7 @@ import playerWidth from "../styles/playerWidth"
 
 import {play, pause, next, prev} from "../actions/player.js"
 
-import glamorous from "glamorous"
+import glamorous, {Div} from "glamorous"
 import Queue from "./Queue"
 
 const margin = 20
@@ -131,6 +134,14 @@ class Player extends Component {
     }
   }
 
+  get activePlayer() {
+    if (YoutubePlayer.canPlay(this.url)) {
+      return this.youtubePlayer
+    } else if (SoundcloudPlayer.canPlay(this.url)) {
+      return this.soundcloudPlayer
+    }
+  }
+
   componentWillReceiveProps(nextProps) {
     if (nextProps.current !== this.state.current) {
       this.setState({
@@ -138,11 +149,48 @@ class Player extends Component {
       })
     }
   }
-
   onSeekChange = value => this.setState({played: value})
-  onSeekChangeComplete = () => this.player.seekTo(this.state.played)
-  onProgress = ({played}) => this.setState({played})
+  onSeekChangeComplete = () => this.activePlayer.seekTo(this.state.played)
   onPlay = () => (this.props.playing ? this.props.pause() : this.props.play())
+
+  get url() {
+    return (this.state.current || {}).url
+  }
+
+  get activeProps() {
+    return {
+      url: this.url,
+      hidden: true,
+      onEnded: () => this.props.next(),
+      playing: this.props.playing,
+      onProgress: ({played}) => this.setState({played}),
+      onDuration: duration => this.setState({duration}),
+      volume: 1,
+    }
+  }
+
+  get youtubeProps() {
+    if (YoutubePlayer.canPlay(this.url)) {
+      return this.activeProps
+    } else {
+      return {
+        url: "https://youtu.be/RxljKS5rc7w",
+        volume: 0,
+        playing: true,
+      }
+    }
+  }
+
+  get soundcloudProps() {
+    if (SoundcloudPlayer.canPlay(this.url)) {
+      return this.activeProps
+    } else {
+      return {
+        url: "https://soundcloud.com/miami-nights-1984/accelerated",
+        playing: false,
+      }
+    }
+  }
 
   render() {
     const thumbnail = this.state.current
@@ -193,18 +241,18 @@ class Player extends Component {
           {title}
         </Title>
         <Queue medias={this.props.queue} next={this.props.next} />
-        {this.state.current
-          ? <ReactPlayer
-              url={this.state.current.url}
-              hidden={true}
-              onEnded={() => this.props.next()}
-              playing={this.props.playing}
-              ref={player => (this.player = player)}
-              onProgress={this.onProgress}
-              onDuration={duration => this.setState({duration})}
-              volume={1}
-            />
-          : undefined}
+        <Div height={0} width={0}>
+          <ReactPlayer
+            {...this.soundcloudProps}
+            key="soundcloud"
+            ref={c => (this.soundcloudPlayer = c)}
+          />
+          <ReactPlayer
+            {...this.youtubeProps}
+            key="youtube"
+            ref={c => (this.youtubePlayer = c)}
+          />
+        </Div>
       </Container>
     )
   }
