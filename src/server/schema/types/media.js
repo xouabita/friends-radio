@@ -1,3 +1,5 @@
+const MediaConnection = require("../connections/MediaConnection")
+
 const AddMediaInput = `
 input AddMediaInput {
   title: String!
@@ -39,4 +41,4 @@ type Media {
 }
 `
 
-module.exports = [Media, AddMediaInput, EditMediaInput]
+module.exports = [Media, AddMediaInput, EditMediaInput, MediaConnection.type]

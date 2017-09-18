@@ -1,8 +1,9 @@
-const Query    = require('./query.js')
-const Mutation = require('./mutation.js')
-const Media    = require('./media.js')
-const User     = require('./user.js')
-const Reaction = require('./reaction.js')
+const Query = require("./query.js")
+const Mutation = require("./mutation.js")
+const Media = require("./media.js")
+const User = require("./user.js")
+const Reaction = require("./reaction.js")
+const {PageInfo} = require("../connection-helpers")
 
 const Schema = `
 schema {
@@ -16,5 +17,6 @@ module.exports = [Schema].concat(
   Mutation,
   Media,
   User,
-  Reaction
+  Reaction,
+  PageInfo,
 )
