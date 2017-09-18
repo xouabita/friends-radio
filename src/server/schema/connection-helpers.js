@@ -65,7 +65,7 @@ class Connection {
 
   resolver(query, {cursorFrom = "created_at", direction = "desc"} = {}) {
     return async (_, {first, after, last, before}) => {
-      query = query.clone()
+      const clone = query.clone()
       if (!first && !last) {
         throw new Error(
           "You must provide a 'first' or 'last' value to properly paginate" +
@@ -73,48 +73,60 @@ class Connection {
         )
       }
 
+      if ((first && before) || (last && after) || (first && last)) {
+        const params =
+          first && before
+            ? "'first' and 'before'"
+            : first && last ? "'first' and 'last'" : "'last' and 'after'"
+        throw new Error(`Mixing ${params} is not supported`)
+      }
+
       first = Math.max(first, 0)
       last = Math.max(last, 0)
 
-      query.orderBy(cursorFrom, direction)
+      clone.orderBy(cursorFrom, direction)
 
-      const totalCount = await this.queryCount(query)
+      const totalCount = await this.queryCount(clone)
 
       if (after) {
         const afterCursor = this.decode(after)
         const operator = direction === "desc" ? "<" : ">"
-        query.where(cursorFrom, operator, afterCursor)
+        clone.where(cursorFrom, operator, afterCursor)
       }
 
       if (before) {
         const beforeCursor = this.decode(before)
         const operator = direction === "desc" ? ">" : "<"
-        query.where(cursorFrom, operator, beforeCursor)
+        clone.where(cursorFrom, operator, beforeCursor)
       }
 
-      const slicedNodesCount = await this.queryCount(query)
+      const slicedNodesCount = await this.queryCount(clone)
 
       if (first) {
-        query.limit(first)
+        clone.limit(first)
       }
 
       if (last) {
-        query.offset(slicedNodesCount - last)
+        clone.offset(Math.max(0, slicedNodesCount - last))
       }
 
-      const nodes = await query.select()
+      const nodes = await clone.select()
+      const endCursor = nodes.length
+        ? this.encode(nodes[nodes.length - 1][cursorFrom])
+        : null
+      const startCursor = nodes.length
+        ? this.encode(nodes[0][cursorFrom])
+        : null
       const pageInfo = {
-        endCursor: this.encode(nodes[nodes.length - 1][cursorFrom]),
-        startCursor: this.encode(nodes[0][cursorFrom]),
+        endCursor,
+        startCursor,
         hasNextPage: !!(
-          first &&
-          nodes.length >= first &&
-          slicedNodesCount > first
+          (last && before) ||
+          (first && slicedNodesCount > nodes.length)
         ),
         hasPreviousPage: !!(
-          last &&
-          nodes.length >= last &&
-          slicedNodesCount > last
+          (first && after) ||
+          (last && slicedNodesCount > nodes.length)
         ),
       }
       const edges = nodes.map(node => ({
