@@ -1,43 +1,20 @@
 const knex = require("../../knex.js")
+const MediaConnection = require("../connections/MediaConnection")
 
 module.exports = {
-  medias: ({id}, {skip, limit}) =>
-    knex("medias")
-      .where("user_id", id)
-      .limit(Math.min(50, limit))
-      .offset(skip)
-      .orderBy("created_at", "desc"),
-  likes: ({id}, {skip, limit}) =>
-    knex
-      .select("medias.*")
-      .from("reactions")
-      .innerJoin("medias", "medias.id", "reactions.media_id")
-      .where({"reactions.type": "like", "reactions.user_id": id})
-      .limit(Math.min(50, limit))
-      .offset(skip)
-      .orderBy("reactions.created_at", "desc"),
-  dislikes: ({id}, {skip, limit}) =>
-    knex
-      .select("medias.*")
-      .from("reactions")
-      .innerJoin("medias", "medias.id", "reactions.media_id")
-      .where({"reactions.type": "dislike", "reactions.user_id": id})
-      .limit(Math.min(50, limit))
-      .offset(skip)
-      .orderBy("reactions.created_at", "desc"),
-  mediaCount: ({id}) =>
-    knex("medias")
-      .where("user_id", id)
-      .count("id as CNT")
-      .then(rows => rows[0].CNT),
-  likeCount: ({id}) =>
-    knex("reactions")
-      .where({user_id: id, type: "like"})
-      .count("id as CNT")
-      .then(([row]) => row.CNT),
-  dislikeCount: ({id}) =>
-    knex("reactions")
-      .where({user_id: id, type: "dislike"})
-      .count("id as CNT")
-      .then(([row]) => row.CNT),
+  medias: MediaConnection.resolver(({id}) =>
+    knex("medias").where("user_id", id),
+  ),
+  reactions: MediaConnection.resolver(
+    ({id}, {type}) =>
+      knex
+        .select("medias.*", "reactions.created_at as reaction_created_at")
+        .from("reactions")
+        .innerJoin("medias", "medias.id", "reactions.media_id")
+        .where({
+          "reactions.type": type.toLowerCase(),
+          "reactions.user_id": id,
+        }),
+    {cursorFrom: "reaction_created_at"},
+  ),
 }

@@ -33,7 +33,7 @@ class MediaList extends Component {
     const isLoading = props.data.loading || this.props.data.loading
 
     if (!props.data.loading && props.data.medias !== this.props.data.medias) {
-      props.updateList(props.data.medias)
+      props.updateList(props.data.medias.edges.map(edge => edge.node))
     }
 
     if (!isLoading && props.data.medias.length - props.current < 10)
@@ -47,13 +47,12 @@ class MediaList extends Component {
         {!data || data.loading
           ? <h2>Loading...</h2>
           : <div>
-              {data.medias.map((media, i) =>
+              {data.medias.edges.map((edge, i) =>
                 <MediaCard
-                  key={i}
-                  list={this.props.uniqueId}
+                  key={edge.cursor}
                   index={i}
                   onPlay={() => play(this.props.player, i)}
-                  {...media}
+                  {...edge.node}
                 />,
               )}
             </div>}
@@ -89,31 +88,29 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
   },
 })
 
-export function withMedias(
-  graphqlQuery,
-  uniqueId,
-  fragments,
-  mediasPath = "medias",
-  vars = () => {},
-) {
+export function withMedias(graphqlQuery, uniqueId, mediasPath = "medias") {
   return graphql(graphqlQuery, {
-    options: props => ({
-      variables: {...vars(props), skip: 0},
-      fragments,
-    }),
     props: ({data, ownProps: props}) => ({
       data,
       uniqueId: typeof uniqueId === "string" ? uniqueId : uniqueId(props),
       loadMore: () =>
         data.fetchMore({
-          variables: {skip: _get(data, mediasPath).length},
+          variables: {after: _get(data, mediasPath).pageInfo.endCursor},
           updateQuery: (prev, {fetchMoreResult}) => {
+            debugger
             if (!fetchMoreResult) return prev
-            let newData = Object.assign({}, prev)
-            _set(newData, mediasPath, [
-              ..._get(prev, mediasPath),
-              ..._get(fetchMoreResult, mediasPath),
-            ])
+            let newData = {
+              ...fetchMoreResult,
+            }
+
+            _set(newData, mediasPath, {
+              edges: [
+                ..._get(prev, mediasPath).edges,
+                ..._get(fetchMoreResult, mediasPath).edges,
+              ],
+              pageInfo: _get(fetchMoreResult, mediasPath).pageInfo,
+              totalCount: _get(fetchMoreResult, mediasPath).totalCount,
+            })
             return newData
           },
         }),

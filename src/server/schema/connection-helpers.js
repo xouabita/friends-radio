@@ -64,8 +64,16 @@ class Connection {
   }
 
   resolver(query, {cursorFrom = "created_at", direction = "desc"} = {}) {
-    return async (_, {first, after, last, before}) => {
-      const clone = query.clone()
+    return async (obj, args, context, info) => {
+      let clone
+      if (typeof query === "function") {
+        clone = query(obj, args, context, info)
+      } else {
+        clone = query.clone()
+      }
+
+      let {first, after, last, before} = args
+
       if (!first && !last) {
         throw new Error(
           "You must provide a 'first' or 'last' value to properly paginate" +
@@ -110,7 +118,9 @@ class Connection {
         clone.offset(Math.max(0, slicedNodesCount - last))
       }
 
-      const nodes = await clone.select()
+      const finalQuery = clone.select()
+      console.log(finalQuery.toString())
+      const nodes = await finalQuery
       const endCursor = nodes.length
         ? this.encode(nodes[nodes.length - 1][cursorFrom])
         : null

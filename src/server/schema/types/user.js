@@ -1,13 +1,11 @@
+const MediaConnection = require("../connections/MediaConnection")
+
 const User = `
 type User {
   id: String!
   name: String!
-  mediaCount: Int!
-  likeCount: Int!
-  dislikeCount: Int!
-  medias(skip: Int = 0, limit: Int = 30): [Media]!
-  likes(skip: Int = 0, limit: Int = 30): [Media]!
-  dislikes(skip: Int = 0, limit: Int = 30): [Media]!
+  ${MediaConnection.field("medias")}
+  ${MediaConnection.field("reactions", ["type: ReactionType!"])}
 }
 `
 

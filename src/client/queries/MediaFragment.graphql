@@ -1,0 +1,25 @@
+fragment MediaFragment on MediaConnection {
+  totalCount
+  edges {
+    cursor
+    node {
+      id
+      title
+      url
+      thumbnail
+      artist
+      description
+      posted_by {
+        id
+        name
+      }
+      myReaction {
+        type
+      }
+    }
+  }
+  pageInfo {
+    hasNextPage
+    endCursor
+  }
+}
