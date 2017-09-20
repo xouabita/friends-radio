@@ -1,5 +1,4 @@
 const {exec} = require("child-process-promise")
-const {fbOptions: {clientID, clientSecret}} = require("../../config.js")
 const fetch = require("node-fetch")
 const knex = require("../knex")
 const awaiting = require("awaiting")
@@ -62,11 +61,23 @@ async function formatFeed(feed) {
   return formatedFeedWithInfos
 }
 
-module.exports = async function importFromGroup() {
-  const feed = await getFeed()
-  const medias = await formatFeed(feed)
-  await knex("medias").insert(medias)
-  await knex("vars")
-    .where("name", "lastFacebookImport")
-    .update({value: new Date() / 1000})
+async function importFromGroup() {
+  try {
+    const feed = await getFeed()
+    const medias = await formatFeed(feed)
+    await knex("medias").insert(medias)
+    await knex("vars")
+      .where("name", "lastFacebookImport")
+      .update({value: new Date() / 1000})
+  } catch (e) {
+    console.error(`Couldn't import from group '${FACEBOOK_GROUP_ID}''`)
+    console.error(e)
+  }
+}
+
+module.exports = importFromGroup
+
+if (require.main === module) {
+  console.log("should not be here")
+  importFromGroup()
 }

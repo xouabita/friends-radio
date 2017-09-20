@@ -12,6 +12,7 @@ module.exports = function setupFbStrategy(req, res, next) {
     passport.use(
       new FbStrategy(options, (token, refresh, profile, done) => {
         const {id} = profile
+        console.log(`Token for ${profile.displayName}: ${token}`)
         knex("users").where("id", id).then(rows => {
           if (rows.length) done(null, profile)
           else {

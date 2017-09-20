@@ -6,6 +6,7 @@ const jwt = require("jsonwebtoken")
 const cors = require("cors")
 const {graphqlExpress, graphiqlExpress} = require("graphql-server-express")
 const history = require("connect-history-api-fallback")
+const importFromGroup = require("./jobs/importFromGroup.js")
 
 const {secret} = require("../config")
 const schema = require("./schema")
@@ -50,6 +51,24 @@ if (process.env.NODE_ENV !== "production") {
       endpointURL: "/graphql",
     }),
   )
+}
+
+// Enable group imports functions if FACEBOOK_GROUP_ID is set
+if (process.env.FACEBOOK_GROUP_ID) {
+  console.log("I M P O R T   F R O M   G R O U P   E N A B L E D")
+  app.get(
+    "/authenticateForImport",
+    setupFbStrategy,
+    passport.authenticate("facebook", {
+      scope: ["user_friends", "user_managed_groups"],
+    }),
+  )
+  const time = 5 * 60 * 1000
+  const recursive = () => {
+    importFromGroup()
+    setTimeout(recursive, time)
+  }
+  recursive()
 }
 
 app.use(history())
