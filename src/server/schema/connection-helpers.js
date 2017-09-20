@@ -119,7 +119,6 @@ class Connection {
       }
 
       const finalQuery = clone.select()
-      console.log(finalQuery.toString())
       const nodes = await finalQuery
       const endCursor = nodes.length
         ? this.encode(nodes[nodes.length - 1][cursorFrom])

@@ -1,0 +1,11 @@
+#import "./MediaFragment.graphql"
+#import "./UserInfoFragment.graphql"
+
+query getUserMedias($id: String!, $after: String) {
+  user(id: $id) {
+    ...UserInfoFragment
+    medias(first: 30, after: $after) {
+      ...MediaFragment
+    }
+  }
+}

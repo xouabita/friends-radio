@@ -1,0 +1,13 @@
+fragment UserInfoFragment on User {
+  id
+  name
+  likeCount: reactions(type: LIKE, first: 1) {
+    value: totalCount
+  }
+  dislikeCount: reactions(type: DISLIKE, first: 1) {
+    value: totalCount
+  }
+  mediaCount: medias(first: 1) {
+    value: totalCount
+  }
+}

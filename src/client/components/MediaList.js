@@ -1,6 +1,7 @@
 import React, {Component} from "react"
 
 import {Button} from "reactstrap"
+import {P} from "glamorous"
 import MediaCard from "./MediaCard"
 
 import {updateList} from "../actions/medias.js"
@@ -51,14 +52,22 @@ class MediaList extends Component {
                 <MediaCard
                   key={edge.cursor}
                   index={i}
+                  list={this.props.uniqueId}
                   onPlay={() => play(this.props.player, i)}
                   {...edge.node}
                 />,
               )}
+              {data.medias.pageInfo.hasNextPage
+                ? <Button {...loadMoreStyle} outline onClick={loadMore}>
+                    Load More...
+                  </Button>
+                : <P textAlign="center">
+                    That's all folks{" "}
+                    <span role="img" aria-label="Hand">
+                      👋
+                    </span>
+                  </P>}
             </div>}
-        <Button {...loadMoreStyle} outline onClick={loadMore}>
-          Load More...
-        </Button>
       </div>
     )
   }
@@ -88,8 +97,14 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
   },
 })
 
-export function withMedias(graphqlQuery, uniqueId, mediasPath = "medias") {
+export function withMedias(
+  graphqlQuery,
+  uniqueId,
+  mediasPath = "medias",
+  vars = () => {},
+) {
   return graphql(graphqlQuery, {
+    options: props => ({variables: vars(props)}),
     props: ({data, ownProps: props}) => ({
       data,
       uniqueId: typeof uniqueId === "string" ? uniqueId : uniqueId(props),
@@ -97,7 +112,6 @@ export function withMedias(graphqlQuery, uniqueId, mediasPath = "medias") {
         data.fetchMore({
           variables: {after: _get(data, mediasPath).pageInfo.endCursor},
           updateQuery: (prev, {fetchMoreResult}) => {
-            debugger
             if (!fetchMoreResult) return prev
             let newData = {
               ...fetchMoreResult,

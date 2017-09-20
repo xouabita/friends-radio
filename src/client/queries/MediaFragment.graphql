@@ -1,5 +1,4 @@
 fragment MediaFragment on MediaConnection {
-  totalCount
   edges {
     cursor
     node {

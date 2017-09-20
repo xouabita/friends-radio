@@ -2,30 +2,9 @@ import React from "react"
 
 import MediaList, {withMedias} from "../components/MediaList"
 import UserCard from "../components/UserCard"
-import gql from "graphql-tag"
-
-const queryUserWith = source => gql`
-query getUserWith_${source}($id: String!, $skip: Int!) {
-  user(id: $id) {
-    id
-    name
-    mediaCount
-    likeCount
-    dislikeCount
-    medias: ${source}(skip: $skip, limit: 50) {
-      id
-      title
-      url
-      thumbnail
-      artist
-      description
-      myReaction {
-        type
-      }
-    }
-  }
-}
-`
+import getUserMedias from "../queries/getUserMedias.graphql"
+import getUserLikes from "../queries/getUserLikes.graphql"
+import getUserDislikes from "../queries/getUserDislikes.graphql"
 
 const User = ({data, loadMore, uniqueId, params}) => {
   const mediaListData = {
@@ -39,9 +18,9 @@ const User = ({data, loadMore, uniqueId, params}) => {
         ? <UserCard
             id={params.user_id}
             name={data.user.name}
-            mediaCount={data.user.mediaCount}
-            likeCount={data.user.likeCount}
-            dislikeCount={data.user.dislikeCount}
+            mediaCount={data.user.mediaCount.value}
+            likeCount={data.user.likeCount.value}
+            dislikeCount={data.user.dislikeCount.value}
           />
         : undefined}
       <MediaList data={mediaListData} uniqueId={uniqueId} loadMore={loadMore} />
@@ -55,10 +34,13 @@ const UserWithMedias = ({match: {params}}) => {
     params.source === "likes" || params.source === "dislikes"
       ? params.source
       : "medias"
+  const query =
+    source === "medias"
+      ? getUserMedias
+      : source === "likes" ? getUserLikes : getUserDislikes
   const WithMedias = withMedias(
-    queryUserWith(source),
-    () => `u(${params.user_id}).${source}`,
-    [],
+    query,
+    `u(${params.user_id}).${source}`,
     "user.medias",
     () => ({id: params.user_id}),
   )(props => <User params={params} {...props} />)

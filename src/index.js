@@ -1,13 +1,6 @@
 const http = require("http")
 const app = require("./server")
 
-if (module.hot) {
-  module.hot.accept("./server", function() {
-    console.log("🔁  HMR Reloading `./server`...")
-  })
-  console.info("✅  Server-side HMR Enabled!")
-}
-
 const server = http.createServer(app)
 server.listen(process.env.PORT || 3000)
 
