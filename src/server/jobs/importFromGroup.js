@@ -1,7 +1,9 @@
-const {exec} = require("child-process-promise")
 const fetch = require("node-fetch")
 const knex = require("../knex")
 const awaiting = require("awaiting")
+const youtubeInfo = require("youtube-info")
+const youtubeVideoId = require("youtube-video-id")
+const {JSDOM} = require("jsdom")
 
 const FACEBOOK_GROUP_ID = process.env.FACEBOOK_GROUP_ID
 const USER_ACCESS_TOKEN = process.env.USER_ACCESS_TOKEN
@@ -16,14 +18,40 @@ async function getUrl() {
   return `${BASE_URL + URL_FEED}?access_token=${USER_ACCESS_TOKEN}&${fields}`
 }
 
+async function soundcloudInfo(url) {
+  const wholePage = await JSDOM.fromURL(url)
+  const articleString = Array.from(
+    wholePage.window.document.getElementsByTagName("noscript"),
+  ).find(elem => elem.innerHTML.includes("article")).innerHTML
+
+  const article = new JSDOM(articleString)
+  const articleDoc = article.window.document
+
+  const [title, artist] = Array.from(
+    articleDoc.querySelectorAll('[itemprop="name"] a'),
+  ).map(elem => elem.innerHTML)
+
+  const [h, m, s] = articleDoc
+    .querySelector('[itemprop="duration"]')
+    .content.replace("PT", "")
+    .split(/H|M|S/)
+
+  const duration = +h * 3600 + +m * 60 + +s
+
+  const thumbnail = articleDoc.querySelector('p [itemprop="image"]').src
+
+  return {
+    title,
+    artist,
+    duration,
+    thumbnail,
+  }
+}
+
 async function getFeed() {
   const url = await getUrl()
-  console.log(url)
   const {feed} = await fetch(url).then(data => data.json())
-  const filterPost = post =>
-    post.link &&
-    (post.link.includes("youtube") || post.link.includes("soundcloud"))
-  return feed.data.filter(filterPost)
+  return (feed || {}).data
 }
 
 function formatPost(post) {
@@ -37,20 +65,29 @@ function formatPost(post) {
 
 async function fetchInfo(post) {
   try {
-    const info = await exec(`youtube-dl -j ${post.url}`)
-      .then(({stdout}) => stdout)
-      .then(text => JSON.parse(text))
-      .then(moreInfo =>
-        Object.assign(post, {
-          duration: moreInfo.duration,
-          thumbnail: moreInfo.thumbnails[0].url,
-          title: moreInfo.title,
-          artist:
-            moreInfo.extractor === "soundcloud" ? moreInfo.uploader : undefined,
-        }),
-      )
-    return info
+    const youtubeId = youtubeVideoId(post.url)
+    if (youtubeId !== post.url) {
+      let ytInfo
+      for (var i = 0; i < 3; i++)
+        try {
+          ytInfo = await youtubeInfo(youtubeVideoId(post.url))
+        } catch (e) {
+          if (i === 2) throw e
+        }
+      return Object.assign({}, post, {
+        duration: ytInfo.duration,
+        title: ytInfo.title,
+        thumbnail: ytInfo.thumbnailUrl,
+      })
+    } else if (post.url.includes("soundcloud")) {
+      const scInfo = await soundcloudInfo(post.url)
+      return Object.assign({}, post, scInfo)
+    } else {
+      throw new Error(`invalid url: ${post.url}`)
+    }
   } catch (e) {
+    console.error(`Couldn't import ${post.url}`)
+    if (post.url) debugger
     return null
   }
 }
@@ -58,17 +95,23 @@ async function fetchInfo(post) {
 async function formatFeed(feed) {
   const formatedFeed = feed.map(formatPost)
   const formatedFeedWithInfos = await awaiting.map(formatedFeed, 10, fetchInfo)
-  return formatedFeedWithInfos
+  return formatedFeedWithInfos.filter(
+    media => media && media.title && media.duration && media.url,
+  )
 }
 
 async function importFromGroup() {
   try {
     const feed = await getFeed()
+    if (!feed) {
+      console.log("No new songs to import")
+      return
+    }
     const medias = await formatFeed(feed)
     await knex("medias").insert(medias)
     await knex("vars")
       .where("name", "lastFacebookImport")
-      .update({value: new Date() / 1000})
+      .update({value: parseInt(new Date() / 1000, 10)})
   } catch (e) {
     console.error(`Couldn't import from group '${FACEBOOK_GROUP_ID}''`)
     console.error(e)
@@ -78,6 +121,5 @@ async function importFromGroup() {
 module.exports = importFromGroup
 
 if (require.main === module) {
-  console.log("should not be here")
   importFromGroup()
 }

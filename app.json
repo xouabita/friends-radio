@@ -23,9 +23,5 @@
       "value": "false"
     }
   },
-  "addons": ["heroku-postgresql"],
-  "buildpacks": [
-    {"url": "heroku/nodejs"},
-    {"url": "https://github.com/livementor/heroku-buildpack-youtube-dl"}
-  ]
+  "addons": ["heroku-postgresql"]
 }

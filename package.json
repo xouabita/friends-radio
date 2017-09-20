@@ -40,6 +40,7 @@
     "graphql-server-express": "^0.8.0",
     "graphql-tag": "^2.4.2",
     "graphql-tools": "^1.0.0",
+    "jsdom": "^11.2.0",
     "jsonwebtoken": "^7.1.9",
     "knex": "^0.13.0",
     "lodash.get": "^4.4.2",
@@ -64,7 +65,9 @@
     "react-truncate": "^2.1.4",
     "reactstrap": "^4.6.2",
     "redux": "^3.6.0",
-    "uuid-v4": "^0.1.0"
+    "uuid-v4": "^0.1.0",
+    "youtube-info": "^1.1.1",
+    "youtube-video-id": "^0.0.2"
   },
   "devDependencies": {
     "babel-plugin-transform-function-bind": "^6.8.0",
