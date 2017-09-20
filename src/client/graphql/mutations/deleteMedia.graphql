@@ -1,0 +1,8 @@
+#import "../fragments/UserInfoFragment.graphql"
+mutation deleteMedia($mediaId: String!) {
+  deleteMedia(media_id: $mediaId) {
+    posted_by {
+      ...UserInfoFragment
+    }
+  }
+}

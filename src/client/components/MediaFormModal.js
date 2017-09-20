@@ -11,6 +11,7 @@ import {
 } from "reactstrap"
 
 import Thumbnail from "./Thumbnail"
+import {withRouter} from "react-router-dom"
 import {css} from "glamor"
 
 const size = 170
@@ -36,8 +37,9 @@ class MediaFormModal extends Component {
   onDelete() {
     const sure = window.confirm("Are you sure you want to delete ?")
     if (sure) {
-      this.props.onDelete(this.props.data.media.id)
+      this.props.onDelete(this.props.id)
       this.props.toggle()
+      this.props.history.push("/")
     }
   }
 
@@ -113,4 +115,4 @@ class MediaFormModal extends Component {
   }
 }
 
-export default MediaFormModal
+export default withRouter(MediaFormModal)

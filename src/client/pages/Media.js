@@ -13,6 +13,7 @@ import {Button} from "reactstrap"
 
 import {fbOptions} from "../../config.js"
 import MediaFormModal from "../components/MediaFormModal"
+import deleteMedia from "../graphql/mutations/deleteMedia.graphql"
 
 const style = {}
 const styles = {
@@ -77,7 +78,18 @@ const withEditMedia = graphql(EDIT_MEDIA_MUTATION, {
   }),
 })
 
+const withDeleteMedia = graphql(deleteMedia, {
+  props: ({mutate, ownProps}) => ({
+    onDelete: mediaId =>
+      mutate({
+        variables: {mediaId},
+        refetchQueries: ["getUserMedias", "getHome"],
+      }),
+  }),
+})
+
 const MediaFormModalEditable = withEditMedia(MediaFormModal)
+const MediaFormModalEditableDeletable = withDeleteMedia(MediaFormModalEditable)
 
 class MediaView extends Component {
   constructor(...props) {
@@ -104,7 +116,7 @@ class MediaView extends Component {
         padding={10}
       >
         {me && me.id === media.posted_by.id
-          ? <MediaFormModalEditable
+          ? <MediaFormModalEditableDeletable
               edit
               isOpen={this.state.modalOpen}
               toggle={this.toggleModal}
