@@ -37,7 +37,7 @@ class MediaList extends Component {
       props.updateList(props.data.medias.edges.map(edge => edge.node))
     }
 
-    if (!isLoading && props.data.medias.length - props.current < 10)
+    if (!isLoading && props.data.medias.edges.length - props.current < 5)
       this.props.loadMore()
   }
 
