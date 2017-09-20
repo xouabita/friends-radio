@@ -1,0 +1,19 @@
+fragment ReactionMutationFragment on Reaction {
+  media {
+    id
+    myReaction {
+      type
+    }
+  }
+  user {
+    likeCount: reactions(type: LIKE, first: 1) {
+      value: totalCount
+    }
+    dislikeCount: reactions(type: DISLIKE, first: 1) {
+      value: totalCount
+    }
+    mediaCount: medias(first: 1) {
+      value: totalCount
+    }
+  }
+}

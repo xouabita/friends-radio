@@ -1,4 +1,4 @@
-#import "./MediaFragment.graphql"
+#import "../fragments/MediaFragment.graphql"
 
 query getHome($after: String) {
   medias(first: 30, after: $after) {

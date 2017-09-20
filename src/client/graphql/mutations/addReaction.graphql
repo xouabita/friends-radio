@@ -1,0 +1,7 @@
+#import "../fragments/ReactionMutationFragment.graphql"
+
+mutation addReaction($mediaId: String!, $type: ReactionType) {
+  addReaction(media_id: $mediaId, type: $type) {
+    ...ReactionMutationFragment
+  }
+}

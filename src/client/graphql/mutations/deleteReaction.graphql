@@ -1,0 +1,7 @@
+#import "../fragments/ReactionMutationFragment.graphql"
+
+mutation deleteReaction($mediaId: String!, $type: ReactionType) {
+  deleteReaction(media_id: $mediaId, type: $type) {
+    ...ReactionMutationFragment
+  }
+}

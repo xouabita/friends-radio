@@ -2,9 +2,9 @@ import React from "react"
 
 import MediaList, {withMedias} from "../components/MediaList"
 import UserCard from "../components/UserCard"
-import getUserMedias from "../queries/getUserMedias.graphql"
-import getUserLikes from "../queries/getUserLikes.graphql"
-import getUserDislikes from "../queries/getUserDislikes.graphql"
+import getUserMedias from "../graphql/queries/getUserMedias.graphql"
+import getUserLikes from "../graphql/queries/getUserLikes.graphql"
+import getUserDislikes from "../graphql/queries/getUserDislikes.graphql"
 
 const User = ({data, loadMore, uniqueId, params}) => {
   const mediaListData = {

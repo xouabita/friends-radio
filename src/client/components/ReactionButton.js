@@ -3,10 +3,12 @@ import React, {Component} from "react"
 import thumbUp from "../assets/emojis/heart.png"
 import thumbDown from "../assets/emojis/poop.png"
 
-import gql from "graphql-tag"
 import {graphql} from "react-apollo"
 import {css} from "glamor"
 import tada from "../styles/tada"
+
+import addReaction from "../graphql/mutations/addReaction.graphql"
+import deleteReaction from "../graphql/mutations/deleteReaction.graphql"
 
 const sizeInactive = "40%"
 const sizeNormal = "70%"
@@ -47,42 +49,6 @@ const wrapperStyle = css({
   position: "relative",
 })
 
-const ADD_REACTION_MUTATION = gql`
-  mutation addReaction($mediaId: String!, $type: ReactionType) {
-    addReaction(media_id: $mediaId, type: $type) {
-      media {
-        id
-        myReaction {
-          type
-        }
-      }
-      user {
-        id
-        likeCount
-        dislikeCount
-      }
-    }
-  }
-`
-
-const DELETE_REACTION_MUTATION = gql`
-  mutation deleteReaction($mediaId: String!, $type: ReactionType!) {
-    deleteReaction(media_id: $mediaId, type: $type) {
-      media {
-        id
-        myReaction {
-          type
-        }
-      }
-      user {
-        id
-        likeCount
-        dislikeCount
-      }
-    }
-  }
-`
-
 const withPerform = mutation =>
   graphql(mutation, {
     props: ({mutate, ownProps: {mediaId, type}}) => ({
@@ -92,7 +58,7 @@ const withPerform = mutation =>
             mediaId,
             type: type.toUpperCase(),
           },
-          refetchQueries: ["getUserWith_likes", "getUserWith_dislikes"],
+          refetchQueries: ["getUserLikes", "getUserDislikes", "getUserMedias"],
         }),
     }),
   })
@@ -158,8 +124,8 @@ class ReactionButton extends Component {
 const ReactionButtonWithPerform = props => {
   const WithPerformWrapped =
     props.status === "active"
-      ? withPerform(DELETE_REACTION_MUTATION)(ReactionButton)
-      : withPerform(ADD_REACTION_MUTATION)(ReactionButton)
+      ? withPerform(deleteReaction)(ReactionButton)
+      : withPerform(addReaction)(ReactionButton)
   return <WithPerformWrapped {...props} />
 }
 

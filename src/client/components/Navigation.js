@@ -13,7 +13,7 @@ import {
 import {Link} from "react-router-dom"
 
 import {graphql} from "react-apollo"
-import getMe from "../queries/getMe.graphql"
+import getMe from "../graphql/queries/getMe.graphql"
 
 import {Img} from "glamorous"
 

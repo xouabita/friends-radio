@@ -1,0 +1,11 @@
+#import "../fragments/MediaFragment.graphql"
+#import "../fragments/UserInfoFragment.graphql"
+
+query getUserLikes($id: String!, $after: String) {
+  user(id: $id) {
+    ...UserInfoFragment
+    medias: reactions(type: LIKE, first: 30, after: $after) {
+      ...MediaFragment
+    }
+  }
+}
