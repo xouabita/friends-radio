@@ -84,7 +84,7 @@ const withAddMedia = graphql(ADD_MEDIA_MUTATION, {
             thumbnail,
           },
         },
-        refetchQueries: [`getUserWith_medias`, `getMedias`],
+        refetchQueries: [`getUserMedias`, `getHome`],
       }),
   }),
 })
