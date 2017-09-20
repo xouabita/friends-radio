@@ -34,6 +34,7 @@
     "cookie-parser": "^1.4.3",
     "cors": "^2.8.3",
     "express": "^4.14.0",
+    "get-urls": "^7.0.0",
     "get-youtube-id": "^1.0.0",
     "glamor": "^2.20.25",
     "glamorous": "^3.20.0",

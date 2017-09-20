@@ -4,6 +4,7 @@ const awaiting = require("awaiting")
 const youtubeInfo = require("youtube-info")
 const youtubeVideoId = require("youtube-video-id")
 const {JSDOM} = require("jsdom")
+const getUrls = require("get-urls")
 
 const FACEBOOK_GROUP_ID = process.env.FACEBOOK_GROUP_ID
 const USER_ACCESS_TOKEN = process.env.USER_ACCESS_TOKEN
@@ -29,7 +30,7 @@ async function soundcloudInfo(url) {
 
   const [title, artist] = Array.from(
     articleDoc.querySelectorAll('[itemprop="name"] a'),
-  ).map(elem => elem.innerHTML)
+  ).map(elem => elem.textContent)
 
   const [h, m, s] = articleDoc
     .querySelector('[itemprop="duration"]')
@@ -64,6 +65,10 @@ function formatPost(post) {
 }
 
 async function fetchInfo(post) {
+  if (!post.url && post.description) {
+    const urls = Array.from(getUrls(post.description))
+    post.url = urls[0]
+  }
   try {
     const youtubeId = youtubeVideoId(post.url)
     if (youtubeId !== post.url) {
@@ -121,5 +126,5 @@ async function importFromGroup() {
 module.exports = importFromGroup
 
 if (require.main === module) {
-  importFromGroup()
+  importFromGroup().then(() => console.log("DONE!!!!"))
 }
