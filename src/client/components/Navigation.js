@@ -25,6 +25,9 @@ import mainColor from "../styles/mainColor"
 
 import {css} from "glamor"
 
+const logo = process.env.RAZZLE_LOGO || radioEmoji
+const brandName = process.env.RAZZLE_BRAND_NAME || "FRIENDS RADIO"
+
 const navStyle = css({
   background: mainColor,
   borderRadius: 0,
@@ -77,8 +80,10 @@ const Navigation = ({data, className}) =>
       <Container>
         <NavbarToggler right />
         <NavbarBrand {...brandStyle} to="/">
-          <img src={radioEmoji} alt="" />
-          <span>FRIENDS RADIO</span>
+          <img src={logo} alt="" />
+          <span>
+            {brandName}
+          </span>
         </NavbarBrand>
         <Collapse navbar>
           <Nav className="ml-auto" navbar>
