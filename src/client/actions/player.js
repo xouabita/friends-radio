@@ -1,36 +1,28 @@
 export function play() {
   return {
-    type: 'PLAY'
+    type: "PLAY",
   }
 }
 
 export function pause() {
   return {
-    type: 'PAUSE'
+    type: "PAUSE",
   }
 }
 
-export function next(skip = 1) {
+export function setCurrent(cursor) {
   return {
-    type: 'NEXT',
-    payload: skip
+    type: "SET_CURRENT",
+    payload: cursor,
   }
 }
 
-export function prev(skip = 1) {
+export function start(list, current) {
   return {
-    type: 'PREV',
-    payload: skip
-  }
-}
-
-export function start(history, current, queue) {
-  return {
-    type: 'START',
+    type: "START",
     payload: {
-      history,
+      list,
       current,
-      queue
-    }
+    },
   }
 }

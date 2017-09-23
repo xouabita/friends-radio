@@ -6,6 +6,10 @@ import MediaList, {withMedias} from "../components/MediaList"
 import getMe from "../graphql/queries/getMe.graphql"
 import getHome from "../graphql/queries/getHome.graphql"
 
+window.getMe = getMe
+window.getHome = getHome
+window.gql = require("graphql-tag")
+
 const MediaListWithMedias = withMedias(getHome, "homepage")(MediaList)
 
 const Homepage = ({data}) =>

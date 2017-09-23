@@ -5,7 +5,7 @@ import {P} from "glamorous"
 import MediaCard from "./MediaCard"
 
 import {updateList} from "../actions/medias.js"
-import {play, pause} from "../actions/player.js"
+import {play, pause, start} from "../actions/player.js"
 
 import {graphql} from "react-apollo"
 import {connect} from "react-redux"
@@ -34,10 +34,10 @@ class MediaList extends Component {
     const isLoading = props.data.loading || this.props.data.loading
 
     if (!props.data.loading && props.data.medias !== this.props.data.medias) {
-      props.updateList(props.data.medias.edges.map(edge => edge.node))
+      props.updateList(props.data.medias.edges)
     }
 
-    if (!isLoading && props.data.medias.edges.length - props.current < 5)
+    if (!isLoading && props.data.medias.edges.length - props.current < 10)
       this.props.loadMore()
   }
 
@@ -48,12 +48,12 @@ class MediaList extends Component {
         {!data || data.loading
           ? <h2>Loading...</h2>
           : <div>
-              {data.medias.edges.map((edge, i) =>
+              {data.medias.edges.map(edge =>
                 <MediaCard
                   key={edge.cursor}
-                  index={i}
                   list={this.props.uniqueId}
-                  onPlay={() => play(this.props.player, i)}
+                  cursor={edge.cursor}
+                  onPlay={() => play(this.props.player, edge.cursor)}
                   {...edge.node}
                 />,
               )}
@@ -79,18 +79,10 @@ const mapStateToProps = ({player}) => ({
   player,
 })
 const mapDispatchToProps = (dispatch, ownProps) => ({
-  play: (player, index) => {
-    if (player.list === ownProps.uniqueId && index === player.current)
+  play: (player, cursor) => {
+    if (player.list === ownProps.uniqueId && cursor === player.current)
       player.playing ? dispatch(pause()) : dispatch(play())
-    else
-      dispatch({
-        type: "START",
-        payload: {
-          current: index,
-          list: ownProps.uniqueId,
-          play: true,
-        },
-      })
+    else dispatch(start(ownProps.uniqueId, cursor))
   },
   updateList: list => {
     dispatch(updateList(ownProps.uniqueId, list))

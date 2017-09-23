@@ -140,7 +140,7 @@ const mapStateToProps = ({player}, ownProps) => ({
   playing:
     player.playing &&
     player.list === ownProps.list &&
-    ownProps.index === player.current,
+    ownProps.cursor === player.current,
 })
 
 export default connect(mapStateToProps)(MediaCard)

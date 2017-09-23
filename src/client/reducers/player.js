@@ -6,28 +6,20 @@ const initialState = {
 
 export default function playerReducer(state = initialState, action) {
   switch (action.type) {
-    case 'PLAY':
-      return { ...state, playing: true }
-    case 'START':
-      const { list, current, play } = action.payload
+    case "PLAY":
+      return {...state, playing: true}
+    case "START":
+      const {list, current} = action.payload
       return {
         ...state,
-        playing: play,
+        playing: true,
         current,
         list,
       }
-    case 'PAUSE':
-      return { ...state, playing: false }
-    case 'NEXT':
-      return {
-        ...state,
-        current: state.current + action.payload
-      }
-    case 'PREV':
-      return {
-        ...state,
-        current: state.current - action.payload
-      }
+    case "PAUSE":
+      return {...state, playing: false}
+    case "SET_CURRENT":
+      return {...state, current: action.payload}
     default:
       return state
   }

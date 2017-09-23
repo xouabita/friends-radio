@@ -15,7 +15,7 @@ import RangeSlider from "react-rangeslider"
 import ReactionButton from "./ReactionButton"
 import playerWidth from "../styles/playerWidth"
 
-import {play, pause, next, prev} from "../actions/player.js"
+import {play, pause, setCurrent} from "../actions/player.js"
 
 import glamorous, {Div} from "glamorous"
 import Queue from "./Queue"
@@ -192,6 +192,16 @@ class Player extends Component {
     }
   }
 
+  next() {
+    const {queue, setCurrent} = this.props
+    setCurrent(queue[0].cursor)
+  }
+
+  prev() {
+    const {history, setCurrent} = this.props
+    setCurrent(history[history.length - 1].cursor)
+  }
+
   render() {
     const thumbnail = this.state.current
       ? this.state.current.thumbnail
@@ -199,7 +209,7 @@ class Player extends Component {
 
     const title = this.state.current ? this.state.current.title : ""
 
-    const prevStyle = !this.props.index > 0 ? {display: "none"} : null
+    const prevStyle = !this.props.history.length ? {display: "none"} : null
     const nextStyle = !this.props.queue.length ? {display: "none"} : null
 
     const likeStatus =
@@ -218,13 +228,13 @@ class Player extends Component {
     return (
       <Container>
         <PlayerThumb src={thumbnail}>
-          <Prev onClick={() => this.props.prev()} style={prevStyle} />
+          <Prev onClick={::this.prev} style={prevStyle} />
           <Play
             playing={this.props.playing}
             onClick={this.onPlay}
             color="white"
           />
-          <Next onClick={() => this.props.next()} style={nextStyle} />
+          <Next onClick={::this.next} style={nextStyle} />
           <Dislike status={dislikeStatus} mediaId={mediaId} />
           <Like status={likeStatus} mediaId={mediaId} />
         </PlayerThumb>
@@ -240,7 +250,7 @@ class Player extends Component {
         <Title>
           {title}
         </Title>
-        <Queue medias={this.props.queue} next={this.props.next} />
+        <Queue medias={this.props.queue} setCurrent={this.props.setCurrent} />
         <Div height={0} width={0}>
           <ReactPlayer
             {...this.soundcloudProps}
@@ -266,22 +276,25 @@ const mapStateToProps = ({player, medias}) => {
       current: null,
       index: 0,
       queue: [],
+      history: [],
     }
-  else
+  else {
+    const isCurrent = edge => edge.cursor === player.current
+    const index = list.findIndex(isCurrent)
     return {
       playing: player.playing,
-      current: list[player.current],
-      index: player.current,
-      queue: list.slice(player.current + 1, list.length),
-      listName: player.list,
+      current: list[index].node,
+      cursor: list[index].cursor,
+      queue: list.slice(index + 1, list.length),
+      history: list.slice(0, index),
     }
+  }
 }
 
 const mapDispatchToProps = dispatch => ({
   play: () => dispatch(play()),
   pause: () => dispatch(pause()),
-  next: i => dispatch(next(i)),
-  prev: i => dispatch(prev(i)),
+  setCurrent: cursor => dispatch(setCurrent(cursor)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Player)
