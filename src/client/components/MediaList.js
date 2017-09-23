@@ -37,7 +37,10 @@ class MediaList extends Component {
       props.updateList(props.data.medias.edges)
     }
 
-    if (!isLoading && props.data.medias.edges.length - props.current < 10)
+    const isCurrent = edge => edge.cursor === props.current
+    const currentIndex = props.data.medias.edges.findIndex(isCurrent)
+
+    if (!isLoading && props.data.medias.edges.length - currentIndex < 10)
       this.props.loadMore()
   }
 
