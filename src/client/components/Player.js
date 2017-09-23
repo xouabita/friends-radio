@@ -161,7 +161,7 @@ class Player extends Component {
     return {
       url: this.url,
       hidden: true,
-      onEnded: () => this.props.next(),
+      onEnded: () => this.next(),
       playing: this.props.playing,
       onProgress: ({played}) => this.setState({played}),
       onDuration: duration => this.setState({duration}),
@@ -192,14 +192,25 @@ class Player extends Component {
     }
   }
 
+  isNotDisliked(edge) {
+    return (edge.node.myReaction || {}).type !== "DISLIKE"
+  }
+
   next() {
     const {queue, setCurrent} = this.props
-    setCurrent(queue[0].cursor)
+    const index = queue.findIndex(this.isNotDisliked)
+    if (index >= 0) setCurrent(queue[index].cursor)
+    else setCurrent(null)
   }
 
   prev() {
     const {history, setCurrent} = this.props
-    setCurrent(history[history.length - 1].cursor)
+    let index = history.length - 1
+    while (index > -1 && !this.isNotDisliked(history[index])) {
+      index--
+    }
+    if (index >= 0) setCurrent(history[index].cursor)
+    else setCurrent(null)
   }
 
   render() {
@@ -270,15 +281,15 @@ class Player extends Component {
 
 const mapStateToProps = ({player, medias}) => {
   const list = medias[player.list]
-  if (!list)
+  if (!list || !player.current)
     return {
       playing: false,
       current: null,
-      index: 0,
+      cursor: null,
       queue: [],
       history: [],
     }
-  else {
+  else if (player.current) {
     const isCurrent = edge => edge.cursor === player.current
     const index = list.findIndex(isCurrent)
     return {
