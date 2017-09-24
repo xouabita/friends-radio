@@ -115,13 +115,13 @@ const Reaction = glamorous(ReactionButton)({
   width: reactionSize,
   bottom: margin,
 })
-function Like() {
+function Like(props) {
   const Styled = glamorous(Reaction)({right: margin})
-  return <Styled type="like" />
+  return <Styled type="like" {...props} />
 }
-function Dislike() {
+function Dislike(props) {
   const Styled = glamorous(Reaction)({left: margin})
-  return <Styled type="dislike" />
+  return <Styled type="dislike" {...props} />
 }
 
 class Player extends Component {
