@@ -23,5 +23,8 @@
       "value": "false"
     }
   },
-  "addons": ["heroku-postgresql"]
+  "addons": ["heroku-postgresql"],
+  "scripts": {
+    "postdeploy": "yarn db -- migrate:latest"
+  }
 }
