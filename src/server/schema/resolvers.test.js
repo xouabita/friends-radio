@@ -209,12 +209,13 @@ describe("mutation resolver", () => {
     )
     for (const key of ["title", "url", "duration"])
       expect(media[key]).toEqual(minimumMedia[key])
+    expect(media.user_id).toBe(users[0].id)
     const [{count}] = await knex("medias").count()
     expect(+count).toBe(medias.length + 1)
     const [mediaFromDb] = await knex("medias").where({id: media.id})
     expect(mediaFromDb).toEqual(media)
   })
-  test("add media with all", async () => {
+  test("addMedia with all", async () => {
     const mediaWithAll = {
       title: "XO Tour Llif3",
       artist: "Lil Uzi Vert",
@@ -237,9 +238,131 @@ describe("mutation resolver", () => {
       "description",
     ])
       expect(media[key]).toEqual(mediaWithAll[key])
+    expect(media.user_id).toBe(users[0].id)
     const [{count}] = await knex("medias").count()
     expect(+count).toBe(medias.length + 2)
     const [mediaFromDb] = await knex("medias").where({id: media.id})
     expect(mediaFromDb).toEqual(media)
+  })
+  describe("editMedia", () => {
+    const testId = "13c309d6-c4e6-4f8b-b52a-c05ae0c03e99"
+    test("doesn't edit if user is not the same", async () => {
+      const media = await mutationResolver.editMedia(
+        null,
+        {
+          media_id: testId,
+          media: {
+            artist: "Major Lazer",
+          },
+        },
+        {me: users[0]},
+      )
+      expect(media).toEqual(medias[1])
+      const [mediaFromDb] = await knex("medias").where({id: testId})
+      expect(mediaFromDb).toEqual(medias[1])
+    })
+    test("edit if user is the same", async () => {
+      const media = await mutationResolver.editMedia(
+        null,
+        {
+          media_id: testId,
+          media: {
+            artist: "Major Lazer",
+          },
+        },
+        {me: users[1]},
+      )
+      expect(media.artist).toBe("Major Lazer")
+      const [mediaFromDb] = await knex("medias").where({id: testId})
+      expect(mediaFromDb).toEqual(media)
+    })
+  })
+  describe("deleteMedia", () => {
+    test("do not delete when user id is wrong", async () => {
+      const inputMedia = {
+        title: "test",
+        url: "test",
+        duration: "1.6",
+      }
+      const media = await mutationResolver.addMedia(
+        null,
+        {media: inputMedia},
+        {me: users[0]},
+      )
+      const count = await knex("medias").count().then(([{count}]) => +count)
+      const deletedMedia = await mutationResolver.deleteMedia(
+        null,
+        {media_id: media.id},
+        {me: users[1]},
+      )
+      expect(deletedMedia).toBeUndefined()
+      const newCount = await knex("medias").count().then(([{count}]) => +count)
+      expect(newCount).toBe(count)
+      const [mediaFromDb] = await knex("medias").where({id: media.id})
+      expect(mediaFromDb).toBeDefined()
+    })
+    test("delete when user id is right", async () => {
+      const inputMedia = {
+        title: "test",
+        url: "test",
+        duration: "1.6",
+      }
+      const media = await mutationResolver.addMedia(
+        null,
+        {media: inputMedia},
+        {me: users[0]},
+      )
+      const count = await knex("medias").count().then(([{count}]) => +count)
+      const deletedMedia = await mutationResolver.deleteMedia(
+        null,
+        {media_id: media.id},
+        {me: users[0]},
+      )
+      expect(deletedMedia.title).toBe("test")
+      expect(deletedMedia.url).toBe("test")
+      expect(deletedMedia.duration).toBe("1.60")
+      const newCount = await knex("medias").count().then(([{count}]) => +count)
+      expect(newCount).toBe(count - 1)
+      const [mediaFromDb] = await knex("medias").where({id: media.id})
+      expect(mediaFromDb).toBeUndefined()
+    })
+  })
+  test("addMutation", async () => {
+    const inputMutation = {
+      media_id: medias[2].id,
+      type: "LIKE",
+    }
+    const reaction = await mutationResolver.addReaction(null, inputMutation, {
+      me: users[0],
+    })
+    expect(reaction.user_id).toBe(users[0].id)
+    const [{count}] = await knex("reactions").count()
+    expect(+count).toBe(reactions.length + 1)
+    const [reactionFromDb] = await knex("reactions").where({id: reaction.id})
+    expect(reactionFromDb).toEqual(reaction)
+  })
+  test("deleteMutation", async () => {
+    const inputMutation = {
+      media_id: medias[1].id,
+      type: "LIKE",
+    }
+    const reaction = await mutationResolver.addReaction(null, inputMutation, {
+      me: users[0],
+    })
+    const count = await knex("reactions").count().then(([{count}]) => +count)
+    const deletedReaction = await mutationResolver.deleteReaction(
+      null,
+      inputMutation,
+      {
+        me: users[0],
+      },
+    )
+    expect(deletedReaction.id).toBe(reaction.id)
+    expect(deletedReaction.media_id).toBe(medias[1].id)
+    expect(deletedReaction.type).toBe("like")
+    const newCount = await knex("reactions").count().then(([{count}]) => +count)
+    expect(newCount).toBe(count - 1)
+    const [reactionFromDb] = await knex("reactions").where({id: reaction.id})
+    expect(reactionFromDb).toBeUndefined()
   })
 })

@@ -31,10 +31,10 @@ module.exports = {
   },
   deleteReaction: async (_, {media_id, type}, {me}) => {
     const data = {user_id: me.id, media_id}
-    const [media] = await knex.select().from("reactions").where(data)
+    const [reaction] = await knex.select().from("reactions").where(data)
 
     await knex("reactions").where(data).del()
 
-    return media
+    return reaction
   },
 }
