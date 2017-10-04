@@ -1,109 +1,8 @@
-const knex = require("../knex")
+const knex = require("../../knex")
 const knexCleaner = require("knex-cleaner")
+const {fakeUsers, fakeMedias, fakeReactions} = require("../../__fixtures__")
 
-const users = [{id: "1", name: "John Doe"}, {id: "2", name: "Jean-Luc Borgnol"}]
-const medias = [
-  {
-    id: "6697c3b3-7934-45d5-bb0c-a985a262204f",
-    user_id: "1",
-    title: "Skrillex & Poo Bear - Would You Ever",
-    url: "https://soundcloud.com/skrillex/wouldyouever",
-    duration: "234.00",
-    thumbnail:
-      "https://i1.sndcdn.com/artworks-000235280255-5fyldq-t500x500.jpg",
-    artist: "Skrillex",
-    description: 'test3 "https://soundcloud.com/skrillex/wouldyouever"',
-    created_at: new Date("2017-09-20T16:41:54.000Z"),
-  },
-  {
-    id: "13c309d6-c4e6-4f8b-b52a-c05ae0c03e99",
-    user_id: "2",
-    title:
-      "Major Lazer - Sua Cara (feat. Anitta & Pabllo Vittar) (Official Audio)",
-    url: "https://www.youtube.com/watch?v=2TzEALB4qP0",
-    duration: "169.00",
-    thumbnail: "https://i.ytimg.com/vi/2TzEALB4qP0/maxresdefault.jpg",
-    artist: null,
-    description: "test2",
-    created_at: new Date("2017-09-20T15:13:44.000Z"),
-  },
-  {
-    id: "520051cd-f2e6-436f-9400-0b069de3d118",
-    user_id: "2",
-    title: "The Chemical Brothers - Asleep From Day",
-    url: "https://www.youtube.com/watch?v=Cj7F0KU367s",
-    duration: "298.00",
-    thumbnail: "https://i.ytimg.com/vi/Cj7F0KU367s/hqdefault.jpg",
-    artist: null,
-    description: null,
-    created_at: new Date("2017-09-16T23:25:51.000Z"),
-  },
-  {
-    id: "ebe7610c-8d49-48a0-8ba0-22cf54d880ac",
-    user_id: "1",
-    title: 'Diplo ft. Jahan Lennon - "About That Life" (Official Music Video)',
-    url: "https://www.youtube.com/watch?v=ylwggwp_YsY",
-    duration: "187.00",
-    thumbnail: "https://i.ytimg.com/vi/ylwggwp_YsY/maxresdefault.jpg",
-    artist: null,
-    description: null,
-    created_at: new Date("2017-09-16T23:24:11.000Z"),
-  },
-  {
-    id: "ca96d4e0-b35d-4016-ac6e-b756e75c6492",
-    user_id: "2",
-    title:
-      "ビッチと会う feat. Weny Dacillo, Pablo Blasta & JP THE WAVY / DJ CHARI & DJ TATSUKI",
-    url: "https://www.youtube.com/watch?v=qkg2st1CWKg",
-    duration: "316.00",
-    thumbnail: "https://i.ytimg.com/vi/qkg2st1CWKg/maxresdefault.jpg",
-    artist: null,
-    description: null,
-    created_at: new Date("2017-09-11T15:47:38.000Z"),
-  },
-  {
-    id: "8727546e-0a28-4a86-9721-a454ad4fc544",
-    user_id: "1",
-    title:
-      "Yellow Claw - Good Day ft. DJ Snake & Elliphant [OFFICIAL MUSIC VIDEO]",
-    url: "https://www.youtube.com/watch?v=RyMqplmQ_fE",
-    duration: "252.00",
-    thumbnail: "https://i.ytimg.com/vi/RyMqplmQ_fE/maxresdefault.jpg",
-    artist: null,
-    description: "Moi j'aime bien le dimanche",
-    created_at: new Date("2017-09-10T15:38:43.000Z"),
-  },
-]
-const reactions = [
-  {
-    id: "e37a3977-323f-4aaf-b53b-6036c3e89f32",
-    user_id: "1",
-    media_id: "6697c3b3-7934-45d5-bb0c-a985a262204f",
-    type: "dislike",
-    created_at: new Date("2017-09-23T16:22:46.769Z"),
-  },
-  {
-    id: "a439c88e-88de-45f8-b140-f783e86fba94",
-    user_id: "2",
-    media_id: "13c309d6-c4e6-4f8b-b52a-c05ae0c03e99",
-    type: "like",
-    created_at: new Date("2017-09-23T16:29:11.802Z"),
-  },
-  {
-    id: "73c8fd17-2ec6-4819-9434-878e153f3104",
-    user_id: "1",
-    media_id: "13c309d6-c4e6-4f8b-b52a-c05ae0c03e99",
-    type: "dislike",
-    created_at: new Date("2017-09-24T09:35:21.060Z"),
-  },
-  {
-    id: "ea39f370-4295-4198-8e07-484b8a8bcfbe",
-    user_id: "1",
-    media_id: "8727546e-0a28-4a86-9721-a454ad4fc544",
-    type: "like",
-    created_at: new Date("2017-09-24T09:44:23.444Z"),
-  },
-]
+const [users, medias, reactions] = [fakeUsers(), fakeMedias(), fakeReactions()]
 
 beforeAll(async () => {
   await knexCleaner.clean(knex)
@@ -113,7 +12,7 @@ beforeAll(async () => {
 })
 
 describe("media resolver", () => {
-  const mediaResolver = require("./resolvers/media")
+  const mediaResolver = require("../resolvers/media")
   test("posted_by", async () => {
     const posted_by = await mediaResolver.posted_by(medias[0])
     expect(posted_by).toEqual(users[0])
@@ -129,7 +28,7 @@ describe("media resolver", () => {
 })
 
 describe("query resolver", () => {
-  const queryResolver = require("./resolvers/query")
+  const queryResolver = require("../resolvers/query")
   test("user", async () => {
     const user = await queryResolver.user(null, {id: "2"})
     expect(user).toEqual(users[1])
@@ -158,7 +57,7 @@ describe("query resolver", () => {
 })
 
 describe("reaction resolver", () => {
-  const reactionResolver = require("./resolvers/reaction")
+  const reactionResolver = require("../resolvers/reaction")
   test("media", async () => {
     const media = await reactionResolver.media(reactions[1])
     expect(media).toEqual(medias[1])
@@ -176,7 +75,7 @@ describe("reaction resolver", () => {
 })
 
 describe("user resolver", () => {
-  const userResolver = require("./resolvers/user")
+  const userResolver = require("../resolvers/user")
   test("medias", async () => {
     const mediasUser0 = await userResolver.medias(users[0], {first: 10})
     const mediasUser1 = await userResolver.medias(users[1], {first: 10})
@@ -195,7 +94,7 @@ describe("user resolver", () => {
 })
 
 describe("mutation resolver", () => {
-  const mutationResolver = require("./resolvers/mutation")
+  const mutationResolver = require("../resolvers/mutation")
   test("addMedia minimum", async () => {
     const minimumMedia = {
       title: "Daughter - Candles",
