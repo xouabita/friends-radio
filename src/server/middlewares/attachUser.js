@@ -9,6 +9,7 @@ module.exports = async function attachUser(req, res, next) {
       const [user] = await knex("users").where("id", id)
       req.user = user
     }
+  } catch (e) {
   } finally {
     if (!req.user) {
       res.clearCookie("jwt_token")
