@@ -4,7 +4,7 @@ const initialState = {
   playing: false,
 }
 
-export default function playerReducer(state = initialState, action) {
+export default function playerReducer(state = initialState, action = {}) {
   switch (action.type) {
     case "PLAY":
       return {...state, playing: true}

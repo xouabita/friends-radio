@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`updateList 1`] = `
+Object {
+  "payload": Object {
+    "list": "test_list",
+    "name": "test_name",
+  },
+  "type": "UPDATE_LIST",
+}
+`;

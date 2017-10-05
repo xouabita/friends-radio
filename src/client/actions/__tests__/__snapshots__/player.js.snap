@@ -1,0 +1,30 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`pause 1`] = `
+Object {
+  "type": "PAUSE",
+}
+`;
+
+exports[`play 1`] = `
+Object {
+  "type": "PLAY",
+}
+`;
+
+exports[`setCurrent 1`] = `
+Object {
+  "payload": "cursor",
+  "type": "SET_CURRENT",
+}
+`;
+
+exports[`start 1`] = `
+Object {
+  "payload": Object {
+    "current": "bar",
+    "list": "foo",
+  },
+  "type": "START",
+}
+`;
