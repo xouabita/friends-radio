@@ -1,0 +1,12 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`NavbarBrand 1`] = `
+<Link
+  className="foo navbar-brand"
+  otherProps="bar"
+  replace={false}
+  to="lol"
+>
+  Brand.
+</Link>
+`;

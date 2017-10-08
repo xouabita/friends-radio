@@ -63,7 +63,7 @@ const withPerform = mutation =>
     }),
   })
 
-class ReactionButton extends Component {
+export class ReactionButton extends Component {
   constructor(...props) {
     super(...props)
     this.state = {

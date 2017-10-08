@@ -65,7 +65,7 @@ const styles = {
   }),
 }
 
-const MediaCard = media => {
+export const MediaCard = media => {
   const likeStatus = media.myReaction
     ? media.myReaction.type === "LIKE" ? "active" : "inactive"
     : "normal"

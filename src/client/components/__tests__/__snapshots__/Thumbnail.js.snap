@@ -1,0 +1,29 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`it should pass props correctly 1`] = `
+Object {
+  "children": <glamorous(div)
+    style={undefined}
+/>,
+  "custom": "withArgs",
+  "customProps": true,
+  "style": Object {
+    "backgroundImage": "url(foobar)",
+    "backgroundPosition": "center center",
+    "backgroundRepeat": "no-repeat",
+    "backgroundSize": "cover",
+    "foo": "bar",
+  },
+}
+`;
+
+exports[`should pass children 1`] = `
+Array [
+  <p>
+    Hello
+</p>,
+  <span>
+    World
+</span>,
+]
+`;
