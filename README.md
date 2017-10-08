@@ -1,6 +1,22 @@
-# FriendsRadio [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/xouabita/friends-radio)
+<h1 align="center">FriendsRadio</h1>
+<p align="Center">
+  <a href="https://heroku.com/deploy?template=https://github.com/xouabita/friends-radio">
+    <img src="https://img.shields.io/badge/deploy-heroku-7056BF.svg" />
+  </a>
+  <a href="https://travis-ci.org/xouabita/friends-radio">
+    <img src="https://travis-ci.org/xouabita/friends-radio.svg?branch=master" />
+  </a>
+  <a href="https://codeclimate.com/github/xouabita/friends-radio">
+    <img src="https://codeclimate.com/github/xouabita/friends-radio/badges/gpa.svg" />
+  </a>
+  <a href="https://codecov.io/gh/xouabita/friends-radio">
+    <img src="https://codecov.io/gh/xouabita/friends-radio/branch/master/graph/badge.svg" alt="Codecov" />
+  </a>
+</p>
 
-:radio: Stream and share musics with friends
+<h4 align="center">:radio: <i>Stream and share musics with friends</i> :sound:</h4>
+
+---
 
 :sparkles: Features
 -------------------
