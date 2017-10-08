@@ -1,0 +1,14 @@
+language: node_js
+services: postgresql
+node_js: '8'
+install:
+  - yarn global add codecov
+  - yarn
+before_script:
+  - createuser friendsradio_user
+  - createdb friendsradio_test
+  - psql -c "ALTER USER friendsradio_user WITH SUPERUSER;" -U postgres
+  - NODE_ENV=test yarn run db -- migrate:latest
+script:
+  - yarn test -- --coverage
+  - codecov
