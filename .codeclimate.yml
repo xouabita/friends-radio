@@ -1,2 +1,10 @@
 exclude_paths:
   - "**/__tests__/"
+engines:
+  duplication:
+    enabled: true
+  eslint:
+    enabled: true
+ratings:
+  paths:
+    - "**.js"
