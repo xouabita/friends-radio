@@ -68,14 +68,14 @@ const Container = glamorous.div({
   flexDirection: "column",
 })
 
-const PlayerThumb = glamorous(Thumbnail)({
+export const PlayerThumb = glamorous(Thumbnail)({
   width: thumbSize,
   height: thumbSize,
   margin: "auto",
   position: "relative",
 })
 
-const Title = glamorous.p({
+export const Title = glamorous.p({
   fontSize: 15,
   width: thumbSize,
   margin: "10px auto",
@@ -84,7 +84,7 @@ const Title = glamorous.p({
   overflow: "hidden",
 })
 
-const Play = glamorous(PlayButton)({
+export const Play = glamorous(PlayButton)({
   width: playButtonSize,
   height: playButtonSize,
   position: "absolute",
@@ -103,8 +103,8 @@ const controlStyle = {
   transform: "translateY(-50%)",
   ":hover": {cursor: "pointer"},
 }
-const Prev = glamorous(PrevIcon)(controlStyle)
-const Next = glamorous(NextIcon)({
+export const Prev = glamorous(PrevIcon)(controlStyle)
+export const Next = glamorous(NextIcon)({
   ...controlStyle,
   right: 0,
 })
@@ -115,16 +115,17 @@ const Reaction = glamorous(ReactionButton)({
   width: reactionSize,
   bottom: margin,
 })
-function Like(props) {
+
+export function Like(props) {
   const Styled = glamorous(Reaction)({right: margin})
   return <Styled type="like" {...props} />
 }
-function Dislike(props) {
+export function Dislike(props) {
   const Styled = glamorous(Reaction)({left: margin})
   return <Styled type="dislike" {...props} />
 }
 
-class Player extends Component {
+export class Player extends Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -141,20 +142,15 @@ class Player extends Component {
       return this.soundcloudPlayer
     }
   }
-
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.current !== this.state.current) {
-      this.setState({
-        current: nextProps.current,
-      })
-    }
-  }
   onSeekChange = value => this.setState({played: value})
   onSeekChangeComplete = () => this.activePlayer.seekTo(this.state.played)
-  onPlay = () => (this.props.playing ? this.props.pause() : this.props.play())
+
+  get onPlay() {
+    return this.props.playing ? this.props.pause : this.props.play
+  }
 
   get url() {
-    return (this.state.current || {}).url
+    return (this.props.current || {}).url
   }
 
   get activeProps() {
@@ -213,41 +209,69 @@ class Player extends Component {
     else setCurrent(null)
   }
 
-  render() {
-    const thumbnail = this.state.current
-      ? this.state.current.thumbnail
+  get thumbnail() {
+    return this.props.current
+      ? this.props.current.thumbnail
       : "http://www.pandora.com/img/no_album_art.png"
+  }
 
-    const title = this.state.current ? this.state.current.title : ""
+  get title() {
+    return this.props.current ? this.props.current.title : ""
+  }
 
-    const prevStyle = !this.props.history.length ? {display: "none"} : null
-    const nextStyle = !this.props.queue.length ? {display: "none"} : null
+  get history() {
+    return this.props.history || []
+  }
 
-    const likeStatus =
-      this.state.current && this.state.current.myReaction
-        ? this.state.current.myReaction.type === "LIKE" ? "active" : "inactive"
-        : "normal"
-    const dislikeStatus =
-      this.state.current && this.state.current.myReaction
-        ? this.state.current.myReaction.type === "DISLIKE"
-          ? "active"
-          : "inactive"
-        : "normal"
+  get queue() {
+    return this.props.queue || []
+  }
 
-    const mediaId = (this.state.current || {}).id
+  get prevStyle() {
+    return !this.history.length ? {display: "none"} : null
+  }
 
+  get nextStyle() {
+    return !this.queue.length ? {display: "none"} : null
+  }
+
+  get likeStatus() {
+    if (this.props.current && this.props.current.myReaction) {
+      const {type} = this.props.current.myReaction
+      if (type === "LIKE") return "active"
+      if (type === "DISLIKE") return "inactive"
+    }
+
+    return "normal"
+  }
+
+  get dislikeStatus() {
+    if (this.props.current && this.props.current.myReaction) {
+      const {type} = this.props.current.myReaction
+      if (type === "DISLIKE") return "active"
+      if (type === "LIKE") return "inactive"
+    }
+
+    return "normal"
+  }
+
+  get mediaId() {
+    return (this.props.current || {}).id
+  }
+
+  render() {
     return (
       <Container>
-        <PlayerThumb src={thumbnail}>
-          <Prev onClick={::this.prev} style={prevStyle} />
+        <PlayerThumb src={this.thumbnail}>
+          <Prev onClick={::this.prev} style={this.prevStyle} />
           <Play
             playing={this.props.playing}
             onClick={this.onPlay}
             color="white"
           />
-          <Next onClick={::this.next} style={nextStyle} />
-          <Dislike status={dislikeStatus} mediaId={mediaId} />
-          <Like status={likeStatus} mediaId={mediaId} />
+          <Next onClick={::this.next} style={this.nextStyle} />
+          <Dislike status={this.dislikeStatus} mediaId={this.mediaId} />
+          <Like status={this.likeStatus} mediaId={this.mediaId} />
         </PlayerThumb>
         <Slider
           tooltip={false}
@@ -259,7 +283,7 @@ class Player extends Component {
           onChangeComplete={this.onSeekChangeComplete}
         />
         <Title>
-          {title}
+          {this.title}
         </Title>
         <Queue medias={this.props.queue} setCurrent={this.props.setCurrent} />
         <Div height={0} width={0}>

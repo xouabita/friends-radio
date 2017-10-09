@@ -1,0 +1,27 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Render with current music not playing should display a queue 1`] = `
+Object {
+  "medias": Array [
+    "queue_1",
+    "queue_2",
+  ],
+  "setCurrent": [Function],
+}
+`;
+
+exports[`Render with current music not playing should display reactions 1`] = `
+Object {
+  "mediaId": "music_id",
+  "status": "normal",
+}
+`;
+
+exports[`Render with current music not playing should display reactions 2`] = `
+Object {
+  "mediaId": "music_id",
+  "status": "normal",
+}
+`;
+
+exports[`Render without current music should set a default thumbnail 1`] = `"http://www.pandora.com/img/no_album_art.png"`;

@@ -1,6 +1,5 @@
 import React from "react"
 import {shallow} from "enzyme"
-import toJson from "enzyme-to-json"
 import {MediaCard} from "../MediaCard"
 import ReactionButton from "../ReactionButton"
 import PlayButton from "../PlayButton"
