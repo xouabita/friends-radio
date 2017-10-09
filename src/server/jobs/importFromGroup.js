@@ -92,7 +92,7 @@ async function fetchInfo(post) {
     }
   } catch (e) {
     console.error(`Couldn't import ${post.url}`)
-    if (post.url) debugger
+    console.error(e)
     return null
   }
 }

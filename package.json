@@ -94,6 +94,7 @@
     "node-fetch": "^1.6.3",
     "ramda": "^0.24.1",
     "react-test-renderer": "^16.0.0",
+    "request": "^2.83.0",
     "supertest": "^3.0.0"
   }
 }

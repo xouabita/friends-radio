@@ -1,0 +1,31 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`new songs to import 1`] = `
+Array [
+  Array [
+    Array [
+      Object {
+        "artist": "CONFESSION",
+        "created_at": "2017-10-04T10:41:22+0000",
+        "description": undefined,
+        "duration": 316,
+        "thumbnail": "https://i1.sndcdn.com/artworks-000244780027-4d03f4-t500x500.jpg",
+        "title": "Tchami & Malaa - Summer 99",
+        "url": "https://soundcloud.com/confession/tchami-malaa-summer-99",
+        "user_id": "1219170918129550",
+      },
+      Object {
+        "created_at": "2017-10-01T13:04:23+0000",
+        "description": "Gros sons. Gros clip.",
+        "duration": 129,
+        "thumbnail": "https://i.ytimg.com/vi/tkzY_VwNIek/hqdefault.jpg",
+        "title": "Ween - Ocean Man [Music Video]",
+        "url": "https://youtu.be/tkzY_VwNIek",
+        "user_id": "10207760159337633",
+      },
+    ],
+  ],
+]
+`;
+
+exports[`new songs to import 2`] = `undefined`;
