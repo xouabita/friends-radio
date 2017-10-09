@@ -248,6 +248,92 @@ Object {
 }
 `;
 
+exports[`query resolver medias 4`] = `
+Object {
+  "edges": Array [
+    Object {
+      "cursor": "IjIwMTctMDktMTBUMTU6Mzg6NDMuMDAwWiI=",
+      "node": anonymous {
+        "artist": null,
+        "created_at": 2017-09-10T15:38:43.000Z,
+        "description": "Moi j'aime bien le dimanche",
+        "duration": "252.00",
+        "id": "8727546e-0a28-4a86-9721-a454ad4fc544",
+        "thumbnail": "https://i.ytimg.com/vi/RyMqplmQ_fE/maxresdefault.jpg",
+        "title": "Yellow Claw - Good Day ft. DJ Snake & Elliphant [OFFICIAL MUSIC VIDEO]",
+        "url": "https://www.youtube.com/watch?v=RyMqplmQ_fE",
+        "user_id": "1",
+      },
+    },
+  ],
+  "nodes": Array [
+    anonymous {
+      "artist": null,
+      "created_at": 2017-09-10T15:38:43.000Z,
+      "description": "Moi j'aime bien le dimanche",
+      "duration": "252.00",
+      "id": "8727546e-0a28-4a86-9721-a454ad4fc544",
+      "thumbnail": "https://i.ytimg.com/vi/RyMqplmQ_fE/maxresdefault.jpg",
+      "title": "Yellow Claw - Good Day ft. DJ Snake & Elliphant [OFFICIAL MUSIC VIDEO]",
+      "url": "https://www.youtube.com/watch?v=RyMqplmQ_fE",
+      "user_id": "1",
+    },
+  ],
+  "pageInfo": Object {
+    "endCursor": "IjIwMTctMDktMTBUMTU6Mzg6NDMuMDAwWiI=",
+    "hasNextPage": false,
+    "hasPreviousPage": true,
+    "startCursor": "IjIwMTctMDktMTBUMTU6Mzg6NDMuMDAwWiI=",
+  },
+  "totalCount": "6",
+}
+`;
+
+exports[`query resolver medias 5`] = `
+Object {
+  "edges": Array [
+    Object {
+      "cursor": "IjIwMTctMDktMTFUMTU6NDc6MzguMDAwWiI=",
+      "node": anonymous {
+        "artist": null,
+        "created_at": 2017-09-11T15:47:38.000Z,
+        "description": null,
+        "duration": "316.00",
+        "id": "ca96d4e0-b35d-4016-ac6e-b756e75c6492",
+        "thumbnail": "https://i.ytimg.com/vi/qkg2st1CWKg/maxresdefault.jpg",
+        "title": "ビッチと会う feat. Weny Dacillo, Pablo Blasta & JP THE WAVY / DJ CHARI & DJ TATSUKI",
+        "url": "https://www.youtube.com/watch?v=qkg2st1CWKg",
+        "user_id": "2",
+      },
+    },
+  ],
+  "nodes": Array [
+    anonymous {
+      "artist": null,
+      "created_at": 2017-09-11T15:47:38.000Z,
+      "description": null,
+      "duration": "316.00",
+      "id": "ca96d4e0-b35d-4016-ac6e-b756e75c6492",
+      "thumbnail": "https://i.ytimg.com/vi/qkg2st1CWKg/maxresdefault.jpg",
+      "title": "ビッチと会う feat. Weny Dacillo, Pablo Blasta & JP THE WAVY / DJ CHARI & DJ TATSUKI",
+      "url": "https://www.youtube.com/watch?v=qkg2st1CWKg",
+      "user_id": "2",
+    },
+  ],
+  "pageInfo": Object {
+    "endCursor": "IjIwMTctMDktMTFUMTU6NDc6MzguMDAwWiI=",
+    "hasNextPage": true,
+    "hasPreviousPage": true,
+    "startCursor": "IjIwMTctMDktMTFUMTU6NDc6MzguMDAwWiI=",
+  },
+  "totalCount": "6",
+}
+`;
+
+exports[`query resolver medias connection errored 1`] = `[Error: You must provide a 'first' or 'last' value to properly paginate the MediaConnection']`;
+
+exports[`query resolver medias connection errored 2`] = `[Error: Mixing 'first' and 'before' is not supported]`;
+
 exports[`user resolver medias 1`] = `
 Object {
   "edges": Array [
@@ -434,41 +520,14 @@ exports[`user resolver reactions 1`] = `
 Object {
   "edges": Array [
     Object {
-      "cursor": "IjIwMTctMDktMjBUMTY6NDE6NTQuMDAwWiI=",
-      "node": anonymous {
-        "artist": "Skrillex",
-        "created_at": 2017-09-20T16:41:54.000Z,
-        "description": "test3 \\"https://soundcloud.com/skrillex/wouldyouever\\"",
-        "duration": "234.00",
-        "id": "6697c3b3-7934-45d5-bb0c-a985a262204f",
-        "thumbnail": "https://i1.sndcdn.com/artworks-000235280255-5fyldq-t500x500.jpg",
-        "title": "Skrillex & Poo Bear - Would You Ever",
-        "url": "https://soundcloud.com/skrillex/wouldyouever",
-        "user_id": "1",
-      },
-    },
-    Object {
-      "cursor": "IjIwMTctMDktMTZUMjM6MjQ6MTEuMDAwWiI=",
-      "node": anonymous {
-        "artist": null,
-        "created_at": 2017-09-16T23:24:11.000Z,
-        "description": null,
-        "duration": "187.00",
-        "id": "ebe7610c-8d49-48a0-8ba0-22cf54d880ac",
-        "thumbnail": "https://i.ytimg.com/vi/ylwggwp_YsY/maxresdefault.jpg",
-        "title": "Diplo ft. Jahan Lennon - \\"About That Life\\" (Official Music Video)",
-        "url": "https://www.youtube.com/watch?v=ylwggwp_YsY",
-        "user_id": "1",
-      },
-    },
-    Object {
-      "cursor": "IjIwMTctMDktMTBUMTU6Mzg6NDMuMDAwWiI=",
+      "cursor": "IjIwMTctMDktMjRUMDk6NDQ6MjMuNDQ0WiI=",
       "node": anonymous {
         "artist": null,
         "created_at": 2017-09-10T15:38:43.000Z,
         "description": "Moi j'aime bien le dimanche",
         "duration": "252.00",
         "id": "8727546e-0a28-4a86-9721-a454ad4fc544",
+        "reaction_created_at": 2017-09-24T09:44:23.444Z,
         "thumbnail": "https://i.ytimg.com/vi/RyMqplmQ_fE/maxresdefault.jpg",
         "title": "Yellow Claw - Good Day ft. DJ Snake & Elliphant [OFFICIAL MUSIC VIDEO]",
         "url": "https://www.youtube.com/watch?v=RyMqplmQ_fE",
@@ -478,33 +537,12 @@ Object {
   ],
   "nodes": Array [
     anonymous {
-      "artist": "Skrillex",
-      "created_at": 2017-09-20T16:41:54.000Z,
-      "description": "test3 \\"https://soundcloud.com/skrillex/wouldyouever\\"",
-      "duration": "234.00",
-      "id": "6697c3b3-7934-45d5-bb0c-a985a262204f",
-      "thumbnail": "https://i1.sndcdn.com/artworks-000235280255-5fyldq-t500x500.jpg",
-      "title": "Skrillex & Poo Bear - Would You Ever",
-      "url": "https://soundcloud.com/skrillex/wouldyouever",
-      "user_id": "1",
-    },
-    anonymous {
-      "artist": null,
-      "created_at": 2017-09-16T23:24:11.000Z,
-      "description": null,
-      "duration": "187.00",
-      "id": "ebe7610c-8d49-48a0-8ba0-22cf54d880ac",
-      "thumbnail": "https://i.ytimg.com/vi/ylwggwp_YsY/maxresdefault.jpg",
-      "title": "Diplo ft. Jahan Lennon - \\"About That Life\\" (Official Music Video)",
-      "url": "https://www.youtube.com/watch?v=ylwggwp_YsY",
-      "user_id": "1",
-    },
-    anonymous {
       "artist": null,
       "created_at": 2017-09-10T15:38:43.000Z,
       "description": "Moi j'aime bien le dimanche",
       "duration": "252.00",
       "id": "8727546e-0a28-4a86-9721-a454ad4fc544",
+      "reaction_created_at": 2017-09-24T09:44:23.444Z,
       "thumbnail": "https://i.ytimg.com/vi/RyMqplmQ_fE/maxresdefault.jpg",
       "title": "Yellow Claw - Good Day ft. DJ Snake & Elliphant [OFFICIAL MUSIC VIDEO]",
       "url": "https://www.youtube.com/watch?v=RyMqplmQ_fE",
@@ -512,12 +550,12 @@ Object {
     },
   ],
   "pageInfo": Object {
-    "endCursor": "IjIwMTctMDktMTBUMTU6Mzg6NDMuMDAwWiI=",
+    "endCursor": "IjIwMTctMDktMjRUMDk6NDQ6MjMuNDQ0WiI=",
     "hasNextPage": false,
     "hasPreviousPage": false,
-    "startCursor": "IjIwMTctMDktMjBUMTY6NDE6NTQuMDAwWiI=",
+    "startCursor": "IjIwMTctMDktMjRUMDk6NDQ6MjMuNDQ0WiI=",
   },
-  "totalCount": "3",
+  "totalCount": "1",
 }
 `;
 
@@ -525,89 +563,68 @@ exports[`user resolver reactions 2`] = `
 Object {
   "edges": Array [
     Object {
-      "cursor": "IjIwMTctMDktMjBUMTY6NDE6NTQuMDAwWiI=",
+      "cursor": "IjIwMTctMDktMjRUMDk6MzU6MjEuMDYwWiI=",
+      "node": anonymous {
+        "artist": null,
+        "created_at": 2017-09-20T15:13:44.000Z,
+        "description": "test2",
+        "duration": "169.00",
+        "id": "13c309d6-c4e6-4f8b-b52a-c05ae0c03e99",
+        "reaction_created_at": 2017-09-24T09:35:21.060Z,
+        "thumbnail": "https://i.ytimg.com/vi/2TzEALB4qP0/maxresdefault.jpg",
+        "title": "Major Lazer - Sua Cara (feat. Anitta & Pabllo Vittar) (Official Audio)",
+        "url": "https://www.youtube.com/watch?v=2TzEALB4qP0",
+        "user_id": "2",
+      },
+    },
+    Object {
+      "cursor": "IjIwMTctMDktMjNUMTY6MjI6NDYuNzY5WiI=",
       "node": anonymous {
         "artist": "Skrillex",
         "created_at": 2017-09-20T16:41:54.000Z,
         "description": "test3 \\"https://soundcloud.com/skrillex/wouldyouever\\"",
         "duration": "234.00",
         "id": "6697c3b3-7934-45d5-bb0c-a985a262204f",
+        "reaction_created_at": 2017-09-23T16:22:46.769Z,
         "thumbnail": "https://i1.sndcdn.com/artworks-000235280255-5fyldq-t500x500.jpg",
         "title": "Skrillex & Poo Bear - Would You Ever",
         "url": "https://soundcloud.com/skrillex/wouldyouever",
         "user_id": "1",
       },
     },
-    Object {
-      "cursor": "IjIwMTctMDktMTZUMjM6MjQ6MTEuMDAwWiI=",
-      "node": anonymous {
-        "artist": null,
-        "created_at": 2017-09-16T23:24:11.000Z,
-        "description": null,
-        "duration": "187.00",
-        "id": "ebe7610c-8d49-48a0-8ba0-22cf54d880ac",
-        "thumbnail": "https://i.ytimg.com/vi/ylwggwp_YsY/maxresdefault.jpg",
-        "title": "Diplo ft. Jahan Lennon - \\"About That Life\\" (Official Music Video)",
-        "url": "https://www.youtube.com/watch?v=ylwggwp_YsY",
-        "user_id": "1",
-      },
-    },
-    Object {
-      "cursor": "IjIwMTctMDktMTBUMTU6Mzg6NDMuMDAwWiI=",
-      "node": anonymous {
-        "artist": null,
-        "created_at": 2017-09-10T15:38:43.000Z,
-        "description": "Moi j'aime bien le dimanche",
-        "duration": "252.00",
-        "id": "8727546e-0a28-4a86-9721-a454ad4fc544",
-        "thumbnail": "https://i.ytimg.com/vi/RyMqplmQ_fE/maxresdefault.jpg",
-        "title": "Yellow Claw - Good Day ft. DJ Snake & Elliphant [OFFICIAL MUSIC VIDEO]",
-        "url": "https://www.youtube.com/watch?v=RyMqplmQ_fE",
-        "user_id": "1",
-      },
-    },
   ],
   "nodes": Array [
+    anonymous {
+      "artist": null,
+      "created_at": 2017-09-20T15:13:44.000Z,
+      "description": "test2",
+      "duration": "169.00",
+      "id": "13c309d6-c4e6-4f8b-b52a-c05ae0c03e99",
+      "reaction_created_at": 2017-09-24T09:35:21.060Z,
+      "thumbnail": "https://i.ytimg.com/vi/2TzEALB4qP0/maxresdefault.jpg",
+      "title": "Major Lazer - Sua Cara (feat. Anitta & Pabllo Vittar) (Official Audio)",
+      "url": "https://www.youtube.com/watch?v=2TzEALB4qP0",
+      "user_id": "2",
+    },
     anonymous {
       "artist": "Skrillex",
       "created_at": 2017-09-20T16:41:54.000Z,
       "description": "test3 \\"https://soundcloud.com/skrillex/wouldyouever\\"",
       "duration": "234.00",
       "id": "6697c3b3-7934-45d5-bb0c-a985a262204f",
+      "reaction_created_at": 2017-09-23T16:22:46.769Z,
       "thumbnail": "https://i1.sndcdn.com/artworks-000235280255-5fyldq-t500x500.jpg",
       "title": "Skrillex & Poo Bear - Would You Ever",
       "url": "https://soundcloud.com/skrillex/wouldyouever",
       "user_id": "1",
     },
-    anonymous {
-      "artist": null,
-      "created_at": 2017-09-16T23:24:11.000Z,
-      "description": null,
-      "duration": "187.00",
-      "id": "ebe7610c-8d49-48a0-8ba0-22cf54d880ac",
-      "thumbnail": "https://i.ytimg.com/vi/ylwggwp_YsY/maxresdefault.jpg",
-      "title": "Diplo ft. Jahan Lennon - \\"About That Life\\" (Official Music Video)",
-      "url": "https://www.youtube.com/watch?v=ylwggwp_YsY",
-      "user_id": "1",
-    },
-    anonymous {
-      "artist": null,
-      "created_at": 2017-09-10T15:38:43.000Z,
-      "description": "Moi j'aime bien le dimanche",
-      "duration": "252.00",
-      "id": "8727546e-0a28-4a86-9721-a454ad4fc544",
-      "thumbnail": "https://i.ytimg.com/vi/RyMqplmQ_fE/maxresdefault.jpg",
-      "title": "Yellow Claw - Good Day ft. DJ Snake & Elliphant [OFFICIAL MUSIC VIDEO]",
-      "url": "https://www.youtube.com/watch?v=RyMqplmQ_fE",
-      "user_id": "1",
-    },
   ],
   "pageInfo": Object {
-    "endCursor": "IjIwMTctMDktMTBUMTU6Mzg6NDMuMDAwWiI=",
+    "endCursor": "IjIwMTctMDktMjNUMTY6MjI6NDYuNzY5WiI=",
     "hasNextPage": false,
     "hasPreviousPage": false,
-    "startCursor": "IjIwMTctMDktMjBUMTY6NDE6NTQuMDAwWiI=",
+    "startCursor": "IjIwMTctMDktMjRUMDk6MzU6MjEuMDYwWiI=",
   },
-  "totalCount": "3",
+  "totalCount": "2",
 }
 `;

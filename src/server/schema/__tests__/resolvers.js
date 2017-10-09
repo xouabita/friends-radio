@@ -154,6 +154,19 @@ describe("query resolver", () => {
     expect(mediasSecond).toMatchSnapshot()
     const allMedias = await queryResolver.medias(null, {first: 10})
     expect(allMedias).toMatchSnapshot()
+    const mediasLast = await queryResolver.medias(null, {last: 1})
+    expect(mediasLast).toMatchSnapshot()
+    const mediasBefore = await queryResolver.medias(null, {
+      last: 1,
+      before: mediasLast.pageInfo.startCursor,
+    })
+    expect(mediasBefore).toMatchSnapshot()
+  })
+  test("medias connection errored", async () => {
+    await expect(queryResolver.medias(null, {})).rejects.toMatchSnapshot()
+    await expect(
+      queryResolver.medias(null, {first: 1, before: "fff"}),
+    ).rejects.toMatchSnapshot()
   })
 })
 
@@ -184,9 +197,12 @@ describe("user resolver", () => {
     expect(mediasUser1).toMatchSnapshot()
   })
   test("reactions", async () => {
-    const likes = await userResolver.medias(users[0], {first: 10, type: "LIKE"})
+    const likes = await userResolver.reactions(users[0], {
+      first: 10,
+      type: "LIKE",
+    })
     expect(likes).toMatchSnapshot()
-    const dislikes = await userResolver.medias(users[0], {
+    const dislikes = await userResolver.reactions(users[0], {
       first: 10,
       type: "DISLIKE",
     })
