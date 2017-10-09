@@ -12,8 +12,12 @@
     "db": "knex"
   },
   "jest": {
-    "setupFiles": ["./jest.setup.js"],
-    "snapshotSerializers": ["enzyme-to-json/serializer"]
+    "setupFiles": [
+      "./jest.setup.js"
+    ],
+    "snapshotSerializers": [
+      "enzyme-to-json/serializer"
+    ]
   },
   "repository": {
     "type": "git",
@@ -85,6 +89,7 @@
     "enzyme": "^3.1.0",
     "enzyme-adapter-react-16": "^1.0.1",
     "enzyme-to-json": "^3.1.1",
+    "eslint-config-react-app": "^2.0.1",
     "knex-cleaner": "^1.1.3",
     "node-fetch": "^1.6.3",
     "ramda": "^0.24.1",
